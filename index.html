@@ -70,6 +70,17 @@
         /* Hide Scrollbar for tabs but keep functionality */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Draggable horizontal scroll rows */
+        .drag-scroll {
+            cursor: grab;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .drag-scroll.dragging {
+            cursor: grabbing;
+            scroll-behavior: auto;
+        }
         
         /* Modal Transitions */
         #product-modal { 
@@ -576,7 +587,7 @@
             </div>
             
             <!-- Horizontal Filter Tabs -->
-            <div class="max-w-7xl mx-auto mt-4 sm:mt-6 flex overflow-x-auto hide-scrollbar gap-5 sm:gap-10 border-b border-gray-100 px-2 lg:px-8 pb-1">
+            <div class="max-w-7xl mx-auto mt-4 sm:mt-6 flex overflow-x-auto hide-scrollbar drag-scroll gap-5 sm:gap-10 border-b border-gray-100 px-2 lg:px-8 pb-1">
                 <button class="tab-btn active pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-ocean flex-shrink-0 transition-colors" onclick="filterCategory('All', this)">All Products</button>
                 <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-gray-400 hover:text-ocean flex-shrink-0 transition-colors" onclick="filterCategory('Purified Water Systems', this)">Purified</button>
                 <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-gray-400 hover:text-ocean flex-shrink-0 transition-colors" onclick="filterCategory('Mineral & High pH', this)">Mineral & High pH</button>
@@ -585,7 +596,7 @@
             </div>
 
             <!-- Consumables Sub-Category Tabs (shown only when Consumables is active) -->
-            <div id="subcategory-tabs" class="hidden max-w-7xl mx-auto mt-3 flex overflow-x-auto hide-scrollbar gap-4 sm:gap-6 px-2 lg:px-8 pb-1">
+            <div id="subcategory-tabs" class="hidden max-w-7xl mx-auto mt-3 flex overflow-x-auto hide-scrollbar drag-scroll gap-4 sm:gap-6 px-2 lg:px-8 pb-1">
                 <button class="sub-tab-btn active px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap bg-ocean text-white flex-shrink-0 transition-colors" onclick="filterSubCategory('All', this)">All</button>
                 <button class="sub-tab-btn px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap bg-gray-100 text-gray-500 hover:bg-gray-200 flex-shrink-0 transition-colors" onclick="filterSubCategory('Wall Hung Filters', this)">Wall Hung Filters</button>
                 <button class="sub-tab-btn px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider whitespace-nowrap bg-gray-100 text-gray-500 hover:bg-gray-200 flex-shrink-0 transition-colors" onclick="filterSubCategory('Sediment Filters', this)">Sediment Filters</button>
@@ -956,19 +967,74 @@
         }
 
         // Close gallery on Escape key press
-document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
 
-    const detailsModal = document.getElementById('details-modal');
-    if (detailsModal.classList.contains('open')) {
-        closeDetails();
-        return;
-    }
+            const detailsModal = document.getElementById('details-modal');
+            if (detailsModal.classList.contains('open')) {
+                closeDetails();
+                return;
+            }
 
-    if (modal.classList.contains('open')) {
-        closeGallery();
-    }
-});
+            if (modal.classList.contains('open')) {
+                closeGallery();
+            }
+        });
+
+        // Enable mouse-drag scrolling and vertical-wheel-to-horizontal-scroll
+        // on any row with the .drag-scroll class (the category & sub-category tab bars).
+        // This fixes the issue where desktop mouse users had no way to reach tabs
+        // that overflow past the visible width, since the scrollbar is hidden and
+        // only touchpad/touch swipes worked by default.
+        function enableDragScroll(el) {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            let moved = false;
+
+            el.addEventListener('mousedown', (e) => {
+                isDown = true;
+                moved = false;
+                el.classList.add('dragging');
+                startX = e.pageX - el.offsetLeft;
+                scrollLeft = el.scrollLeft;
+            });
+
+            const stopDrag = () => {
+                isDown = false;
+                el.classList.remove('dragging');
+            };
+
+            el.addEventListener('mouseleave', stopDrag);
+            el.addEventListener('mouseup', stopDrag);
+
+            el.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - el.offsetLeft;
+                const walk = x - startX;
+                if (Math.abs(walk) > 5) moved = true;
+                el.scrollLeft = scrollLeft - walk;
+            });
+
+            // Prevent the click from firing on the button if the user was dragging
+            el.addEventListener('click', (e) => {
+                if (moved) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+            }, true);
+
+            // Let a vertical mouse wheel scroll the row horizontally too
+            el.addEventListener('wheel', (e) => {
+                if (e.deltaY !== 0 && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                    e.preventDefault();
+                    el.scrollLeft += e.deltaY;
+                }
+            }, { passive: false });
+        }
+
+        document.querySelectorAll('.drag-scroll').forEach(enableDragScroll);
 
         // Render the grid initially
         renderProducts();
