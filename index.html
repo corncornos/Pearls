@@ -37,11 +37,11 @@
         }
         /* Modern UI Improvements */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(50px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.05);
+            background: rgba(10, 20, 40, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
         }
         
         .hero-bg {
@@ -152,39 +152,43 @@
 <body class="antialiased min-h-screen flex flex-col pt-16 sm:pt-24">
 
     <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 glass-panel transition-all duration-300 h-16 sm:h-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+    <nav class="fixed top-3 sm:top-5 left-3 right-3 sm:left-6 sm:right-6 lg:left-10 lg:right-10 z-50 glass-panel transition-all duration-300 h-14 sm:h-16 rounded-full">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 h-full">
             <div class="flex justify-between items-center h-full">
                 <!-- Left: Logo & Text -->
-                <div class="flex items-center gap-2 sm:gap-4 shrink min-w-0">
-                    <div class="flex items-center justify-center h-12 w-12 sm:h-20 sm:w-20 flex-shrink-0 overflow-visible">
+                <div class="flex items-center gap-2 shrink min-w-0">
+                    <div class="flex items-center justify-center h-9 w-9 sm:h-11 sm:w-11 flex-shrink-0 overflow-visible">
                          <img src = "/pearls-logo.png" alt="Pearls Water Logo" class="w-full h-full object-contain scale-125 drop-shadow-sm" />
                     </div>
+                    <span class="text-white font-bold text-sm sm:text-base tracking-wide hidden sm:inline">Pearls Water</span>
                 </div>
 
                 <!-- Desktop Menu -->
-                <div class="hidden lg:flex items-center justify-end gap-6 flex-shrink-0">
-                     <a href="#packages" class="text-deep hover:text-turquoise transition-colors text-sm uppercase tracking-wider font-bold focus:outline-none">
+                <div class="hidden lg:flex items-center justify-end gap-8 flex-shrink-0">
+                     <a href="#packages" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none">
                         Packages
                     </a>
-                     <a href="#why-us" class="text-deep hover:text-turquoise transition-colors text-sm uppercase tracking-wider font-bold focus:outline-none">
+                     <a href="#why-us" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none">
                         Why Us
                     </a>
-                     <a href="#opportunity" class="text-deep hover:text-turquoise transition-colors text-sm uppercase tracking-wider font-bold focus:outline-none border-r border-gray-300 pr-6">
+                     <a href="#opportunity" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none">
                         Opportunity
                     </a>
-                     <button onclick="openGallery()" class="text-deep hover:text-turquoise transition-colors text-sm uppercase tracking-wider font-bold focus:outline-none">
+                     <button onclick="openGallery()" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none">
                         Catalog
                     </button>
-                     <button onclick="window.location.href='mailto:info@pearlswater.com'" class="text-deep hover:text-turquoise transition-colors text-sm uppercase tracking-wider font-bold focus:outline-none">
+                     <button onclick="window.location.href='mailto:info@pearlswater.com'" class="ml-2 px-5 py-2.5 bg-white text-deep rounded-full font-bold text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none">
                         Contact
                     </button>
                 </div>
 
                 <!-- Hamburger Mobile -->
-                <div class="lg:hidden flex items-center justify-end">
-                    <button onclick="toggleMobileMenu()" class="text-deep hover:text-turquoise focus:outline-none p-2" aria-label="Toggle Menu">
-                        <i data-feather="menu" class="w-7 h-7 sm:w-8 sm:h-8"></i>
+                <div class="lg:hidden flex items-center justify-end gap-2">
+                     <button onclick="window.location.href='mailto:info@pearlswater.com'" class="px-4 py-2 bg-white text-deep rounded-full font-bold text-xs sm:text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none">
+                        Contact
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="text-white hover:text-turquoise focus:outline-none p-2" aria-label="Toggle Menu">
+                        <i data-feather="menu" class="w-6 h-6 sm:w-7 sm:h-7"></i>
                     </button>
                 </div>
             </div>
