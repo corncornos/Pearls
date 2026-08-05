@@ -183,7 +183,7 @@
 
                 <!-- Hamburger Mobile -->
                 <div class="lg:hidden flex items-center justify-end gap-2">
-                     <button onclick="window.location.href='mailto:info@pearlswater.com'" class="px-4 py-2 bg-deep text-deep rounded-full font-bold text-xs sm:text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none">
+                     <button onclick="window.location.href='mailto:info@pearlswater.com'" class="px-4 py-2 bg-white text-deep rounded-full font-bold text-xs sm:text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none">
                         Contact
                     </button>
                     <button onclick="toggleMobileMenu()" class="text-white hover:text-turquoise focus:outline-none p-2" aria-label="Toggle Menu">
@@ -893,33 +893,28 @@
             document.getElementById('details-modal').classList.remove('open');
         }
 
- function filterCategory(category, btnElement) {
-    currentCategory = category;
-    currentSubCategory = 'All';
-    
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active', 'text-turquoise');
-        btn.classList.add('text-white/50');
-    });
-    
-    btnElement.classList.add('active', 'text-turquoise');
-    btnElement.classList.remove('text-white/50');
+        function filterCategory(category, btnElement) {
+            currentCategory = category;
+            currentSubCategory = 'All';
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-turquoise');
+                btn.classList.add('text-white/50');
             });
-            
-            // Set active styles for the clicked button
-            btnElement.classList.add('active', 'text-ocean');
-            btnElement.classList.remove('text-gray-500');
+
+            btnElement.classList.add('active', 'text-turquoise');
+            btnElement.classList.remove('text-white/50');
 
             // Show sub-category tabs only for Consumables, and reset their active state
             if (category === 'Consumables') {
                 subcategoryTabs.classList.remove('hidden');
-  document.querySelectorAll('.sub-tab-btn').forEach(btn => {
-    btn.classList.remove('active', 'bg-ocean', 'text-white');
-    btn.classList.add('bg-white/10', 'text-white/60');
-});
-const allSubBtn = subcategoryTabs.querySelector('.sub-tab-btn');
-allSubBtn.classList.add('active', 'bg-ocean', 'text-white');
-allSubBtn.classList.remove('bg-white/10', 'text-white/60');
+                document.querySelectorAll('.sub-tab-btn').forEach(btn => {
+                    btn.classList.remove('active', 'bg-ocean', 'text-white');
+                    btn.classList.add('bg-white/10', 'text-white/60');
+                });
+                const allSubBtn = subcategoryTabs.querySelector('.sub-tab-btn');
+                allSubBtn.classList.add('active', 'bg-ocean', 'text-white');
+                allSubBtn.classList.remove('bg-white/10', 'text-white/60');
             } else {
                 subcategoryTabs.classList.add('hidden');
             }
@@ -932,11 +927,11 @@ allSubBtn.classList.remove('bg-white/10', 'text-white/60');
 
             document.querySelectorAll('.sub-tab-btn').forEach(btn => {
                 btn.classList.remove('active', 'bg-ocean', 'text-white');
-                btn.classList.add('bg-gray-100', 'text-gray-500');
+                btn.classList.add('bg-white/10', 'text-white/60');
             });
 
             btnElement.classList.add('active', 'bg-ocean', 'text-white');
-            btnElement.classList.remove('bg-gray-100', 'text-gray-500');
+            btnElement.classList.remove('bg-white/10', 'text-white/60');
 
             renderProducts(searchInput.value);
         }
