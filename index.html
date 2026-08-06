@@ -174,7 +174,7 @@
                      <a href="#opportunity" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none">
                         Opportunity
                     </a>
-                    <button onclick="openGallery()" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none">
+<button onclick="openGallery()" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none">
     Catalog
 </button>
                      <button onclick="window.location.href='mailto:info@pearlswater.com'" class="ml-2 px-5 py-2.5 bg-white text-deep rounded-full font-bold text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none">
@@ -620,6 +620,7 @@
                 <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                     <!-- Products will be injected here via JavaScript -->
                 </div>
+                <div id="pagination-controls" class="flex items-center justify-center flex-wrap gap-2 mt-10 mb-4"></div>
             </div>
         </div>
     </div>
@@ -805,53 +806,98 @@
 
         let currentCategory = 'All';
         let currentSubCategory = 'All';
+        const PRODUCTS_PER_PAGE = 4;
+        let currentPage = 1;
         const grid = document.getElementById('product-grid');
         const searchInput = document.getElementById('searchInput');
         const subcategoryTabs = document.getElementById('subcategory-tabs');
 
-        function renderProducts(searchQuery = '') {
-            grid.innerHTML = '';
-            
-            const filtered = products.filter(p => {
-                const matchCategory = currentCategory === 'All' || p.category === currentCategory;
-                const matchSubCategory = currentCategory !== 'Consumables' || currentSubCategory === 'All' || p.subCategory === currentSubCategory;
-                const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                  p.desc.toLowerCase().includes(searchQuery.toLowerCase());
-                return matchCategory && matchSubCategory && matchSearch;
-            });
+  function renderProducts(searchQuery = '') {
+    grid.innerHTML = '';
+    
+    const filtered = products.filter(p => {
+        const matchCategory = currentCategory === 'All' || p.category === currentCategory;
+        const matchSubCategory = currentCategory !== 'Consumables' || currentSubCategory === 'All' || p.subCategory === currentSubCategory;
+        const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          p.desc.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchCategory && matchSubCategory && matchSearch;
+    });
 
-            if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full flex flex-col items-center justify-center py-32 text-white/60">
-                        <i data-feather="search" class="w-12 h-12 mb-4 text-gray-600"></i>
-                        <p class="text-xl">No products found for your search.</p>
-                    </div>`;
-                feather.replace();
-                return;
-            }
+    if (filtered.length === 0) {
+        grid.innerHTML = `
+            <div class="col-span-full flex flex-col items-center justify-center py-32 text-white/60">
+                <i data-feather="search" class="w-12 h-12 mb-4 text-gray-600"></i>
+                <p class="text-xl">No products found for your search.</p>
+            </div>`;
+        feather.replace();
+        document.getElementById('pagination-controls').innerHTML = '';
+        return;
+    }
 
-            filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = "product-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer h-full";
-                card.setAttribute('onclick', `showProductDetails(${p.id}, event)`);
-                card.innerHTML = `
-                    <div class="relative pt-[100%] overflow-hidden bg-gray-50">
-                        <!-- Product Image with Zoom -->
-                        <img src="${p.images[0]}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1544485547-5d1e67c87c7e?auto=format&fit=crop&q=80&w=600'" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105">
-                    </div>
-                    <div class="p-5 md:p-6 flex-1 flex flex-col bg-white">
-                        <span class="text-[9px] sm:text-[11px] font-bold text-turquoise mb-1 sm:mb-2 uppercase tracking-widest leading-tight">${p.category}</span>
-                        <h3 class="text-deep font-bold text-sm sm:text-base md:text-lg leading-tight mb-1 sm:mb-2 group-hover:text-turquoise transition-colors">${p.name}</h3>
-                        <p class="text-[11px] sm:text-xs text-gray-500 line-clamp-2 mb-3 sm:mb-5 flex-1 leading-relaxed">${p.desc}</p>
-                        <div class="flex items-center justify-between mt-auto gap-1">
-                            <span class="text-sm sm:text-lg md:text-xl font-black text-deep truncate tracking-tight">${p.price}</span>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-            feather.replace();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PRODUCTS_PER_PAGE));
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    const startIdx = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    const pageItems = filtered.slice(startIdx, startIdx + PRODUCTS_PER_PAGE);
+
+    pageItems.forEach(p => {
+        const card = document.createElement('div');
+        card.className = "product-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer h-full";
+        card.setAttribute('onclick', `showProductDetails(${p.id}, event)`);
+        card.innerHTML = `
+            <div class="relative pt-[100%] overflow-hidden bg-gray-50">
+                <img src="${p.images[0]}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1544485547-5d1e67c87c7e?auto=format&fit=crop&q=80&w=600'" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105">
+            </div>
+            <div class="p-5 md:p-6 flex-1 flex flex-col bg-white">
+                <span class="text-[9px] sm:text-[11px] font-bold text-turquoise mb-1 sm:mb-2 uppercase tracking-widest leading-tight">${p.category}</span>
+                <h3 class="text-deep font-bold text-sm sm:text-base md:text-lg leading-tight mb-1 sm:mb-2 group-hover:text-turquoise transition-colors">${p.name}</h3>
+                <p class="text-[11px] sm:text-xs text-gray-500 line-clamp-2 mb-3 sm:mb-5 flex-1 leading-relaxed">${p.desc}</p>
+                <div class="flex items-center justify-between mt-auto gap-1">
+                    <span class="text-sm sm:text-lg md:text-xl font-black text-deep truncate tracking-tight">${p.price}</span>
+                </div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+
+    feather.replace();
+    renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+    const container = document.getElementById('pagination-controls');
+    container.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    const makeBtn = (label, page, opts = {}) => {
+        const btn = document.createElement('button');
+        btn.className = `min-w-[2.5rem] h-10 px-3 rounded-full text-sm font-bold transition-colors ${
+            opts.active ? 'bg-turquoise text-white' :
+            opts.disabled ? 'text-white/20 cursor-not-allowed' :
+            'text-white/70 hover:bg-white/10'
+        }`;
+        btn.innerText = label;
+        if (opts.disabled) {
+            btn.disabled = true;
+        } else {
+            btn.onclick = () => goToPage(page);
         }
+        return btn;
+    };
+
+    container.appendChild(makeBtn('Prev', currentPage - 1, { disabled: currentPage === 1 }));
+    for (let i = 1; i <= totalPages; i++) {
+        container.appendChild(makeBtn(String(i), i, { active: i === currentPage }));
+    }
+    container.appendChild(makeBtn('Next', currentPage + 1, { disabled: currentPage === totalPages }));
+}
+
+function goToPage(page) {
+    currentPage = page;
+    renderProducts(searchInput.value);
+    document.querySelector('.modal-content').scrollTo({ top: 0, behavior: 'smooth' });
+}
 
         function buildDetailsThumbnails(images) {
             const container = document.getElementById('detail-thumbnails');
@@ -897,6 +943,7 @@
         function filterCategory(category, btnElement) {
             currentCategory = category;
             currentSubCategory = 'All';
+            currentPage = 1;
 
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active', 'text-turquoise');
@@ -925,6 +972,7 @@
 
         function filterSubCategory(subCategory, btnElement) {
             currentSubCategory = subCategory;
+            currentPage = 1;
 
             document.querySelectorAll('.sub-tab-btn').forEach(btn => {
                 btn.classList.remove('active', 'bg-ocean', 'text-white');
@@ -939,6 +987,10 @@
 
         searchInput.addEventListener('input', (e) => {
             renderProducts(e.target.value);
+            searchInput.addEventListener('input', (e) => {
+    currentPage = 1;
+    renderProducts(e.target.value);
+});
         });
 
         // Overlay/Modal Logic
