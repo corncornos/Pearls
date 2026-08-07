@@ -5,6 +5,22 @@ import { isAuthenticated } from '../lib/auth.js';
 // enforce a slightly smaller limit here and surface a clear error.
 const MAX_BYTES = 4 * 1024 * 1024; // 4MB
 
+// Vercel's automatic body parsing only reliably covers application/json,
+// application/x-www-form-urlencoded, and text/plain. For arbitrary binary
+// content types like image/*, req.body may be undefined depending on the
+// runtime version, so we read the raw request stream ourselves as the
+// source of truth (falling back to req.body if it was already parsed).
+async function readRawBody(req) {
+  if (Buffer.isBuffer(req.body) && req.body.length > 0) {
+    return req.body;
+  }
+  const chunks = [];
+  for await (const chunk of req) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks);
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -25,9 +41,13 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Only image uploads are allowed' });
   }
 
-  // Vercel's Node runtime parses the body into a Buffer for binary content-types.
-  const body = req.body;
-  if (!body || !(body instanceof Buffer) || body.length === 0) {
+  let body;
+  try {
+    body = await readRawBody(req);
+  } catch (err) {
+    return res.status(400).json({ error: 'Failed to read request body', detail: String(err) });
+  }
+  if (!body || body.length === 0) {
     return res.status(400).json({ error: 'Empty or unreadable file body' });
   }
 
