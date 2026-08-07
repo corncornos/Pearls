@@ -124,29 +124,6 @@
             opacity: 0;
         }
 
-        /* Package Tiers Modal Transitions */
-        #package-modal {
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-        #package-modal.open {
-            opacity: 1; visibility: visible;
-        }
-        #package-modal:not(.open) {
-            opacity: 0; visibility: hidden;
-        }
-        #package-modal.open .package-modal-content {
-            transform: scale(1);
-            opacity: 1;
-        }
-        .package-modal-content {
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
-            transform: scale(0.92);
-            opacity: 0;
-        }
-        .tier-chip {
-            transition: all 0.2s;
-        }
-
         /* Product Card */
         .product-card {
             background: #ffffff;
@@ -274,43 +251,72 @@
                     <span class="w-12 h-px bg-turquoise"></span> 
                 </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                 <!-- Card 1: Mineral / High pH Water -->
-                <div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col cursor-pointer" onclick="openPackageModal('mineral')">
-                    <h3 class="text-2xl font-bold text-[#0c2340] mb-2 uppercase tracking-wide text-center">Mineral / High pH Water</h3>
-                    <div class="flex-1"></div>
-                    <button onclick="event.stopPropagation(); openPackageModal('mineral')" class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors mt-6">Inquire Now</button>
+                <div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col">
+                    <h3 class="text-xl sm:text-2xl font-bold text-[#0c2340] mb-6 uppercase tracking-wide text-center">Mineral / High pH Water</h3>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-3">
+                            <i data-feather="check-circle" class="w-5 h-5 text-[#0c2340] flex-shrink-0"></i>
+                            <span class="text-[#0c2340] font-semibold text-sm">Regular</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-feather="check-circle" class="w-5 h-5 text-[#0c2340] flex-shrink-0"></i>
+                            <span class="text-[#0c2340] font-semibold text-sm">Premium</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-feather="check-circle" class="w-5 h-5 text-[#0c2340] flex-shrink-0"></i>
+                            <span class="text-[#0c2340] font-semibold text-sm">Ultrafine</span>
+                        </li>
+                    </ul>
+                    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Mineral / High pH Water Package Inquiry'" class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors">Inquire Now</button>
                 </div>
                 <!-- Card 2: Reverse Osmosis - Purified -->
-                <div class="bg-[#0c2340] text-white rounded-3xl p-8 border border-ocean transform md:-translate-y-4 shadow-[0_20px_50px_-12px_rgba(12,35,64,0.5)] relative flex flex-col group cursor-pointer" onclick="openPackageModal('ro')">
-                    <h3 class="text-2xl font-bold mb-2 uppercase tracking-wide text-white text-center">Reverse Osmosis - Purified</h3>
-                    <div class="flex-1"></div>
-                    <button onclick="event.stopPropagation(); openPackageModal('ro')" class="w-full py-4 rounded-xl bg-gradient-to-r from-turquoise to-[#00a8cc] text-white font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg shadow-turquoise/20 mt-6">Inquire Now</button>
+                <div class="bg-[#0c2340] text-white rounded-3xl p-8 border border-ocean shadow-[0_20px_50px_-12px_rgba(12,35,64,0.5)] relative flex flex-col group">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-6 uppercase tracking-wide text-white text-center">Reverse Osmosis - Purified</h3>
+                    <div class="space-y-4 mb-8 flex-1">
+                        <div>
+                            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Single</h4>
+                            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Double</h4>
+                            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Triple</h4>
+                            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Quadruple</h4>
+                            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
+                        </div>
+                    </div>
+                    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Reverse Osmosis - Purified Package Inquiry'" class="w-full py-4 rounded-xl bg-gradient-to-r from-turquoise to-[#00a8cc] text-white font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg shadow-turquoise/20">Inquire Now</button>
                 </div>
                 <!-- Card 3: Combination Packages -->
-                <div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col cursor-pointer" onclick="openPackageModal('combo')">
-                    <h3 class="text-2xl font-bold text-[#0c2340] mb-2 uppercase tracking-wide text-center">Combination Packages</h3>
-                    <p class="text-sm text-[#0c2340] mb-2 text-center">2-N-1, 3-N-1.</p>
-                    <div class="flex-1"></div>
-                    <button onclick="event.stopPropagation(); openPackageModal('combo')" class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors mt-6">Inquire Now</button>
+                <div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col">
+                    <h3 class="text-xl sm:text-2xl font-bold text-[#0c2340] mb-1 uppercase tracking-wide text-center">Combination Packages</h3>
+                    <p class="text-xs text-[#0c2340]/70 mb-6 text-center font-medium">2-N-1, 3-N-1</p>
+                    <div class="space-y-4 mb-8 flex-1">
+                        <div>
+                            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">2-N-1 Single</h4>
+                            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">3-N-1 Single</h4>
+                            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">3-N-1 Double</h4>
+                            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
+                        </div>
+                    </div>
+                    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Combination Package Inquiry'" class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors">Inquire Now</button>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Package Tiers Modal -->
-    <div id="package-modal" class="fixed inset-0 z-[110] flex items-center justify-center bg-deep/80 backdrop-blur-sm p-4 sm:p-6" onclick="closePackageModal(event)">
-        <div class="package-modal-content bg-white w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl shadow-2xl relative" onclick="event.stopPropagation()">
-            <button onclick="closePackageModal()" class="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-md p-2 rounded-full text-deep hover:bg-gray-100 transition shadow-sm">
-                <i data-feather="x" class="w-5 h-5 sm:w-6 sm:h-6"></i>
-            </button>
-            <div class="p-6 sm:p-10">
-                <h2 id="package-modal-title" class="text-2xl sm:text-3xl font-black text-deep mb-8 uppercase tracking-wide pr-10"></h2>
-                <div id="package-modal-groups" class="space-y-8"></div>
-                <button id="package-modal-inquire" class="w-full py-4 rounded-xl bg-gradient-to-r from-ocean to-turquoise text-white font-bold uppercase tracking-wide mt-10 hover:opacity-90 transition-opacity shadow-lg shadow-turquoise/20">Inquire Now</button>
-            </div>
-        </div>
-    </div>
 
     <!-- Why Us Section -->
     <section id="why-us" class="py-24 bg-gray-50 border-[0px]">
@@ -919,83 +925,6 @@ function goToPage(page) {
             document.getElementById('details-modal').classList.remove('open');
         }
 
-        // Business Package Tiers Data
-        const packageTiers = {
-            mineral: {
-                title: "Mineral / High pH Water",
-                groups: [
-                    { name: null, items: ["Regular", "Premium", "Ultrafine"] }
-                ],
-                subject: "Mineral / High pH Water Package Inquiry"
-            },
-            ro: {
-                title: "Reverse Osmosis - Purified",
-                groups: [
-                    { name: "Single", items: ["Special Purified", "Deluxe", "Economy", "Premium", "Executive"] },
-                    { name: "Double", items: ["Special Purified", "Deluxe", "Economy", "Premium", "Executive"] },
-                    { name: "Triple", items: ["Special Purified", "Deluxe", "Economy", "Premium", "Executive"] },
-                    { name: "Quadruple", items: ["Special Purified", "Deluxe", "Economy", "Premium", "Executive"] }
-                ],
-                subject: "Reverse Osmosis - Purified Package Inquiry"
-            },
-            combo: {
-                title: "Combination Packages",
-                groups: [
-                    { name: "2-N-1 Single", items: ["Special Basic", "Deluxe", "Economy", "Premium", "Executive"] },
-                    { name: "3-N-1 Single", items: ["Special Basic", "Deluxe", "Economy", "Premium", "Executive"] },
-                    { name: "3-N-1 Double", items: ["Special Basic", "Deluxe", "Economy", "Premium", "Executive"] }
-                ],
-                subject: "Combination Package Inquiry"
-            }
-        };
-
-        const packageModal = document.getElementById('package-modal');
-        const packageModalTitle = document.getElementById('package-modal-title');
-        const packageModalGroups = document.getElementById('package-modal-groups');
-        const packageModalInquire = document.getElementById('package-modal-inquire');
-
-        function openPackageModal(key) {
-            const pkg = packageTiers[key];
-            if (!pkg) return;
-
-            packageModalTitle.innerText = pkg.title;
-            packageModalGroups.innerHTML = '';
-
-            pkg.groups.forEach(group => {
-                const groupEl = document.createElement('div');
-                if (group.name) {
-                    const groupLabel = document.createElement('h4');
-                    groupLabel.className = "text-sm font-bold text-turquoise uppercase tracking-widest mb-3";
-                    groupLabel.innerText = group.name;
-                    groupEl.appendChild(groupLabel);
-                }
-                const chipsWrap = document.createElement('div');
-                chipsWrap.className = "flex flex-wrap gap-3";
-                group.items.forEach(item => {
-                    const chip = document.createElement('span');
-                    chip.className = "tier-chip px-4 py-2.5 rounded-xl bg-[#e1e2e9] text-[#0c2340] font-semibold text-sm";
-                    chip.innerText = item;
-                    chipsWrap.appendChild(chip);
-                });
-                groupEl.appendChild(chipsWrap);
-                packageModalGroups.appendChild(groupEl);
-            });
-
-            packageModalInquire.onclick = () => {
-                window.location.href = `mailto:info@pearlswater.com?subject=${encodeURIComponent(pkg.subject)}`;
-            };
-
-            packageModal.classList.add('open');
-            document.body.style.overflow = 'hidden';
-            feather.replace();
-        }
-
-        function closePackageModal(event) {
-            if (event && event.target !== event.currentTarget) return;
-            packageModal.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
         function filterCategory(category, btnElement) {
             currentCategory = category;
             currentSubCategory = 'All';
@@ -1082,11 +1011,6 @@ function goToPage(page) {
             const detailsModal = document.getElementById('details-modal');
             if (detailsModal.classList.contains('open')) {
                 closeDetails();
-                return;
-            }
-
-            if (packageModal.classList.contains('open')) {
-                closePackageModal();
                 return;
             }
 
