@@ -19,6 +19,8 @@
   .product-row.dragging { opacity: 0.4; }
   .product-row.drag-over-top { border-top: 2px solid #00D4FF; }
   .product-row.drag-over-bottom { border-bottom: 2px solid #00D4FF; }
+  .dropzone { transition: border-color 0.15s, background-color 0.15s; }
+  .dropzone.drag-over { border-color: #00D4FF; background: rgba(0,212,255,0.08); }
 </style>
 </head>
 <body class="min-h-screen text-white">
@@ -76,6 +78,23 @@ function nextId() {
   return products.reduce((max, p) => Math.max(max, Number(p.id) || 0), 0) + 1;
 }
 
+function escapeHtml(str) {
+  return String(str).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+}
+function escapeAttr(str) {
+  return String(str).replace(/"/g, '&quot;');
+}
+
+function thumbsMarkup(idx) {
+  const p = products[idx];
+  return (p.images || []).filter(Boolean).map((img, imgIdx) => `
+    <div class="relative w-16 h-16 rounded-lg overflow-hidden border border-white/15 group">
+      <img src="${escapeAttr(img)}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1544485547-5d1e67c87c7e?auto=format&fit=crop&q=80&w=200'">
+      <button type="button" data-remove-img="${idx}:${imgIdx}" title="Remove image" class="absolute top-0 right-0 bg-black/70 text-white text-xs w-5 h-5 flex items-center justify-center rounded-bl-lg opacity-0 group-hover:opacity-100 transition">&times;</button>
+    </div>
+  `).join('');
+}
+
 function render() {
   listEl.innerHTML = '';
   products.forEach((p, idx) => {
@@ -114,8 +133,17 @@ function render() {
           <textarea data-field="desc" data-idx="${idx}" rows="2" class="w-full rounded-lg px-3 py-2 mt-1">${escapeHtml(p.desc || '')}</textarea>
         </div>
         <div class="md:col-span-2">
-          <label class="text-xs text-white/50">Image URLs (comma-separated)</label>
-          <input data-field="images" data-idx="${idx}" value="${escapeAttr((p.images || []).join(', '))}" class="w-full rounded-lg px-3 py-2 mt-1" />
+          <label class="text-xs text-white/50">Images</label>
+          <div class="flex flex-wrap gap-2 mt-1 mb-2" data-thumbs="${idx}">${thumbsMarkup(idx)}</div>
+          <div data-dropzone="${idx}" class="dropzone rounded-lg px-3 py-4 text-center text-sm text-white/50 cursor-pointer border-2 border-dashed border-white/15 hover:border-turquoise">
+            Drag &amp; drop images here, or click to browse
+          </div>
+          <input type="file" data-fileinput="${idx}" accept="image/*" multiple class="hidden" />
+          <p class="text-[11px] mt-1 min-h-[1em]" data-upload-status="${idx}"></p>
+          <details class="mt-2">
+            <summary class="text-xs text-white/40 cursor-pointer">Or paste image URLs (comma-separated)</summary>
+            <input data-field="images" data-idx="${idx}" value="${escapeAttr((p.images || []).join(', '))}" class="w-full rounded-lg px-3 py-2 mt-2" />
+          </details>
         </div>
       </div>
       <div class="flex justify-end mt-3">
@@ -138,6 +166,7 @@ function render() {
   });
 
   attachDragHandlers();
+  attachImageUploadHandlers();
 }
 
 let dragSrcIdx = null;
@@ -192,22 +221,136 @@ function attachDragHandlers() {
   });
 }
 
+// --- Image drag-and-drop upload -------------------------------------------------
+
+const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // 4MB, matches api/upload-image.js
+
+function updateImagesUI(idx) {
+  const thumbs = listEl.querySelector(`[data-thumbs="${idx}"]`);
+  if (thumbs) {
+    thumbs.innerHTML = thumbsMarkup(idx);
+    thumbs.querySelectorAll('[data-remove-img]').forEach(btn => {
+      btn.addEventListener('click', onRemoveImageClick);
+    });
+  }
+  const textInput = listEl.querySelector(`input[data-field="images"][data-idx="${idx}"]`);
+  if (textInput) textInput.value = (products[idx].images || []).join(', ');
+}
+
+function onRemoveImageClick(e) {
+  const [idx, imgIdx] = e.currentTarget.dataset.removeImg.split(':').map(Number);
+  products[idx].images.splice(imgIdx, 1);
+  updateImagesUI(idx);
+}
+
+async function uploadFiles(idx, fileList) {
+  const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+  const statusEl = listEl.querySelector(`[data-upload-status="${idx}"]`);
+  if (files.length === 0) {
+    if (statusEl) {
+      statusEl.textContent = 'Only image files are supported.';
+      statusEl.className = 'text-[11px] mt-1 min-h-[1em] text-red-400';
+    }
+    return;
+  }
+
+  for (const file of files) {
+    if (file.size > MAX_UPLOAD_BYTES) {
+      if (statusEl) {
+        statusEl.textContent = `${file.name} is too large (max ${MAX_UPLOAD_BYTES / (1024 * 1024)}MB).`;
+        statusEl.className = 'text-[11px] mt-1 min-h-[1em] text-red-400';
+      }
+      continue;
+    }
+    if (statusEl) {
+      statusEl.textContent = `Uploading ${file.name}...`;
+      statusEl.className = 'text-[11px] mt-1 min-h-[1em] text-white/50';
+    }
+    try {
+      const res = await fetch(`/api/upload-image?filename=${encodeURIComponent(file.name)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': file.type || 'application/octet-stream' },
+        body: file,
+      });
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error(`Server returned a non-JSON response (status ${res.status}).`);
+      }
+      if (!res.ok) throw new Error(data.error || `Upload failed (status ${res.status})`);
+
+      products[idx].images = [...(products[idx].images || []), data.url];
+      updateImagesUI(idx);
+      if (statusEl) {
+        statusEl.textContent = `Uploaded ${file.name}`;
+        statusEl.className = 'text-[11px] mt-1 min-h-[1em] text-turquoise';
+      }
+    } catch (err) {
+      if (statusEl) {
+        statusEl.textContent = String(err.message || err);
+        statusEl.className = 'text-[11px] mt-1 min-h-[1em] text-red-400';
+      }
+      console.error('Image upload failed:', err);
+    }
+  }
+
+  setTimeout(() => {
+    if (statusEl) statusEl.textContent = '';
+  }, 4000);
+}
+
+function attachImageUploadHandlers() {
+  listEl.querySelectorAll('[data-dropzone]').forEach(zone => {
+    const idx = Number(zone.dataset.dropzone);
+    const fileInput = listEl.querySelector(`[data-fileinput="${idx}"]`);
+
+    zone.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) uploadFiles(idx, fileInput.files);
+      fileInput.value = '';
+    });
+
+    ['dragenter', 'dragover'].forEach(evt => {
+      zone.addEventListener(evt, (e) => {
+        e.preventDefault();
+        e.stopPropagation(); // don't trigger the row's own reorder-drag handlers
+        zone.classList.add('drag-over');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(evt => {
+      zone.addEventListener(evt, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        zone.classList.remove('drag-over');
+      });
+    });
+
+    zone.addEventListener('drop', (e) => {
+      const dtFiles = e.dataTransfer && e.dataTransfer.files;
+      if (dtFiles && dtFiles.length) uploadFiles(idx, dtFiles);
+    });
+  });
+
+  listEl.querySelectorAll('[data-remove-img]').forEach(btn => {
+    btn.addEventListener('click', onRemoveImageClick);
+  });
+}
+
+// ----------------------------------------------------------------------------
+
 function onFieldChange(e) {
   const idx = Number(e.target.dataset.idx);
   const field = e.target.dataset.field;
   if (field === 'images') {
     products[idx].images = e.target.value.split(',').map(s => s.trim()).filter(Boolean);
+    updateImagesUI(idx);
   } else {
     products[idx][field] = e.target.value;
   }
   if (field === 'category') render(); // toggle subcategory field visibility
-}
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-}
-function escapeAttr(str) {
-  return String(str).replace(/"/g, '&quot;');
 }
 
 document.getElementById('add-btn').addEventListener('click', () => {
