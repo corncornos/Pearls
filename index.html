@@ -252,68 +252,76 @@
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-                <!-- Card 1: Mineral / High pH Water -->
-                <div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col">
-                    <h3 class="text-xl sm:text-2xl font-bold text-[#0c2340] mb-6 uppercase tracking-wide text-center">Mineral / High pH Water</h3>
-                    <ul class="space-y-3 mb-8 flex-1">
-                        <li class="flex items-center gap-3">
-                            
-                          <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">Regular</h4>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            
-                            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">Premium</h4>
-                        </li>
-                        <li class="flex items-center gap-3">
-                
-                            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">Ultrafine</h4>
-                        </li>
-                    </ul>
-                    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Mineral / High pH Water Package Inquiry'" class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors">Inquire Now</button>
-                </div>
-                <!-- Card 2: Reverse Osmosis - Purified -->
-                <div class="bg-[#0c2340] text-white rounded-3xl p-8 border border-ocean shadow-[0_20px_50px_-12px_rgba(12,35,64,0.5)] relative flex flex-col group">
-                    <h3 class="text-xl sm:text-2xl font-bold mb-6 uppercase tracking-wide text-white text-center">Reverse Osmosis - Purified</h3>
-                    <div class="space-y-4 mb-8 flex-1">
-                        <div>
-                            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Single</h4>
-                            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Double</h4>
-                            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Triple</h4>
-                            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Quadruple</h4>
-                            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
-                        </div>
-                    </div>
-                    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Reverse Osmosis - Purified Package Inquiry'" class="w-full py-4 rounded-xl bg-gradient-to-r from-turquoise to-[#00a8cc] text-white font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg shadow-turquoise/20">Inquire Now</button>
-                </div>
-                <!-- Card 3: Combination Packages -->
-                <div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col">
-                    <h3 class="text-xl sm:text-2xl font-bold text-[#0c2340] mb-1 uppercase tracking-wide text-center">Combination Packages</h3>
-                    <p class="text-xs text-[#0c2340]/70 mb-6 text-center font-medium">2-N-1, 3-N-1</p>
-                    <div class="space-y-4 mb-8 flex-1">
-                        <div>
-                            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">2-N-1 Single</h4>
-                            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">3-N-1 Single</h4>
-                            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">3-N-1 Double</h4>
-                            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
-                        </div>
-                    </div>
-                    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Combination Package Inquiry'" class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors">Inquire Now</button>
-                </div>
+<!-- Card 1: Reverse Osmosis - Purified (moved to first position) -->
+<div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col">
+    <h3 class="text-xl sm:text-2xl font-bold text-[#0c2340] mb-6 uppercase tracking-wide text-center">Reverse Osmosis - Purified</h3>
+    <div class="space-y-4 mb-8 flex-1">
+        <div>
+            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">Single</h4>
+            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
+        </div>
+        <div>
+            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">Double</h4>
+            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
+        </div>
+        <div>
+            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">Triple</h4>
+            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
+        </div>
+        <div>
+            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">Quadruple</h4>
+            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
+        </div>
+    </div>
+    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Reverse Osmosis - Purified Package Inquiry'" 
+            class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors">
+        Inquire Now
+    </button>
+</div>
+
+<!-- Card 2: Mineral / High pH Water (now in the middle + blue) -->
+<div class="bg-[#0c2340] text-white rounded-3xl p-8 border border-ocean transform md:-translate-y-4 shadow-[0_20px_50px_-12px_rgba(12,35,64,0.5)] relative flex flex-col group">
+    <h3 class="text-xl sm:text-2xl font-bold mb-6 uppercase tracking-wide text-white text-center">Mineral / High pH Water</h3>
+    <ul class="space-y-3 mb-8 flex-1">
+        <li class="flex items-center gap-3">
+            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Regular</h4>
+        </li>
+        <li class="flex items-center gap-3">
+            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Premium</h4>
+        </li>
+        <li class="flex items-center gap-3">
+            <h4 class="text-xs font-bold text-turquoise uppercase tracking-widest mb-1.5">Ultrafine</h4>
+        </li>
+    </ul>
+    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Mineral / High pH Water Package Inquiry'" 
+            class="w-full py-4 rounded-xl bg-gradient-to-r from-turquoise to-[#00a8cc] text-white font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg shadow-turquoise/20">
+        Inquire Now
+    </button>
+</div>
+
+<!-- Card 3: Combination Packages (unchanged) -->
+<div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col">
+    <h3 class="text-xl sm:text-2xl font-bold text-[#0c2340] mb-1 uppercase tracking-wide text-center">Combination Packages</h3>
+    <p class="text-xs text-[#0c2340]/70 mb-6 text-center font-medium">2-N-1, 3-N-1</p>
+    <div class="space-y-4 mb-8 flex-1">
+        <div>
+            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">2-N-1 Single</h4>
+            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
+        </div>
+        <div>
+            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">3-N-1 Single</h4>
+            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
+        </div>
+        <div>
+            <h4 class="text-xs font-bold text-ocean uppercase tracking-widest mb-1.5">3-N-1 Double</h4>
+            <p class="text-[#0c2340]/80 text-xs sm:text-sm leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
+        </div>
+    </div>
+    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Combination Package Inquiry'" 
+            class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors">
+        Inquire Now
+    </button>
+</div>
             </div>
         </div>
     </section>
