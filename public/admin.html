@@ -14,6 +14,11 @@
   .card { background:#0f2a4a; border:1px solid rgba(255,255,255,0.08); }
   input, textarea, select { background:#0A1428; border:1px solid rgba(255,255,255,0.15); color:#fff; }
   input:focus, textarea:focus, select:focus { outline:none; border-color:#00D4FF; }
+  .drag-handle { cursor: grab; touch-action: none; }
+  .drag-handle:active { cursor: grabbing; }
+  .product-row.dragging { opacity: 0.4; }
+  .product-row.drag-over-top { border-top: 2px solid #00D4FF; }
+  .product-row.drag-over-bottom { border-bottom: 2px solid #00D4FF; }
 </style>
 </head>
 <body class="min-h-screen text-white">
@@ -43,7 +48,7 @@
       </div>
     </div>
 
-    <p id="status-msg" class="mb-4 text-sm hidden"></p>
+    <p id="status-msg" class="mb-4 text-sm hidden break-words"></p>
 
     <div id="product-list" class="space-y-4"></div>
   </div>
@@ -64,7 +69,7 @@ function showStatus(msg, isError = false) {
   statusEl.textContent = msg;
   statusEl.className = 'mb-4 text-sm ' + (isError ? 'text-red-400' : 'text-turquoise');
   statusEl.classList.remove('hidden');
-  setTimeout(() => statusEl.classList.add('hidden'), 4000);
+  setTimeout(() => statusEl.classList.add('hidden'), isError ? 15000 : 4000);
 }
 
 function nextId() {
@@ -75,8 +80,14 @@ function render() {
   listEl.innerHTML = '';
   products.forEach((p, idx) => {
     const row = document.createElement('div');
-    row.className = 'card rounded-xl p-4';
+    row.className = 'product-row card rounded-xl p-4';
+    row.draggable = true;
+    row.dataset.idx = idx;
     row.innerHTML = `
+      <div class="flex items-start gap-2 mb-3">
+        <span class="drag-handle text-white/30 hover:text-white/70 text-lg leading-none select-none pt-1" title="Drag to reorder">&#9776;</span>
+        <span class="text-xs text-white/40 pt-1">#${idx + 1}</span>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div>
           <label class="text-xs text-white/50">Name</label>
@@ -125,6 +136,60 @@ function render() {
       render();
     });
   });
+
+  attachDragHandlers();
+}
+
+let dragSrcIdx = null;
+
+function attachDragHandlers() {
+  const rows = listEl.querySelectorAll('.product-row');
+  rows.forEach(row => {
+    row.addEventListener('dragstart', (e) => {
+      dragSrcIdx = Number(row.dataset.idx);
+      row.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      // Firefox requires setData to enable dragging
+      e.dataTransfer.setData('text/plain', String(dragSrcIdx));
+    });
+
+    row.addEventListener('dragend', () => {
+      row.classList.remove('dragging');
+      rows.forEach(r => r.classList.remove('drag-over-top', 'drag-over-bottom'));
+      dragSrcIdx = null;
+    });
+
+    row.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const targetIdx = Number(row.dataset.idx);
+      if (targetIdx === dragSrcIdx) return;
+      const rect = row.getBoundingClientRect();
+      const isAfter = (e.clientY - rect.top) > rect.height / 2;
+      row.classList.toggle('drag-over-bottom', isAfter);
+      row.classList.toggle('drag-over-top', !isAfter);
+    });
+
+    row.addEventListener('dragleave', () => {
+      row.classList.remove('drag-over-top', 'drag-over-bottom');
+    });
+
+    row.addEventListener('drop', (e) => {
+      e.preventDefault();
+      row.classList.remove('drag-over-top', 'drag-over-bottom');
+      const targetIdx = Number(row.dataset.idx);
+      if (dragSrcIdx === null || targetIdx === dragSrcIdx) return;
+
+      const rect = row.getBoundingClientRect();
+      const isAfter = (e.clientY - rect.top) > rect.height / 2;
+      let insertAt = isAfter ? targetIdx + 1 : targetIdx;
+
+      const [moved] = products.splice(dragSrcIdx, 1);
+      if (dragSrcIdx < insertAt) insertAt -= 1; // account for the removed item shifting indices
+      products.splice(insertAt, 0, moved);
+      render();
+    });
+  });
 }
 
 function onFieldChange(e) {
@@ -157,11 +222,20 @@ document.getElementById('save-btn').addEventListener('click', async () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(products),
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Save failed');
+    let data;
+    try {
+      data = await res.json();
+    } catch (parseErr) {
+      throw new Error(`Server returned a non-JSON response (status ${res.status}). Check Vercel function logs.`);
+    }
+    if (!res.ok) {
+      const msg = [data.error, data.detail].filter(Boolean).join(' — ');
+      throw new Error(msg || `Save failed (status ${res.status})`);
+    }
     showStatus(`Saved ${data.count} products. Live site will pick these up on next page load.`);
   } catch (err) {
     showStatus(String(err.message || err), true);
+    console.error('Save failed:', err);
   }
 });
 
