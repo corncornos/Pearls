@@ -124,6 +124,29 @@
             opacity: 0;
         }
 
+        /* Package Tiers Modal Transitions */
+        #package-modal {
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        #package-modal.open {
+            opacity: 1; visibility: visible;
+        }
+        #package-modal:not(.open) {
+            opacity: 0; visibility: hidden;
+        }
+        #package-modal.open .package-modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .package-modal-content {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+            transform: scale(0.92);
+            opacity: 0;
+        }
+        .tier-chip {
+            transition: all 0.2s;
+        }
+
         /* Product Card */
         .product-card {
             background: #ffffff;
@@ -208,7 +231,12 @@
     <!-- MAIN HERO -->
 <header class="relative flex-1 flex items-center justify-start min-h-[90vh] hero-bg pb-24 overflow-hidden">
     <div class="relative z-10 text-left px-4 sm:px-10 lg:px-20 max-w-3xl flex flex-col items-start pt-28 sm:pt-36">
-  
+            
+            <!-- Small Pre-headline pill -->
+            <div class="text-lg text-gray-500 max-w-2xl flex items-center justify-start gap-2">
+            <span class="w-12 h-px bg-turquoise"></span> 
+             Premium Purification Technology
+            </div>
             
             <h2 class="hero-title mb-6 text-white drop-shadow-2xl">
                 Safe, Clean and<br/>
@@ -222,7 +250,7 @@
             <div class="flex flex-col sm:flex-row items-center justify-start gap-4 sm:gap-6 w-full">
                 <!-- Primary CTA -->
                 <button onclick="openGallery()" class="glow-btn border-none outline-none overflow-hidden transform-gpu px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-ocean to-turquoise text-white rounded-full font-bold text-base sm:text-lg uppercase tracking-wider transition-all hover:-translate-y-1 w-full sm:w-auto shadow-lg shadow-turquoise/40 flex justify-center items-center">
-                    Check Our Products And Services
+                    Check Our Products
                 </button>
                 
                 <!-- Secondary CTA -->
@@ -239,7 +267,7 @@
     <section id="packages" class="py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-black text-deep mb-4 uppercase tracking-wider">Business Packages</h2>
+                <h2 class="text-4xl md:text-5xl font-black text-deep mb-4 uppercase tracking-wider">Our Packages</h2>
                 <p class="text-lg text-gray-500 max-w-2xl mx-auto flex items-center justify-center gap-2">
                     <span class="w-12 h-px bg-turquoise"></span> 
                     Complete turnkey solutions to start your business
@@ -247,50 +275,67 @@
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Package 1 -->
-                <div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col text-center">
-                    <h3 class="text-2xl font-bold text-[#0c2340] mb-2 uppercase tracking-wide">Mineral/ High PH Water</h3>
-                    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Starter Package Inquiry'" class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors">Inquire Now</button>
+                <!-- Card 1: Mineral / High pH Water -->
+                <div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col cursor-pointer" onclick="openPackageModal('mineral')">
+                    <h3 class="text-2xl font-bold text-[#0c2340] mb-2 uppercase tracking-wide text-center">Mineral / High pH Water</h3>
+                    <div class="flex-1"></div>
+                    <button onclick="event.stopPropagation(); openPackageModal('mineral')" class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors mt-6">Inquire Now</button>
                 </div>
-                <!-- Package 2 -->
-                <div class="bg-[#0c2340] text-white rounded-3xl p-8 border border-ocean transform md:-translate-y-4 shadow-[0_20px_50px_-12px_rgba(12,35,64,0.5)] relative flex flex-col group text-center">
-                    <h3 class="text-2xl font-bold mb-2 uppercase tracking-wide text-white mt-2">Reverse Osmosis - Purified</h3>
-                    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Pro Mineral Package Inquiry'" class="w-full py-4 rounded-xl bg-gradient-to-r from-turquoise to-[#00a8cc] text-white font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg shadow-turquoise/20">Inquire Now</button>
+                <!-- Card 2: Reverse Osmosis - Purified -->
+                <div class="bg-[#0c2340] text-white rounded-3xl p-8 border border-ocean transform md:-translate-y-4 shadow-[0_20px_50px_-12px_rgba(12,35,64,0.5)] relative flex flex-col group cursor-pointer" onclick="openPackageModal('ro')">
+                    <h3 class="text-2xl font-bold mb-2 uppercase tracking-wide text-white text-center">Reverse Osmosis - Purified</h3>
+                    <div class="flex-1"></div>
+                    <button onclick="event.stopPropagation(); openPackageModal('ro')" class="w-full py-4 rounded-xl bg-gradient-to-r from-turquoise to-[#00a8cc] text-white font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg shadow-turquoise/20 mt-6">Inquire Now</button>
                 </div>
-                <!-- Package 3 -->
-                <div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col text-center">
-                    <h3 class="text-2xl font-bold text-[#0c2340] mb-2 uppercase tracking-wide">Combination packages</h3>
-                    <p class="text-sm text-[#0c2340] mb-6">2-N-1, 3-N-1.</p>
-                    <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Complete 3-in-1 Package Inquiry'" class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors">Inquire Now</button>
+                <!-- Card 3: Combination Packages -->
+                <div class="bg-[#e1e2e9] rounded-3xl p-8 border border-gray-100 hover:border-[#0c2340] transition-colors group flex flex-col cursor-pointer" onclick="openPackageModal('combo')">
+                    <h3 class="text-2xl font-bold text-[#0c2340] mb-2 uppercase tracking-wide text-center">Combination Packages</h3>
+                    <p class="text-sm text-[#0c2340] mb-2 text-center">2-N-1, 3-N-1.</p>
+                    <div class="flex-1"></div>
+                    <button onclick="event.stopPropagation(); openPackageModal('combo')" class="w-full py-4 rounded-xl border border-ocean text-ocean font-bold uppercase tracking-wide hover:bg-ocean hover:text-white transition-colors mt-6">Inquire Now</button>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Package Tiers Modal -->
+    <div id="package-modal" class="fixed inset-0 z-[110] flex items-center justify-center bg-deep/80 backdrop-blur-sm p-4 sm:p-6" onclick="closePackageModal(event)">
+        <div class="package-modal-content bg-white w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closePackageModal()" class="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-md p-2 rounded-full text-deep hover:bg-gray-100 transition shadow-sm">
+                <i data-feather="x" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </button>
+            <div class="p-6 sm:p-10">
+                <h2 id="package-modal-title" class="text-2xl sm:text-3xl font-black text-deep mb-8 uppercase tracking-wide pr-10"></h2>
+                <div id="package-modal-groups" class="space-y-8"></div>
+                <button id="package-modal-inquire" class="w-full py-4 rounded-xl bg-gradient-to-r from-ocean to-turquoise text-white font-bold uppercase tracking-wide mt-10 hover:opacity-90 transition-opacity shadow-lg shadow-turquoise/20">Inquire Now</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Why Us Section -->
     <section id="why-us" class="py-24 bg-gray-50 border-[0px]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col lg:flex-row gap-16 items-center pt-[6px] pl-[17px]">
                 <div class="flex-1 space-y-8">
-                    <div class="inline-block px-4 py-1.5 text-turquoise text-xs font-bold tracking-widest uppercase">
+                    <div class="inline-block px-4 py-1.5 rounded-full border border-turquoise/30 bg-turquoise/10 text-turquoise text-xs font-bold tracking-widest uppercase">
                         Why Choose Pearls Water
                     </div>
                     <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-deep leading-[1.1] uppercase tracking-wide">
                         Engineered for <br/>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-ocean to-turquoise">Durability & Quality</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-ocean to-turquoise">Purity & Durability</span>
                     </h2>
                     <p class="text-lg text-gray-600 leading-relaxed max-w-lg">
-                        We just don't sell water filters, we design and create low capacity to high-volume production capacity and adaptable design with competitive result.
+                        We don't just sell water filters; we build resilient, high-capacity water systems designed to thrive in the demanding conditions of the Philippines.
                     </p>
-                    <h3 class="text-lg font-bold text-deep mb-4">After-sales Support:</h3>
+                    
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-4">
                         <div class="flex items-start gap-4">
                             <div class="p-3 bg-white rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-100 text-ocean flex-shrink-0">
                                 <i data-feather="shield" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-deep mb-2">After-sales Technician</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Stand by for prompt servicing.</p>
+                                <h4 class="font-bold text-deep mb-2">Premium Parts</h4>
+                                <p class="text-sm text-gray-500 leading-relaxed">Sourced globally to ensure maximum lifespan and minimal maintenance down-time.</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -298,15 +343,15 @@
                                 <i data-feather="tool" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-deep mb-2">After-sales Service Staff</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Receives servicing concerns and orders.</p>
+                                <h4 class="font-bold text-deep mb-2">Expert Support</h4>
+                                <p class="text-sm text-gray-500 leading-relaxed">Our technicians are always on standby for rapid onsite installation and servicing.</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="flex-1 w-full lg:w-auto relative group">
                     <div class="absolute inset-0 bg-gradient-to-tr from-turquoise/20 to-ocean/20 rounded-[2.5rem] transform rotate-3 scale-105 transition-transform duration-700 group-hover:rotate-6"></div>
-                    <img src="/arns.jpg" alt="Water System Technology" class="relative rounded-[2.5rem] object-cover w-full h-[400px] lg:h-[500px] shadow-2xl z-10 border-4 border-white transition-transform duration-700 group-hover:scale-[1.01]">
+                    <img src="/4-m.jpg" alt="Water System Technology" class="relative rounded-[2.5rem] object-cover w-full h-[400px] lg:h-[500px] shadow-2xl z-10 border-4 border-white transition-transform duration-700 group-hover:scale-[1.01]">
                 </div>
             </div>
         </div>
@@ -874,6 +919,83 @@ function goToPage(page) {
             document.getElementById('details-modal').classList.remove('open');
         }
 
+        // Business Package Tiers Data
+        const packageTiers = {
+            mineral: {
+                title: "Mineral / High pH Water",
+                groups: [
+                    { name: null, items: ["Regular", "Premium", "Ultrafine"] }
+                ],
+                subject: "Mineral / High pH Water Package Inquiry"
+            },
+            ro: {
+                title: "Reverse Osmosis - Purified",
+                groups: [
+                    { name: "Single", items: ["Special Purified", "Deluxe", "Economy", "Premium", "Executive"] },
+                    { name: "Double", items: ["Special Purified", "Deluxe", "Economy", "Premium", "Executive"] },
+                    { name: "Triple", items: ["Special Purified", "Deluxe", "Economy", "Premium", "Executive"] },
+                    { name: "Quadruple", items: ["Special Purified", "Deluxe", "Economy", "Premium", "Executive"] }
+                ],
+                subject: "Reverse Osmosis - Purified Package Inquiry"
+            },
+            combo: {
+                title: "Combination Packages",
+                groups: [
+                    { name: "2-N-1 Single", items: ["Special Basic", "Deluxe", "Economy", "Premium", "Executive"] },
+                    { name: "3-N-1 Single", items: ["Special Basic", "Deluxe", "Economy", "Premium", "Executive"] },
+                    { name: "3-N-1 Double", items: ["Special Basic", "Deluxe", "Economy", "Premium", "Executive"] }
+                ],
+                subject: "Combination Package Inquiry"
+            }
+        };
+
+        const packageModal = document.getElementById('package-modal');
+        const packageModalTitle = document.getElementById('package-modal-title');
+        const packageModalGroups = document.getElementById('package-modal-groups');
+        const packageModalInquire = document.getElementById('package-modal-inquire');
+
+        function openPackageModal(key) {
+            const pkg = packageTiers[key];
+            if (!pkg) return;
+
+            packageModalTitle.innerText = pkg.title;
+            packageModalGroups.innerHTML = '';
+
+            pkg.groups.forEach(group => {
+                const groupEl = document.createElement('div');
+                if (group.name) {
+                    const groupLabel = document.createElement('h4');
+                    groupLabel.className = "text-sm font-bold text-turquoise uppercase tracking-widest mb-3";
+                    groupLabel.innerText = group.name;
+                    groupEl.appendChild(groupLabel);
+                }
+                const chipsWrap = document.createElement('div');
+                chipsWrap.className = "flex flex-wrap gap-3";
+                group.items.forEach(item => {
+                    const chip = document.createElement('span');
+                    chip.className = "tier-chip px-4 py-2.5 rounded-xl bg-[#e1e2e9] text-[#0c2340] font-semibold text-sm";
+                    chip.innerText = item;
+                    chipsWrap.appendChild(chip);
+                });
+                groupEl.appendChild(chipsWrap);
+                packageModalGroups.appendChild(groupEl);
+            });
+
+            packageModalInquire.onclick = () => {
+                window.location.href = `mailto:info@pearlswater.com?subject=${encodeURIComponent(pkg.subject)}`;
+            };
+
+            packageModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            feather.replace();
+        }
+
+        function closePackageModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            packageModal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
         function filterCategory(category, btnElement) {
             currentCategory = category;
             currentSubCategory = 'All';
@@ -960,6 +1082,11 @@ function goToPage(page) {
             const detailsModal = document.getElementById('details-modal');
             if (detailsModal.classList.contains('open')) {
                 closeDetails();
+                return;
+            }
+
+            if (packageModal.classList.contains('open')) {
+                closePackageModal();
                 return;
             }
 
