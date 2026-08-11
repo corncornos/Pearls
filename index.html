@@ -147,6 +147,26 @@
             border-bottom-color: #00D4FF;
             color: #00D4FF;
         }
+
+        /* Orientation Modal Transitions */
+        #orientation-modal {
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        #orientation-modal.open {
+            opacity: 1; visibility: visible;
+        }
+        #orientation-modal:not(.open) {
+            opacity: 0; visibility: hidden;
+        }
+        #orientation-modal.open .orientation-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .orientation-content {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+            transform: scale(0.94);
+            opacity: 0;
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
@@ -472,7 +492,7 @@
                  The rapid growth for clean and safe drinking water need is substantial. Our company provides quality materials and services with fast income returns.
              </p>
              <div class="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
-                 <button onclick="window.location.href='mailto:info@pearlswater.com?subject=Franchise/Business Opportunity'" class="px-8 py-4 sm:py-5 bg-white text-[#0c2340] font-bold rounded-full uppercase tracking-wider hover:bg-gray-100 transition-transform hover:-translate-y-1 shadow-[0_10px_30px_-10px_rgba(255,255,255,0.3)]">
+                 <button onclick="openOrientationModal()" class="px-8 py-4 sm:py-5 bg-white text-[#0c2340] font-bold rounded-full uppercase tracking-wider hover:bg-gray-100 transition-transform hover:-translate-y-1 shadow-[0_10px_30px_-10px_rgba(255,255,255,0.3)]">
                      Request for a one on one educational business orientation!
                  </button>
     
@@ -567,6 +587,64 @@
             </div>
         </div>
     </footer>
+
+    <!-- Orientation Request Modal -->
+    <div id="orientation-modal" class="fixed inset-0 z-[120] flex items-center justify-center bg-deep/80 backdrop-blur-sm p-4 sm:p-6" onclick="closeOrientationModal(event)">
+        <div class="orientation-content bg-white w-full max-w-lg max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closeOrientationModal()" class="absolute top-4 right-4 z-10 bg-gray-50 p-2 rounded-full text-deep hover:bg-gray-100 transition shadow-sm" aria-label="Close">
+                <i data-feather="x" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </button>
+
+            <div class="p-6 sm:p-10">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="w-8 h-px bg-turquoise"></span>
+                    <span class="text-xs font-bold uppercase tracking-widest text-turquoise">Free Consultation</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-deep mb-2 uppercase tracking-wide leading-tight">Schedule Your Free Business Orientation</h2>
+                <p class="text-sm text-gray-500 mb-8 leading-relaxed">Fill out the form below and our team will reach out to confirm your session.</p>
+
+                <form id="orientation-form" onsubmit="submitOrientationForm(event)" class="space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label for="orient-firstname" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">First Name</label>
+                            <input type="text" id="orient-firstname" name="firstName" required
+                                class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
+                        </div>
+                        <div>
+                            <label for="orient-lastname" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Last Name</label>
+                            <input type="text" id="orient-lastname" name="lastName" required
+                                class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="orient-contact" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Contact No.</label>
+                        <input type="tel" id="orient-contact" name="contactNo" required placeholder="09XX XXX XXXX"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
+                    </div>
+
+                    <div>
+                        <label for="orient-schedule" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Schedule for Orientation</label>
+                        <input type="datetime-local" id="orient-schedule" name="schedule" required
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
+                    </div>
+
+                    <div>
+                        <label for="orient-message" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Message</label>
+                        <textarea id="orient-message" name="message" rows="4" placeholder="Tell us more about your business goals or questions..."
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all resize-none"></textarea>
+                    </div>
+
+                    <div id="orient-status" class="hidden text-sm font-medium rounded-xl px-4 py-3"></div>
+
+                    <button type="submit" id="orient-submit-btn"
+                        class="w-full py-4 rounded-xl bg-gradient-to-r from-ocean to-turquoise text-white font-bold uppercase tracking-wide hover:opacity-90 transition-opacity shadow-lg shadow-turquoise/20 flex items-center justify-center gap-2">
+                        <span id="orient-submit-label">Submit Request</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Product Gallery Modal (Shopping App Style) -->
     <!-- Fixed over the entire screen with a high z-index -->
@@ -1028,6 +1106,12 @@ function goToPage(page) {
         document.addEventListener('keydown', (e) => {
             if (e.key !== 'Escape') return;
 
+            const orientationModal = document.getElementById('orientation-modal');
+            if (orientationModal.classList.contains('open')) {
+                closeOrientationModal();
+                return;
+            }
+
             const detailsModal = document.getElementById('details-modal');
             if (detailsModal.classList.contains('open')) {
                 closeDetails();
@@ -1038,6 +1122,79 @@ function goToPage(page) {
                 closeGallery();
             }
         });
+
+        // ---- Orientation Request Form (submits to Google Sheets via Apps Script) ----
+
+        // Replace this with your deployed Google Apps Script Web App URL.
+        // See the deployment instructions provided alongside this file.
+        const ORIENTATION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyaoUKaExbsAs646WeEkpY5ymtmS0P4MjRBDdWm5CGsp-XXKjWvG8WIhORtrOED8BXQ/exec";
+
+        function openOrientationModal() {
+            document.getElementById('orientation-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            feather.replace();
+        }
+
+        function closeOrientationModal(event) {
+            if (event && event.target !== event.currentTarget) return; // don't close on inner clicks
+            document.getElementById('orientation-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function setOrientationStatus(message, type) {
+            const statusEl = document.getElementById('orient-status');
+            statusEl.textContent = message;
+            statusEl.classList.remove('hidden', 'bg-green-50', 'text-green-700', 'bg-red-50', 'text-red-700');
+            if (type === 'success') {
+                statusEl.classList.add('bg-green-50', 'text-green-700');
+            } else if (type === 'error') {
+                statusEl.classList.add('bg-red-50', 'text-red-700');
+            }
+        }
+
+        function submitOrientationForm(event) {
+            event.preventDefault();
+
+            if (ORIENTATION_SCRIPT_URL.indexOf('PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') !== -1) {
+                setOrientationStatus('Form is not connected yet. Please add your Google Apps Script Web App URL in the code (ORIENTATION_SCRIPT_URL).', 'error');
+                return;
+            }
+
+            const form = document.getElementById('orientation-form');
+            const submitBtn = document.getElementById('orient-submit-btn');
+            const submitLabel = document.getElementById('orient-submit-label');
+
+            const payload = new FormData();
+            payload.append('firstName', document.getElementById('orient-firstname').value.trim());
+            payload.append('lastName', document.getElementById('orient-lastname').value.trim());
+            payload.append('contactNo', document.getElementById('orient-contact').value.trim());
+            payload.append('schedule', document.getElementById('orient-schedule').value);
+            payload.append('message', document.getElementById('orient-message').value.trim());
+
+            submitBtn.disabled = true;
+            submitLabel.textContent = 'Submitting...';
+            setOrientationStatus('', null);
+            document.getElementById('orient-status').classList.add('hidden');
+
+            // Apps Script Web Apps don't return CORS headers by default, so we
+            // fire the request in no-cors mode. We can't read the response body,
+            // but the row will still be appended to the Sheet on the server side.
+            fetch(ORIENTATION_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: payload
+            }).then(() => {
+                setOrientationStatus('Thank you! Your orientation request has been received. Our team will contact you shortly.', 'success');
+                form.reset();
+                submitBtn.disabled = false;
+                submitLabel.textContent = 'Submit Request';
+                setTimeout(() => { closeOrientationModal(); }, 2200);
+            }).catch(() => {
+                setOrientationStatus('Something went wrong sending your request. Please try again or email us directly.', 'error');
+                submitBtn.disabled = false;
+                submitLabel.textContent = 'Submit Request';
+            });
+        }
 
         // Enable mouse-drag scrolling and vertical-wheel-to-horizontal-scroll
         // on any row with the .drag-scroll class (the category & sub-category tab bars).
