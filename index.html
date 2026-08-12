@@ -105,6 +105,15 @@
             opacity: 1;
         }
 
+        /* Water Related Products Modal Transitions */
+#water-related-modal {
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    opacity: 0; visibility: hidden;
+}
+#water-related-modal.open {
+    opacity: 1; visibility: visible;
+}
+
         /* Product Details Modal Transitions */
         #details-modal { 
             transition: opacity 0.4s ease, visibility 0.4s ease; 
@@ -190,7 +199,7 @@
                 <button onclick="openGallery()" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none whitespace-nowrap">
                     Catalog
                 </button>
-                <button onclick="openGalleryToCategory('Water Related Products')" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none whitespace-nowrap">
+                <button onclick="openWaterRelatedModal()" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none whitespace-nowrap">
                     Other Water Related Product
                 </button>
                 <button onclick="openOrientationModal()" class="ml-2 px-5 py-2.5 bg-white text-deep rounded-full font-bold text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none whitespace-nowrap">
@@ -217,7 +226,7 @@
         </button>
         <a href="#packages" onclick="toggleMobileMenu()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Packages</a>
                 <button onclick="toggleMobileMenu(); openGallery()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Catalog</button>
-        <button onclick="toggleMobileMenu(); openGalleryToCategory('Water Related Products')" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Other Related Water Products</button>
+        <button onclick="toggleMobileMenu(); openWaterRelatedModal()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Other Related Water Products</button>
 
         <button onclick="toggleMobileMenu(); openOrientationModal()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Contact</button>
     </div>
@@ -755,6 +764,32 @@
         </div>
     </div>
 
+    <!-- Other Water Related Products Modal (separate showcase, not the catalog) -->
+<div id="water-related-modal" class="fixed inset-0 z-[105] flex flex-col bg-[#123A66] backdrop-blur-3xl">
+    <div class="bg-[#123A66]/95 border-b border-white/10 pt-6 pb-5 px-4 sm:px-8 sticky top-0 z-20 shadow-sm">
+        <div class="max-w-5xl mx-auto flex items-center justify-between gap-4">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-widest text-turquoise">Beyond Water Systems</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-wide mt-1">Other Water Related Products</h2>
+            </div>
+            <button onclick="closeWaterRelatedModal()" class="text-white hover:text-turquoise p-2 rounded-full hover:bg-white/10 transition-colors flex-shrink-0">
+                <i data-feather="x" class="w-6 h-6 md:w-8 md:h-8"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-4 sm:p-8">
+        <div class="max-w-5xl mx-auto">
+            <p class="text-white/70 text-sm sm:text-base mb-8 max-w-2xl">
+                Complementary equipment and business ideas that pair naturally with a water refilling station — extra income streams from the same foot traffic.
+            </p>
+            <div id="water-related-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Cards injected here via JS -->
+            </div>
+        </div>
+    </div>
+</div>
+
     <!-- Product Details Modal -->
     <div id="details-modal" class="fixed inset-0 z-[110] flex items-center justify-center bg-deep/80 backdrop-blur-sm p-4 sm:p-6" onclick="closeDetails(event)">
         <div class="details-content bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl flex flex-col md:flex-row relative" onclick="event.stopPropagation()">
@@ -1152,6 +1187,37 @@ function goToPage(page) {
                 filterCategory(category, tabBtn);
             }
         }
+
+            // ---- Other Water Related Products Modal ----
+function renderWaterRelatedProducts() {
+    const grid = document.getElementById('water-related-grid');
+    const items = products.filter(p => p.category === 'Water Related Products');
+    grid.innerHTML = items.map(p => `
+        <div class="product-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer" onclick="showProductDetails(${p.id}, event)">
+            <div class="relative pt-[65%] overflow-hidden bg-gray-50">
+                <img src="${p.images[0]}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1544485547-5d1e67c87c7e?auto=format&fit=crop&q=80&w=600'" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105">
+            </div>
+            <div class="p-5 md:p-6 flex-1 flex flex-col bg-white">
+                <h3 class="text-deep font-bold text-lg leading-tight mb-2 group-hover:text-turquoise transition-colors">${p.name}</h3>
+                <p class="text-sm text-gray-500 leading-relaxed mb-4 flex-1">${p.desc}</p>
+                <span class="text-lg font-black text-deep">${p.price}</span>
+            </div>
+        </div>
+    `).join('');
+    feather.replace();
+}
+
+function openWaterRelatedModal() {
+    renderWaterRelatedProducts();
+    document.getElementById('water-related-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    feather.replace();
+}
+
+function closeWaterRelatedModal() {
+    document.getElementById('water-related-modal').classList.remove('open');
+    document.body.style.overflow = '';
+}
         
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -1180,6 +1246,12 @@ function goToPage(page) {
                 closeOrientationModal();
                 return;
             }
+
+            const waterRelatedModal = document.getElementById('water-related-modal');
+if (waterRelatedModal.classList.contains('open')) {
+    closeWaterRelatedModal();
+    return;
+}
 
             const detailsModal = document.getElementById('details-modal');
             if (detailsModal.classList.contains('open')) {
