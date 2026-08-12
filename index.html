@@ -11,10 +11,10 @@
             theme: {
                 extend: {
                     colors: {
-                        deep: '#0A1428',
-                        ocean: '#0c2340',
+                        deep: '#123A66',
+                        ocean: '#1C6FB5',
                         turquoise: '#00D4FF',
-                        accent: '#0d3b66'
+                        accent: '#2E86DE'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -30,14 +30,14 @@
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #cbd7e5; 
-            color: #0A1428; 
+            color: #123A66; 
             margin: 0; 
             padding: 0;
             overflow-x: hidden;
         }
         /* Modern UI Improvements */
         .glass-panel {
-            background: rgba(10, 20, 40, 0.4);
+            background: rgba(28, 111, 181, 0.45);
             backdrop-filter: blur(20);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -45,8 +45,8 @@
         }
         
  .hero-bg {
-    background-image: linear-gradient(to right, rgba(10, 20, 40, 0.85) 0%, rgba(10, 20, 40, 0.3) 100%), url('/public/hero-section-sample.jpeg');
-    background-color: #0c2340;
+    background-image: linear-gradient(to right, rgba(28, 111, 181, 0.85) 0%, rgba(28, 111, 181, 0.3) 100%), url('/public/hero-section-sample.jpeg');
+    background-color: #1C6FB5;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -127,7 +127,7 @@
         /* Product Card */
         .product-card {
             background: #ffffff;
-            border: 1px solid rgba(10, 20, 40, 0.05);
+            border: 1px solid rgba(28, 111, 181, 0.08);
             border-radius: 24px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
@@ -279,7 +279,7 @@
             <i data-feather="droplet" class="w-7 h-7"></i>
         </div>
         <h3 class="text-xl sm:text-2xl font-black text-deep uppercase tracking-tight leading-tight">Reverse Osmosis</h3>
-        <p class="text-sm text-gray-400 font-medium mt-1">Purified</p>
+        <p class="text-sm text-gray-400 font-medium mt-1">— Purified</p>
     </div>
     <div class="w-full h-px bg-gray-100 mb-6"></div>
     <div class="flex items-start gap-3 mb-7">
@@ -324,8 +324,8 @@
 </div>
 
 <!-- Card 2: Mineral / High pH Water (Most Popular) -->
-<div class="bg-gradient-to-b from-[#0c2340] to-[#081a30] text-white rounded-3xl p-8 sm:p-10 border border-white/10 transform md:-translate-y-4 shadow-[0_25px_60px_-15px_rgba(0,212,255,0.3)] relative flex flex-col group">
-    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-turquoise text-[#0c2340] text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg shadow-turquoise/40 whitespace-nowrap">
+<div class="bg-gradient-to-b from-[#1C6FB5] to-[#123A66] text-white rounded-3xl p-8 sm:p-10 border border-white/10 transform md:-translate-y-4 shadow-[0_25px_60px_-15px_rgba(0,212,255,0.3)] relative flex flex-col group">
+    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-turquoise text-[#123A66] text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg shadow-turquoise/40 whitespace-nowrap">
         ★ Most Popular
     </div>
     <div class="flex flex-col items-center text-center mb-6 pt-3">
@@ -333,7 +333,7 @@
             <i data-feather="droplet" class="w-7 h-7"></i>
         </div>
         <h3 class="text-xl sm:text-2xl font-black uppercase tracking-tight leading-tight">Mineral / High pH Water</h3>
-        <p class="text-sm text-turquoise/80 font-medium mt-1">Alkaline & Energized</p>
+        <p class="text-sm text-turquoise/80 font-medium mt-1">— Alkaline & Energized</p>
     </div>
     <div class="w-full h-px bg-white/10 mb-6"></div>
     <div class="flex items-start gap-3 mb-7">
@@ -359,7 +359,7 @@
             <i data-feather="layers" class="w-7 h-7"></i>
         </div>
         <h3 class="text-xl sm:text-2xl font-black text-deep uppercase tracking-tight leading-tight">Combination Packages</h3>
-        <p class="text-sm text-gray-400 font-medium mt-1">Best of Both Worlds</p>
+        <p class="text-sm text-gray-400 font-medium mt-1">— Best of Both Worlds</p>
     </div>
     <div class="w-full h-px bg-gray-100 mb-6"></div>
     <div class="flex items-start gap-3 mb-7">
@@ -525,7 +525,7 @@
     </section>
 
     <!-- Opportunity Section -->
-    <section id="opportunity" class="py-32 relative overflow-hidden bg-[#0c2340]">
+    <section id="opportunity" class="py-32 relative overflow-hidden bg-[#1C6FB5]">
         <div class="absolute inset-0 z-0 opacity-20 mix-blend-overlay">
             <img src="/4-m.jpg" alt="Background" class="w-full h-full object-cover pt-[0px] pl-[1px]">
         </div>
@@ -541,7 +541,7 @@
                  The rapid growth for clean and safe drinking water need is substantial. Our company provides quality materials and services with fast income returns.
              </p>
              <div class="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
-                 <button onclick="openOrientationModal()" class="px-8 py-4 sm:py-5 bg-white text-[#0c2340] font-bold rounded-full uppercase tracking-wider hover:bg-gray-100 transition-transform hover:-translate-y-1 shadow-[0_10px_30px_-10px_rgba(255,255,255,0.3)]">
+                 <button onclick="openOrientationModal()" class="px-8 py-4 sm:py-5 bg-white text-[#1C6FB5] font-bold rounded-full uppercase tracking-wider hover:bg-gray-100 transition-transform hover:-translate-y-1 shadow-[0_10px_30px_-10px_rgba(255,255,255,0.3)]">
                      Request for a one on one educational business orientation!
                  </button>
     
@@ -550,7 +550,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-[#050f1f] text-gray-300 pt-20 pb-10 border-t border-white/5 relative z-10">
+    <footer class="bg-[#0F2E52] text-gray-300 pt-20 pb-10 border-t border-white/5 relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
                 <!-- Brand (Span 4) -->
@@ -697,10 +697,10 @@
 
     <!-- Product Gallery Modal (Shopping App Style) -->
     <!-- Fixed over the entire screen with a high z-index -->
-    <div id="product-modal" class="fixed inset-0 z-[100] flex flex-col bg-[#0c2340] backdrop-blur-3xl">
+    <div id="product-modal" class="fixed inset-0 z-[100] flex flex-col bg-[#1C6FB5] backdrop-blur-3xl">
         
         <!-- Modal Header / Search Area -->
-    <div class="bg-[#0c2340]/95 border-b border-white/10 pt-6 pb-4 px-4 sticky top-0 z-20 shadow-sm">
+    <div class="bg-[#1C6FB5]/95 border-b border-white/10 pt-6 pb-4 px-4 sticky top-0 z-20 shadow-sm">
             <div class="max-w-7xl mx-auto flex items-center gap-4">
                 
                 <!-- Close Button -->
@@ -802,44 +802,44 @@
         let products = [
             // Category: Purified
             { 
-                id: 1, name: "Single Membrane System", category: "Purified Water Systems", price: "PHP25,000", 
+                id: 1, name: "Single Membrane System", category: "Purified Water Systems", price: "₱25,000", 
                 desc: "Reliable single membrane purification for entry-level stations.", 
                 images: ["/regenerated_image_1777348959001.png", "https://images.unsplash.com/photo-1523413651479-59cb1f1f619b?auto=format&fit=crop&q=80&w=600"] 
             },
             { 
-                id: 2, name: "Double Membrane System", category: "Purified Water Systems", price: "PHP45,000", 
+                id: 2, name: "Double Membrane System", category: "Purified Water Systems", price: "₱45,000", 
                 desc: "Dual RO filtration strength for medium to high volume operations.", 
                 images: ["/regenerated_image_1777348429470.png", "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&q=80&w=600"] 
             },
             { 
-                id: 3, name: "Triple Membrane (Auto)", category: "Purified Water Systems", price: "PHP68,000", 
+                id: 3, name: "Triple Membrane (Auto)", category: "Purified Water Systems", price: "₱68,000", 
                 desc: "Automated high-capacity triple membrane system for commercial use.", 
                 images: ["/regenerated_image_1777348377790.png", "https://images.unsplash.com/photo-1550508821-654a1a3e6af2?auto=format&fit=crop&q=80&w=600"] 
             },
             { 
-                id: 4, name: "Quadruple Membrane", category: "Purified Water Systems", price: "PHP90,000", 
+                id: 4, name: "Quadruple Membrane", category: "Purified Water Systems", price: "₱90,000", 
                 desc: "Industrial-grade heavy duty quadruple membrane setup.", 
                 images: ["/regenerated_image_1777348345639.png", "https://images.unsplash.com/photo-1584486665790-2e45da27e9ff?auto=format&fit=crop&q=80&w=600"] 
             },
             
             // Category: Mineral & High pH
             { 
-                id: 5, name: "Mineral Water System", category: "Mineral & High pH", price: "PHP35,000", 
+                id: 5, name: "Mineral Water System", category: "Mineral & High pH", price: "₱35,000", 
                 desc: "Remineralization system to add essential minerals back into purified water.", 
                 images: ["/regenerated_image_1777348342303.png", "https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&q=80&w=600"] 
             },
             { 
-                id: 6, name: "High pH Alkaline Unit", category: "Mineral & High pH", price: "PHP42,000", 
+                id: 6, name: "High pH Alkaline Unit", category: "Mineral & High pH", price: "₱42,000", 
                 desc: "Boosts your water pH securely for excellent alkaline health benefits.", 
                 images: ["/regenerated_image_1777352616332.png", "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"] 
             },
             { 
-                id: 7, name: "Ultrafine Mineral + Alkaline", category: "Mineral & High pH", price: "PHP55,000", 
+                id: 7, name: "Ultrafine Mineral + Alkaline", category: "Mineral & High pH", price: "₱55,000", 
                 desc: "The ultimate 2-in-1 combo system providing both mineral and alkaline outputs.", 
                 images: ["https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1606550262100-305141e5dc42?auto=format&fit=crop&q=80&w=600"] 
             },
             { 
-                id: 8, name: "3-in-1 Complete Station", category: "Mineral & High pH", price: "PHP85,000", 
+                id: 8, name: "3-in-1 Complete Station", category: "Mineral & High pH", price: "₱85,000", 
                 desc: "Dispenses Purified, Mineral, and Alkaline from one integrated powerhouse.", 
                 images: ["https://images.unsplash.com/photo-1606550262100-305141e5dc42?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1564419320461-6870880221ad?auto=format&fit=crop&q=80&w=600"] 
             },
@@ -851,12 +851,12 @@
                 images: ["https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600"] 
             },
             { 
-                id: 19, name: "Membrane Replacement Labor", category: "Services", price: "PHP1,500", 
+                id: 19, name: "Membrane Replacement Labor", category: "Services", price: "₱1,500", 
                 desc: "Professional on-site installation and tuning service.", 
                 images: ["https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"] 
             },
             { 
-                id: 20, name: "Staff Re-training Course", category: "Services", price: "PHP3,000", 
+                id: 20, name: "Staff Re-training Course", category: "Services", price: "₱3,000", 
                 desc: "Comprehensive on-site operational and maintenance training for your staff.", 
                 images: ["https://plus.unsplash.com/premium_photo-1661631481102-127e9f3b1add?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1582216503947-6bcf49457637?auto=format&fit=crop&q=80&w=600"] 
             },
@@ -1176,7 +1176,7 @@ function goToPage(page) {
 
         // Replace this with your deployed Google Apps Script Web App URL.
         // See the deployment instructions provided alongside this file.
-        const ORIENTATION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyaoUKaExbsAs646WeEkpY5ymtmS0P4MjRBDdWm5CGsp-XXKjWvG8WIhORtrOED8BXQ/exec";
+        const ORIENTATION_SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
         function openOrientationModal(context) {
             const messageField = document.getElementById('orient-message');
