@@ -679,6 +679,24 @@
                     </div>
 
                     <div>
+                        <label class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Products to Inquire</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <label class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-3 text-sm text-deep cursor-pointer hover:border-turquoise transition-all">
+                                <input type="checkbox" name="productsInquiry" value="Water Refilling Station" class="w-4 h-4 accent-turquoise flex-shrink-0">
+                                <span>Water Refilling Station</span>
+                            </label>
+                            <label class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-3 text-sm text-deep cursor-pointer hover:border-turquoise transition-all">
+                                <input type="checkbox" name="productsInquiry" value="Laundry Business" class="w-4 h-4 accent-turquoise flex-shrink-0">
+                                <span>Laundry Business</span>
+                            </label>
+                            <label class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-3 text-sm text-deep cursor-pointer hover:border-turquoise transition-all">
+                                <input type="checkbox" name="productsInquiry" value="Ice Maker Machine" class="w-4 h-4 accent-turquoise flex-shrink-0">
+                                <span>Ice Maker Machine</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
                         <label for="orient-schedule" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Schedule for Orientation</label>
                         <input type="datetime-local" id="orient-schedule" name="schedule" required
                             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
@@ -1309,10 +1327,15 @@ if (waterRelatedModal.classList.contains('open')) {
             const submitBtn = document.getElementById('orient-submit-btn');
             const submitLabel = document.getElementById('orient-submit-label');
 
+            const selectedProducts = Array.from(document.querySelectorAll('input[name="productsInquiry"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+
             const payload = new FormData();
             payload.append('firstName', document.getElementById('orient-firstname').value.trim());
             payload.append('lastName', document.getElementById('orient-lastname').value.trim());
             payload.append('contactNo', document.getElementById('orient-contact').value.trim());
+            payload.append('productsInquiry', selectedProducts);
             payload.append('schedule', document.getElementById('orient-schedule').value);
             payload.append('message', document.getElementById('orient-message').value.trim());
 
