@@ -192,9 +192,9 @@
         <button onclick="openGallery()" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none">
     Catalog
 </button>
-                     <a href="#opportunity" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none">
+                     <button onclick="openGalleryToCategory('Water Related Products')" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none">
                         Other Water Related Product
-                    </a>
+                    </button>
                      <button onclick="openOrientationModal()" class="ml-2 px-5 py-2.5 bg-white text-deep rounded-full font-bold text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none">
                         Contact
                     </button>
@@ -220,7 +220,7 @@
         </button>
         <a href="#packages" onclick="toggleMobileMenu()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Packages</a>
                 <button onclick="toggleMobileMenu(); openGallery()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Catalog</button>
-        <a href="#opportunity" onclick="toggleMobileMenu()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Other Related Water Products</a>
+        <button onclick="toggleMobileMenu(); openGalleryToCategory('Water Related Products')" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Other Related Water Products</button>
 
         <button onclick="toggleMobileMenu(); openOrientationModal()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Contact</button>
     </div>
@@ -723,11 +723,12 @@
             
             <!-- Horizontal Filter Tabs -->
             <div class="max-w-7xl mx-auto mt-4 sm:mt-6 flex overflow-x-auto hide-scrollbar drag-scroll gap-5 sm:gap-10 border-b border-white/10 px-2 lg:px-8 pb-1">
-                <button class="tab-btn active pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-turquoise flex-shrink-0 transition-colors" onclick="filterCategory('All', this)">All Products</button>
-                <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-white/50 hover:text-turquoise flex-shrink-0 transition-colors" onclick="filterCategory('Purified Water Systems', this)">Purified</button>
-                <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-white/50 hover:text-turquoise flex-shrink-0 transition-colors" onclick="filterCategory('Mineral & High pH', this)">Mineral & High pH</button>
-                <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-white/50 hover:text-turquoise flex-shrink-0 transition-colors" onclick="filterCategory('Consumables', this)">Consumables</button>
-                <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-white/50 hover:text-turquoise flex-shrink-0 transition-colors" onclick="filterCategory('Services', this)">Services</button>
+                <button class="tab-btn active pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-turquoise flex-shrink-0 transition-colors" data-category="All" onclick="filterCategory('All', this)">All Products</button>
+                <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-white/50 hover:text-turquoise flex-shrink-0 transition-colors" data-category="Purified Water Systems" onclick="filterCategory('Purified Water Systems', this)">Purified</button>
+                <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-white/50 hover:text-turquoise flex-shrink-0 transition-colors" data-category="Mineral & High pH" onclick="filterCategory('Mineral & High pH', this)">Mineral & High pH</button>
+                <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-white/50 hover:text-turquoise flex-shrink-0 transition-colors" data-category="Consumables" onclick="filterCategory('Consumables', this)">Consumables</button>
+                <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-white/50 hover:text-turquoise flex-shrink-0 transition-colors" data-category="Water Related Products" onclick="filterCategory('Water Related Products', this)">Water Related Products</button>
+                <button class="tab-btn pb-2 sm:pb-3 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap text-white/50 hover:text-turquoise flex-shrink-0 transition-colors" data-category="Services" onclick="filterCategory('Services', this)">Services</button>
             </div>
 
             <!-- Consumables Sub-Category Tabs (shown only when Consumables is active) -->
@@ -859,6 +860,18 @@
                 id: 20, name: "Staff Re-training Course", category: "Services", price: "₱3,000", 
                 desc: "Comprehensive on-site operational and maintenance training for your staff.", 
                 images: ["https://plus.unsplash.com/premium_photo-1661631481102-127e9f3b1add?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1582216503947-6bcf49457637?auto=format&fit=crop&q=80&w=600"] 
+            },
+
+            // Category: Water Related Products
+            { 
+                id: 200, name: "Ice Maker Machine", category: "Water Related Products", price: "Get Quote", 
+                desc: "Commercial-grade ice maker machine, a natural add-on business alongside your water refilling station — extra income stream, same foot traffic.", 
+                images: ["https://images.unsplash.com/photo-1638513892459-c5b6a5da0ecd?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&q=80&w=600"] 
+            },
+            { 
+                id: 201, name: "Laundry Business Showcase", category: "Water Related Products", price: "Get Quote", 
+                desc: "See how a coin or app-operated laundry setup pairs with a water station for a combined water-and-laundry business — shared space, shared customers, dual income.", 
+                images: ["https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&q=80&w=600"] 
             },
 
             // Category: Consumables -> Wall Hung Filters
@@ -1131,6 +1144,16 @@ function goToPage(page) {
             modal.classList.add('open');
             document.body.style.overflow = 'hidden'; 
             // Small delay to allow CSS grid to render before triggering animations if desired
+        }
+
+        // Opens the catalog modal pre-filtered to a specific top-level category,
+        // e.g. openGalleryToCategory('Water Related Products')
+        function openGalleryToCategory(category) {
+            openGallery();
+            const tabBtn = document.querySelector(`.tab-btn[data-category="${category}"]`);
+            if (tabBtn) {
+                filterCategory(category, tabBtn);
+            }
         }
         
         function toggleMobileMenu() {
