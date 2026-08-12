@@ -172,37 +172,37 @@
 <body class="antialiased min-h-screen flex flex-col">
 
 <!-- Navbar -->
-<div class="fixed top-3 sm:top-5 left-3 right-3 sm:left-6 sm:right-6 lg:left-10 lg:right-10 z-50 flex items-center gap-3 sm:gap-5">
+<div class="fixed top-3 sm:top-5 left-3 sm:left-6 lg:left-10 z-50 flex items-center gap-3 sm:gap-5">
 
-    <!-- Standalone Logo (separated from the pill nav so it can be bigger & stand out) -->
-    <a href="#" onclick="event.preventDefault(); closeGallery(); const m=document.getElementById('mobile-menu'); if(m.classList.contains('opacity-100')) toggleMobileMenu(); window.scrollTo({top:0, behavior:'smooth'});" aria-label="Pearls Water Home" class="flex items-center justify-center flex-shrink-0 h-14 w-14 sm:h-18 sm:w-18 lg:h-20 lg:w-20 cursor-pointer -my-1 sm:-my-1.5">
+    <!-- Standalone Logo (larger, separated from the pill nav) -->
+    <a href="#" onclick="event.preventDefault(); closeGallery(); const m=document.getElementById('mobile-menu'); if(m.classList.contains('opacity-100')) toggleMobileMenu(); window.scrollTo({top:0, behavior:'smooth'});" aria-label="Pearls Water Home" class="flex items-center justify-center flex-shrink-0 h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24 cursor-pointer -my-1 sm:-my-2">
         <img src="/pearls-logo.png" alt="Pearls Water Logo" class="w-full h-full object-contain drop-shadow-[0_4px_14px_rgba(0,0,0,0.5)]" />
     </a>
 
-    <!-- Nav Pill -->
-    <nav class="glass-panel transition-all duration-300 h-14 sm:h-16 rounded-full flex-1 min-w-0">
-        <div class="max-w-7xl mx-auto px-3 sm:px-6 h-full">
-            <div class="flex justify-end items-center h-full">
+    <!-- Nav Pill: shrink-wraps to its content, sits close to the logo -->
+    <nav class="glass-panel transition-all duration-300 h-14 sm:h-16 rounded-full w-fit">
+        <div class="px-4 sm:px-6 h-full">
+            <div class="flex justify-end items-center h-full gap-6 sm:gap-8">
 
                 <!-- Desktop Menu -->
-                <div class="hidden lg:flex items-center justify-end gap-8 flex-shrink-0">
-                    <a href="#packages" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none">
+                <div class="hidden lg:flex items-center gap-8 flex-shrink-0">
+                    <a href="#packages" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none whitespace-nowrap">
                         Business Packages
                     </a>
-                    <button onclick="openGallery()" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none">
+                    <button onclick="openGallery()" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none whitespace-nowrap">
                         Catalog
                     </button>
-                    <button onclick="openGalleryToCategory('Water Related Products')" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none">
+                    <button onclick="openGalleryToCategory('Water Related Products')" class="text-white/80 hover:text-turquoise transition-colors text-sm font-medium focus:outline-none bg-transparent border-none p-0 m-0 leading-none whitespace-nowrap">
                         Other Water Related Product
                     </button>
-                    <button onclick="openOrientationModal()" class="ml-2 px-5 py-2.5 bg-white text-deep rounded-full font-bold text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none">
+                    <button onclick="openOrientationModal()" class="ml-2 px-5 py-2.5 bg-white text-deep rounded-full font-bold text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none whitespace-nowrap">
                         Contact
                     </button>
                 </div>
 
                 <!-- Hamburger Mobile -->
-                <div class="lg:hidden flex items-center justify-end gap-2">
-                    <button onclick="openOrientationModal()" class="px-4 py-2 bg-white text-deep rounded-full font-bold text-xs sm:text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none">
+                <div class="lg:hidden flex items-center gap-2">
+                    <button onclick="openOrientationModal()" class="px-4 py-2 bg-white text-deep rounded-full font-bold text-xs sm:text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none whitespace-nowrap">
                         Contact
                     </button>
                     <button onclick="toggleMobileMenu()" class="text-white hover:text-turquoise focus:outline-none p-2" aria-label="Toggle Menu">
@@ -213,7 +213,6 @@
         </div>
     </nav>
 </div>
-
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu" class="fixed inset-0 bg-white/98 backdrop-blur-xl z-[60] flex flex-col items-center justify-center space-y-8 opacity-0 pointer-events-none transition-all duration-300">
         <button onclick="toggleMobileMenu()" class="absolute top-4 right-4 sm:top-6 sm:right-6 text-deep hover:text-turquoise focus:outline-none p-2" aria-label="Close Menu">
