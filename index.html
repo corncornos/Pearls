@@ -257,7 +257,7 @@
                 </button>
                 
                 <!-- Secondary CTA -->
-                <button onclick="openOrientationModal()" class="px-8 sm:px-10 py-4 sm:py-5 bg-white/5 backdrop-blur-sm border-2 border-white/30 hover:border-white hover:bg-white hover:text-ocean text-white rounded-full font-bold text-base sm:text-lg uppercase tracking-wider transition-all w-full sm:w-auto hover:-translate-y-1 shadow-lg flex justify-center items-center">
+                <button onclick="openOrientationModal('General Quote Request')" class="px-8 sm:px-10 py-4 sm:py-5 bg-white/5 backdrop-blur-sm border-2 border-white/30 hover:border-white hover:bg-white hover:text-ocean text-white rounded-full font-bold text-base sm:text-lg uppercase tracking-wider transition-all w-full sm:w-auto hover:-translate-y-1 shadow-lg flex justify-center items-center">
                     Get a Quote
                 </button>
             </div>
@@ -547,7 +547,7 @@
                  The rapid growth for clean and safe drinking water need is substantial. Our company provides quality materials and services with fast income returns.
              </p>
              <div class="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
-                 <button onclick="openOrientationModal()" class="px-8 py-4 sm:py-5 bg-white text-[#1C6FB5] font-bold rounded-full uppercase tracking-wider hover:bg-gray-100 transition-transform hover:-translate-y-1 shadow-[0_10px_30px_-10px_rgba(255,255,255,0.3)]">
+                 <button onclick="openOrientationModal('Free Business Orientation Session')" class="px-8 py-4 sm:py-5 bg-white text-[#1C6FB5] font-bold rounded-full uppercase tracking-wider hover:bg-gray-100 transition-transform hover:-translate-y-1 shadow-[0_10px_30px_-10px_rgba(255,255,255,0.3)]">
                      Request for a one on one educational business orientation!
                  </button>
     
@@ -1137,10 +1137,12 @@ if (waterRelatedModal.classList.contains('open')) {
         // See the deployment instructions provided alongside this file.
         const ORIENTATION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSxomE1ozGW_G6-Fn5P86Dk9LhgYBr4isZI84eSr0ToWQ0cPs-JcV6nJZK9fUpXQsQ/exec";
 
-     function openOrientationModal(context, presetProducts) {
+function openOrientationModal(context, presetProducts) {
     const messageField = document.getElementById('orient-message');
-    if (context && !messageField.value) {
-        messageField.value = 'Interested in: ' + context;
+    // Always sync the message to whichever button was clicked, instead of
+    // only filling it when empty — otherwise a stale message from a
+    // previous "Inquire Now" click sticks around on Contact/Get a Quote.
+    messageField.value = context ? ('Interested in: ' + context) : '';
     }
 
     // Reset, then check any presets — so re-opening from a different
