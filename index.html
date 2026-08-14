@@ -323,7 +323,7 @@
             </div>
         </div>
     </div>
-    <button onclick="openOrientationModal('Reverse Osmosis - Purified Package Inquiry')"
+    <button onclick="openOrientationModal('Reverse Osmosis - Purified Package Inquiry', ['Water Refilling Station'])"
             class="w-full py-4 rounded-full border-2 border-ocean text-ocean font-bold uppercase tracking-wide text-sm hover:bg-ocean hover:text-white transition-colors flex items-center justify-center gap-2 group/btn">
         Inquire Now <i data-feather="arrow-right" class="w-4 h-4 transition-transform group-hover/btn:translate-x-1"></i>
     </button>
@@ -352,7 +352,7 @@
         <div class="text-center py-3 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/15 transition-colors">Premium</div>
         <div class="text-center py-3 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/15 transition-colors">Ultrafine</div>
     </div>
-    <button onclick="openOrientationModal('Mineral / High pH Water Package Inquiry')"
+    <button onclick="openOrientationModal('Reverse Osmosis - Purified Package Inquiry', ['Water Refilling Station'])"
             class="w-full py-4 rounded-full bg-gradient-to-r from-[#FFC857] to-[#FF9F5A] text-[#123A66] font-bold uppercase tracking-wide text-sm hover:opacity-90 transition-opacity shadow-md flex items-center justify-center gap-2 group/btn">
         Inquire Now <i data-feather="arrow-right" class="w-4 h-4 transition-transform group-hover/btn:translate-x-1"></i>
     </button>
@@ -396,7 +396,7 @@
             </div>
         </div>
     </div>
-    <button onclick="openOrientationModal('Combination Package Inquiry')"
+    <button onclick="openOrientationModal('Reverse Osmosis - Purified Package Inquiry', ['Water Refilling Station'])"
             class="w-full py-4 rounded-full border-2 border-ocean text-ocean font-bold uppercase tracking-wide text-sm hover:bg-ocean hover:text-white transition-colors flex items-center justify-center gap-2 group/btn">
         Inquire Now <i data-feather="arrow-right" class="w-4 h-4 transition-transform group-hover/btn:translate-x-1"></i>
     </button>
@@ -1288,15 +1288,22 @@ if (waterRelatedModal.classList.contains('open')) {
         // See the deployment instructions provided alongside this file.
         const ORIENTATION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyaoUKaExbsAs646WeEkpY5ymtmS0P4MjRBDdWm5CGsp-XXKjWvG8WIhORtrOED8BXQ/exec";
 
-        function openOrientationModal(context) {
-            const messageField = document.getElementById('orient-message');
-            if (context && !messageField.value) {
-                messageField.value = 'Interested in: ' + context;
-            }
-            document.getElementById('orientation-modal').classList.add('open');
-            document.body.style.overflow = 'hidden';
-            feather.replace();
-        }
+     function openOrientationModal(context, presetProducts) {
+    const messageField = document.getElementById('orient-message');
+    if (context && !messageField.value) {
+        messageField.value = 'Interested in: ' + context;
+    }
+
+    // Reset, then check any presets — so re-opening from a different
+    // trigger doesn't leave stale checkboxes ticked.
+    document.querySelectorAll('input[name="productsInquiry"]').forEach(cb => {
+        cb.checked = Array.isArray(presetProducts) && presetProducts.includes(cb.value);
+    });
+
+    document.getElementById('orientation-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    feather.replace();
+}
 
         function closeOrientationModal(event) {
             if (event && event.target !== event.currentTarget) return; // don't close on inner clicks
