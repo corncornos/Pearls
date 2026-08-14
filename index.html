@@ -1092,6 +1092,9 @@ function openWaterRelatedModal() {
 function closeWaterRelatedModal() {
     document.getElementById('water-related-modal').classList.remove('open');
     document.body.style.overflow = '';
+    // Reset scroll so reopening doesn't land mid-list
+    const scrollArea = document.querySelector('#water-related-modal .flex-1.overflow-y-auto');
+    if (scrollArea) scrollArea.scrollTo({ top: 0, behavior: 'auto' });
 }
         
         function toggleMobileMenu() {
@@ -1107,10 +1110,47 @@ function closeWaterRelatedModal() {
             }
         }
         
-        function closeGallery() {
-            modal.classList.remove('open');
-            document.body.style.overflow = '';
-        }
+    function resetCatalogFilters() {
+    // Snap the catalog back to its default "All Products" view — no
+    // search term, no sub-category filter, page 1 — so reopening the
+    // gallery doesn't still show whatever was last filtered/searched/paged to.
+    currentCategory = 'All';
+    currentSubCategory = 'All';
+    currentPage = 1;
+    searchInput.value = '';
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'text-turquoise');
+        btn.classList.add('text-white/50');
+    });
+    const allTabBtn = document.querySelector('.tab-btn[data-category="All"]');
+    if (allTabBtn) {
+        allTabBtn.classList.add('active', 'text-turquoise');
+        allTabBtn.classList.remove('text-white/50');
+    }
+
+    subcategoryTabs.classList.add('hidden');
+    document.querySelectorAll('.sub-tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-ocean', 'text-white');
+        btn.classList.add('bg-white/10', 'text-white/60');
+    });
+    const allSubBtn = subcategoryTabs.querySelector('.sub-tab-btn');
+    if (allSubBtn) {
+        allSubBtn.classList.add('active', 'bg-ocean', 'text-white');
+        allSubBtn.classList.remove('bg-white/10', 'text-white/60');
+    }
+
+    renderProducts();
+
+    const scrollArea = document.querySelector('.modal-content');
+    if (scrollArea) scrollArea.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+function closeGallery() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    resetCatalogFilters();
+}
 
         // Close gallery on Escape key press
         document.addEventListener('keydown', (e) => {
