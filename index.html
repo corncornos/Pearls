@@ -46,7 +46,7 @@
 
         
  .hero-bg {
-    background-image: url('/public/hero-section-sample.jpeg');
+    background-image: url('public/hero-section-sample.jpeg');
     background-color: #123A66;
     background-size: cover;
     background-position: center;
@@ -536,7 +536,7 @@
             <img src="/4-m.jpg" alt="Background" class="w-full h-full object-cover pt-[0px] pl-[1px]">
         </div>
         <!-- Decorative light sweep -->
-        <div class="absolute top-0 left-0 w-full h-full z-0 overflow-hidden point-events-none">
+       <div class="absolute top-0 left-0 w-full h-full z-0 overflow-hidden pointer-events-none">
             <div class="absolute -top-[50%] -left-[10%] w-[120%] h-[200%] bg-white/5 opacity-50 transform rotate-12 origin-center pointer-events-none"></div>
         </div>
         
@@ -1179,10 +1179,7 @@ function goToPage(page) {
 
             renderProducts(searchInput.value);
         }
-
-        searchInput.addEventListener('input', (e) => {
-            renderProducts(e.target.value);
-            searchInput.addEventListener('input', (e) => {
+searchInput.addEventListener('input', (e) => {
     currentPage = 1;
     renderProducts(e.target.value);
 });
