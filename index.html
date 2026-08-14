@@ -84,15 +84,17 @@
         }
         
         /* Modal Transitions */
-        #product-modal { 
-            transition: opacity 0.5s ease, visibility 0.5s ease; 
-        }
-        #product-modal.open { 
-            opacity: 1; visibility: visible; 
-        }
-        #product-modal:not(.open) { 
-            opacity: 0; visibility: hidden; 
-        }
+       #product-modal { 
+    transition: opacity 0.5s ease, visibility 0.5s ease; 
+    pointer-events: none;
+}
+      #product-modal.open { 
+    opacity: 1; visibility: visible; 
+    pointer-events: auto;
+}
+  #product-modal:not(.open) { 
+    opacity: 0; visibility: hidden; 
+}
         
         /* Modal Content Animation */
         .modal-content {
@@ -109,21 +111,25 @@
 #water-related-modal {
     transition: opacity 0.4s ease, visibility 0.4s ease;
     opacity: 0; visibility: hidden;
+    pointer-events: none;
 }
 #water-related-modal.open {
     opacity: 1; visibility: visible;
+    pointer-events: auto;
 }
 
         /* Product Details Modal Transitions */
-        #details-modal { 
-            transition: opacity 0.4s ease, visibility 0.4s ease; 
-        }
-        #details-modal.open { 
-            opacity: 1; visibility: visible; 
-        }
-        #details-modal:not(.open) { 
-            opacity: 0; visibility: hidden; 
-        }
+    #details-modal { 
+    transition: opacity 0.4s ease, visibility 0.4s ease; 
+    pointer-events: none;
+}
+    #details-modal.open { 
+    opacity: 1; visibility: visible; 
+    pointer-events: auto;
+}
+ #details-modal:not(.open) { 
+    opacity: 0; visibility: hidden; 
+}
         #details-modal.open .details-content {
             transform: scale(1);
             opacity: 1;
@@ -159,15 +165,17 @@
         }
 
         /* Orientation Modal Transitions */
-        #orientation-modal {
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-        #orientation-modal.open {
-            opacity: 1; visibility: visible;
-        }
-        #orientation-modal:not(.open) {
-            opacity: 0; visibility: hidden;
-        }
+ #orientation-modal {
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    pointer-events: none;
+}
+ #orientation-modal.open {
+    opacity: 1; visibility: visible;
+    pointer-events: auto;
+}
+ #orientation-modal:not(.open) {
+    opacity: 0; visibility: hidden;
+}
         #orientation-modal.open .orientation-content {
             transform: scale(1);
             opacity: 1;
