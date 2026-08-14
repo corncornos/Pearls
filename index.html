@@ -854,7 +854,12 @@
 
         // Product Catalog Data - starts from the shared bundled defaults;
         // loadLiveCatalog() below overwrites this with the live Blob data if one exists.
-        let products = window.DEFAULT_PRODUCTS.slice();
+        // Guard against catalog-defaults.js failing to load (404 / wrong path / opened as a
+        // local file without a server) so a missing script can't take down the whole page.
+        let products = (window.DEFAULT_PRODUCTS || []).slice();
+        if (!window.DEFAULT_PRODUCTS) {
+            console.warn('catalog-defaults.js did not load — /catalog-defaults.js is missing or unreachable. Catalog will be empty until it is fixed or the live catalog loads.');
+        }
 
         let currentCategory = 'All';
         let currentSubCategory = 'All';
