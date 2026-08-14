@@ -1171,55 +1171,55 @@ if (waterRelatedModal.classList.contains('open')) {
             }
         }
 
-        function submitOrientationForm(event) {
-            event.preventDefault();
+function submitOrientationForm(event) {
+    event.preventDefault();
 
-            if (ORIENTATION_SCRIPT_URL.indexOf('PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') !== -1) {
-                setOrientationStatus('Form is not connected yet. Please add your Google Apps Script Web App URL in the code (ORIENTATION_SCRIPT_URL).', 'error');
-                return;
-            }
+    if (ORIENTATION_SCRIPT_URL.indexOf('PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') !== -1) {
+        setOrientationStatus('Form is not connected yet. Please add your Google Apps Script Web App URL in the code (ORIENTATION_SCRIPT_URL).', 'error');
+        return;
+    }
 
-            const form = document.getElementById('orientation-form');
-            const submitBtn = document.getElementById('orient-submit-btn');
-            const submitLabel = document.getElementById('orient-submit-label');
+    const form = document.getElementById('orientation-form');
+    const submitBtn = document.getElementById('orient-submit-btn');
+    const submitLabel = document.getElementById('orient-submit-label');
 
-            const selectedProducts = Array.from(document.querySelectorAll('input[name="productsInquiry"]:checked'))
-                .map(cb => cb.value)
-                .join(', ');
+    const selectedProducts = Array.from(document.querySelectorAll('input[name="productsInquiry"]:checked'))
+        .map(cb => cb.value)
+        .join(', ');
 
-            const payload = new FormData();
-            payload.append('firstName', document.getElementById('orient-firstname').value.trim());
-            payload.append('lastName', document.getElementById('orient-lastname').value.trim());
-            payload.append('contactNo', document.getElementById('orient-contact').value.trim());
-            payload.append('productsInquiry', selectedProducts);
-            payload.append('schedule', document.getElementById('orient-schedule').value);
-            payload.append('message', document.getElementById('orient-message').value.trim());
+    const payload = {
+        firstName: document.getElementById('orient-firstname').value.trim(),
+        lastName: document.getElementById('orient-lastname').value.trim(),
+        contactNo: document.getElementById('orient-contact').value.trim(),
+        productsInquiry: selectedProducts,
+        schedule: document.getElementById('orient-schedule').value,
+        message: document.getElementById('orient-message').value.trim()
+    };
 
-            submitBtn.disabled = true;
-            submitLabel.textContent = 'Submitting...';
-            setOrientationStatus('', null);
-            document.getElementById('orient-status').classList.add('hidden');
+    submitBtn.disabled = true;
+    submitLabel.textContent = 'Submitting...';
+    setOrientationStatus('', null);
+    document.getElementById('orient-status').classList.add('hidden');
 
-            // Apps Script Web Apps don't return CORS headers by default, so we
-            // fire the request in no-cors mode. We can't read the response body,
-            // but the row will still be appended to the Sheet on the server side.
-            fetch(ORIENTATION_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: payload
-            }).then(() => {
-                setOrientationStatus('Thank you! Your orientation request has been received. Our team will contact you shortly.', 'success');
-                form.reset();
-                submitBtn.disabled = false;
-                submitLabel.textContent = 'Submit Request';
-                setTimeout(() => { closeOrientationModal(); }, 2200);
-            }).catch(() => {
-                setOrientationStatus('Something went wrong sending your request. Please try again or email us directly.', 'error');
-                submitBtn.disabled = false;
-                submitLabel.textContent = 'Submit Request';
-            });
-        }
-
+    // text/plain avoids a CORS preflight AND survives the redirect Apps
+    // Script issues on POST — multipart FormData does not.
+    fetch(ORIENTATION_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+    }).then(() => {
+        setOrientationStatus('Thank you! Your orientation request has been received. Our team will contact you shortly.', 'success');
+        form.reset(); // clears text fields AND unchecks all productsInquiry boxes
+        submitBtn.disabled = false;
+        submitLabel.textContent = 'Submit Request';
+        setTimeout(() => { closeOrientationModal(); }, 2200);
+    }).catch(() => {
+        setOrientationStatus('Something went wrong sending your request. Please try again or email us directly.', 'error');
+        submitBtn.disabled = false;
+        submitLabel.textContent = 'Submit Request';
+    });
+}
         // Enable mouse-drag scrolling and vertical-wheel-to-horizontal-scroll
         // on any row with the .drag-scroll class (the category & sub-category tab bars).
         // This fixes the issue where desktop mouse users had no way to reach tabs
