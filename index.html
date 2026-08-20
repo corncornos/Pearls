@@ -1226,14 +1226,6 @@ function openOrientationModal(context, presetProducts) {
                 statusEl.classList.add('bg-red-50', 'text-red-700');
             }
         }
-
-function submitOrientationForm(event) {
-    event.preventDefault();
-
-    if (ORIENTATION_SCRIPT_URL.indexOf('PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') !== -1) {
-        setOrientationStatus('Form is not connected yet. Please add your Google Apps Script Web App URL in the code (ORIENTATION_SCRIPT_URL).', 'error');
-        return;
-    }
     function submitNewsletterForm(event) {
     event.preventDefault();
 
@@ -1267,6 +1259,13 @@ function submitOrientationForm(event) {
         submitBtn.disabled = false;
     });
 }
+function submitOrientationForm(event) {
+    event.preventDefault();
+
+    if (ORIENTATION_SCRIPT_URL.indexOf('PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') !== -1) {
+        setOrientationStatus('Form is not connected yet. Please add your Google Apps Script Web App URL in the code (ORIENTATION_SCRIPT_URL).', 'error');
+        return;
+    }
 
     const form = document.getElementById('orientation-form');
     const submitBtn = document.getElementById('orient-submit-btn');
