@@ -683,7 +683,9 @@
                     <div>
                         <label for="orient-contact" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Contact No.</label>
                         <input type="tel" id="orient-contact" name="contactNo" required placeholder="09XX XXX XXXX"
-                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
+                        inputmode="numeric" maxlength="11" pattern="[0-9]{11}" title="Please enter exactly 11 digits"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
                     </div>
 
                     <div>
