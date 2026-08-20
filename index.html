@@ -631,12 +631,13 @@
                 <div class="lg:col-span-3">
                     <h4 class="text-white font-bold uppercase tracking-wider mb-6 text-sm">Stay Updated</h4>
                     <p class="text-sm text-gray-400 mb-6 leading-relaxed">Subscribe to receive tech updates, exclusive promos, and business tips.</p>
-                    <form class="flex" onsubmit="event.preventDefault(); alert('Subscribed!')">
-                        <input type="email" placeholder="Email Address" class="bg-white/5 border border-white/10 rounded-l-xl px-4 py-3 w-full text-sm focus:outline-none focus:border-turquoise text-white placeholder-gray-500 font-medium transition-colors" required>
-                        <button type="submit" class="bg-turquoise text-white px-5 py-3 rounded-r-xl font-bold hover:bg-turquoise/80 transition-colors">
-                            <i data-feather="arrow-right" class="w-5 h-5"></i>
-                        </button>
-                    </form>
+                   <form id="newsletter-form" class="flex" onsubmit="submitNewsletterForm(event)">
+    <input type="email" id="newsletter-email" placeholder="Email Address" class="bg-white/5 border border-white/10 rounded-l-xl px-4 py-3 w-full text-sm focus:outline-none focus:border-turquoise text-white placeholder-gray-500 font-medium transition-colors" required>
+    <button type="submit" id="newsletter-submit-btn" class="bg-turquoise text-white px-5 py-3 rounded-r-xl font-bold hover:bg-turquoise/80 transition-colors flex-shrink-0">
+        <i data-feather="arrow-right" class="w-5 h-5"></i>
+    </button>
+</form>
+<p id="newsletter-status" class="hidden text-xs mt-3"></p>
                 </div>
             </div>
             
@@ -1183,7 +1184,7 @@ if (waterRelatedModal.classList.contains('open')) {
 
         // Replace this with your deployed Google Apps Script Web App URL.
         // See the deployment instructions provided alongside this file.
-        const ORIENTATION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSxomE1ozGW_G6-Fn5P86Dk9LhgYBr4isZI84eSr0ToWQ0cPs-JcV6nJZK9fUpXQsQ/exec";
+        const ORIENTATION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLxLqdaSeoLQF3sTlhRxKYzubCpKeKviXeAt9Wj4CRsdKEgHrkcY8LHjz9Z6XDu5dS/exec";
 
 function openOrientationModal(context, presetProducts) {
     const messageField = document.getElementById('orient-message');
@@ -1233,6 +1234,39 @@ function submitOrientationForm(event) {
         setOrientationStatus('Form is not connected yet. Please add your Google Apps Script Web App URL in the code (ORIENTATION_SCRIPT_URL).', 'error');
         return;
     }
+    function submitNewsletterForm(event) {
+    event.preventDefault();
+
+    const emailField = document.getElementById('newsletter-email');
+    const submitBtn = document.getElementById('newsletter-submit-btn');
+    const statusEl = document.getElementById('newsletter-status');
+
+    const payload = {
+        formType: 'newsletter',
+        email: emailField.value.trim()
+    };
+
+    submitBtn.disabled = true;
+    statusEl.classList.add('hidden');
+
+    fetch(ORIENTATION_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+    }).then(() => {
+        statusEl.textContent = 'Thanks — you\'re subscribed!';
+        statusEl.className = 'text-xs mt-3 text-turquoise';
+        statusEl.classList.remove('hidden');
+        emailField.value = '';
+        submitBtn.disabled = false;
+    }).catch(() => {
+        statusEl.textContent = 'Something went wrong. Please try again.';
+        statusEl.className = 'text-xs mt-3 text-red-300';
+        statusEl.classList.remove('hidden');
+        submitBtn.disabled = false;
+    });
+}
 
     const form = document.getElementById('orientation-form');
     const submitBtn = document.getElementById('orient-submit-btn');
