@@ -670,14 +670,13 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
                             <label for="orient-firstname" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">First Name</label>
-                            <input type="text" id="orient-firstname" name="firstName" required
-                                class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
+                            <input type="text" id="orient-firstname" name="firstName" required maxlength="50"
+    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
                         </div>
                         <div>
                             <label for="orient-lastname" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Last Name</label>
-                            <input type="text" id="orient-lastname" name="lastName" required
-                                class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
-                        </div>
+                            <input type="text" id="orient-lastname" name="lastName" required maxlength="50"
+    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
                     </div>
 
                     <div>
@@ -714,8 +713,8 @@
 
                     <div>
                         <label for="orient-message" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Message</label>
-                        <textarea id="orient-message" name="message" rows="4" placeholder="Tell us more about your business goals or questions..."
-                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all resize-none"></textarea>
+                        <textarea id="orient-message" name="message" rows="4" maxlength="500" placeholder="Tell us more about your business goals or questions..."
+    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all resize-none"></textarea>
                     </div>
 
                     <div id="orient-status" class="hidden text-sm font-medium rounded-xl px-4 py-3"></div>
@@ -1189,6 +1188,12 @@ if (waterRelatedModal.classList.contains('open')) {
 
 function openOrientationModal(context, presetProducts) {
     const messageField = document.getElementById('orient-message');
+
+    // Prevent picking a date/time before right now.
+    const scheduleField = document.getElementById('orient-schedule');
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // convert to local time for the input
+    scheduleField.min = now.toISOString().slice(0, 16); // "YYYY-MM-DDTHH:mm"
     // Always sync the message to whichever button was clicked, instead of
     // only filling it when empty — otherwise a stale message from a
     // previous "Inquire Now" click sticks around on Contact/Get a Quote.
