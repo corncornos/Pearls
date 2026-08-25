@@ -859,7 +859,12 @@
     <!-- Application Logic -->
     <script>
         // Initialize icons
-        feather.replace();
+       function safeFeatherReplace() {
+    if (window.feather && typeof feather.replace === 'function') {
+        safeFeatherReplace();
+    }
+}
+safeFeatherReplace();
 
         // Product Catalog Data - starts from the shared bundled defaults;
         // loadLiveCatalog() below overwrites this with the live Blob data if one exists.
@@ -895,7 +900,7 @@
                 <i data-feather="search" class="w-12 h-12 mb-4 text-gray-600"></i>
                 <p class="text-xl">No products found for your search.</p>
             </div>`;
-        feather.replace();
+        safeFeatherReplace();
         document.getElementById('pagination-controls').innerHTML = '';
         return;
     }
@@ -927,7 +932,7 @@
         grid.appendChild(card);
     });
 
-    feather.replace();
+    safeFeatherReplace();
     renderPagination(totalPages);
 }
 
@@ -997,7 +1002,7 @@ function goToPage(page) {
                 buildDetailsThumbnails(p.images);
                 
                 document.getElementById('details-modal').classList.add('open');
-                feather.replace(); // just in case
+                safeFeatherReplace(); // just in case
             }
         }
         
@@ -1080,14 +1085,14 @@ function renderWaterRelatedProducts() {
             </div>
         </div>
     `).join('');
-    feather.replace();
+    safeFeatherReplace();
 }
 
 function openWaterRelatedModal() {
     renderWaterRelatedProducts();
     document.getElementById('water-related-modal').classList.add('open');
     document.body.style.overflow = 'hidden';
-    feather.replace();
+    safeFeatherReplace();
 }
 
 function closeWaterRelatedModal() {
@@ -1207,7 +1212,7 @@ function openOrientationModal(context, presetProducts) {
 
     document.getElementById('orientation-modal').classList.add('open');
     document.body.style.overflow = 'hidden';
-    feather.replace();
+    safeFeatherReplace();
 }
 
         function closeOrientationModal(event) {
