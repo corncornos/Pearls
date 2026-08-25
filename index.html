@@ -861,7 +861,7 @@
         // Initialize icons
        function safeFeatherReplace() {
     if (window.feather && typeof feather.replace === 'function') {
-        safeFeatherReplace();
+        feather.replace();
     }
 }
 safeFeatherReplace();
