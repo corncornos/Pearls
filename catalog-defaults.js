@@ -89,9 +89,9 @@ window.DEFAULT_PRODUCTS = [
     { id: 102, name: "PW2", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: ["/consumables/wallhungfilters/PW2.JPG"] },
     { id: 103, name: "Mineral", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: ["/consumables/wallhungfilters/MINERAL.JPG"] },
     { id: 104, name: "M+", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: ["/consumables/wallhungfilters/M+.JPG"] },
-    { id: 105, name: "PW1 C", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: [""] },
-    { id: 106, name: "PW2 C", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: [""] },
-    { id: 107, name: "PW3 C", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: [""] },
+    { id: 105, name: "PW1 C", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: ["consumables/wallhungfilters/M+.JPG"] },
+    { id: 106, name: "PW2 C", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: ["consumables/wallhungfilters/M+.JPG"] },
+    { id: 107, name: "PW3 C", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: ["consumables/wallhungfilters/M+.JPG"] },
     { id: 108, name: "Mineral C", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: ["/consumables/wallhungfilters/MINERAL C.JPG"] },
     { id: 109, name: "M+ C", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "", images: [""] },
     { id: 110, name: "Brine Tank", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "Available in 70, 80, and 120 liters", images: ["/consumables/wallhungfilters/BRINE TANK.JPG"] },
@@ -100,9 +100,9 @@ window.DEFAULT_PRODUCTS = [
     { id: 113, name: "Quick Connect (1/2 or 1/4)", category: "Consumables", subCategory: "Wall Hung Filters", price: "Ask for Price", desc: "Available in 1/2 and 1/4", images: ["/consumables/wallhungfilters/QUICK CONNECT.JPG"] },
 
     // Category: Consumables -> Sediment Filters
-    { id: 120, name: "10x54", category: "Consumables", subCategory: "Sediment Filters", price: "Ask for Price", desc: "", images: [""] },
-    { id: 121, name: "13x54", category: "Consumables", subCategory: "Sediment Filters", price: "Ask for Price", desc: "", images: [""] },
-    { id: 122, name: "16x54", category: "Consumables", subCategory: "Sediment Filters", price: "Ask for Price", desc: "", images: [""] },
+    { id: 120, name: "10x54", category: "Consumables", subCategory: "Sediment Filters", price: "Ask for Price", desc: "", images: ["consumables/wallhungfilters/M+.JPG"] },
+    { id: 121, name: "13x54", category: "Consumables", subCategory: "Sediment Filters", price: "Ask for Price", desc: "", images: ["consumables/wallhungfilters/M+.JPG"] },
+    { id: 122, name: "16x54", category: "Consumables", subCategory: "Sediment Filters", price: "Ask for Price", desc: "", images: ["consumables/wallhungfilters/M+.JPG"] },
 
     // Category: Consumables -> Carbon Block
     { id: 123, name: "AC Cream", category: "Consumables", subCategory: "Carbon Block", price: "Ask for Price", desc: "Hydrosep", images: ["/ac cream.png"] },
