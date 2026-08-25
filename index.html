@@ -84,13 +84,17 @@
         }
         
         /* Modal Transitions */
-       #product-modal { 
-    transition: opacity 0.5s ease, visibility 0.5s ease; 
-    pointer-events: none;
+ #product-modal {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
-      #product-modal.open { 
-    opacity: 1; visibility: visible; 
-    pointer-events: auto;
+#product-modal.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 }
   #product-modal:not(.open) { 
     opacity: 0; visibility: hidden; 
