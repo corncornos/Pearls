@@ -84,16 +84,13 @@
         }
         
         /* Modal Transitions */
- #product-modal {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+       #product-modal { 
+    transition: opacity 0.5s ease, visibility 0.5s ease; 
+    pointer-events: none;
 }
-#product-modal.open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+      #product-modal.open { 
+    opacity: 1; visibility: visible; 
+    pointer-events: auto;
 }
   #product-modal:not(.open) { 
     opacity: 0; visibility: hidden; 
@@ -587,7 +584,8 @@
                     <p class="text-sm text-gray-400 mb-8 leading-relaxed max-w-sm">Premium purification technology delivering perfect, clean water. Empowering communities and businesses across the Philippines.</p>
                     <div class="flex gap-4">
                         <a href="https://www.facebook.com/profile.php?id=61551875476595" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:bg-turquoise hover:border-turquoise hover:text-white transition-all"><i data-feather="facebook" class="w-4 h-4"></i></a>
-    
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:bg-turquoise hover:border-turquoise hover:text-white transition-all"><i data-feather="instagram" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:bg-turquoise hover:border-turquoise hover:text-white transition-all"><i data-feather="twitter" class="w-4 h-4"></i></a>
                     </div>
                 </div>
                 
@@ -607,7 +605,7 @@
                     <ul class="space-y-4 text-sm">
                         <li class="flex items-start gap-4">
                             <i data-feather="map-pin" class="w-5 h-5 text-turquoise flex-shrink-0 mt-0.5 opacity-80"></i>
-                            <span class="text-gray-400 leading-relaxed">Brgy. San Dionisio<br/>Paranaque, Philippines</span>
+                            <span class="text-gray-400 leading-relaxed">Pearl Street, Business District<br/>Metro Manila, Philippines</span>
                         </li>
 
                         <li class="flex items-center gap-4">
@@ -634,13 +632,12 @@
                 <div class="lg:col-span-3">
                     <h4 class="text-white font-bold uppercase tracking-wider mb-6 text-sm">Stay Updated</h4>
                     <p class="text-sm text-gray-400 mb-6 leading-relaxed">Subscribe to receive tech updates, exclusive promos, and business tips.</p>
-                   <form id="newsletter-form" class="flex" onsubmit="submitNewsletterForm(event)">
-    <input type="email" id="newsletter-email" placeholder="Email Address" class="bg-white/5 border border-white/10 rounded-l-xl px-4 py-3 w-full text-sm focus:outline-none focus:border-turquoise text-white placeholder-gray-500 font-medium transition-colors" required>
-    <button type="submit" id="newsletter-submit-btn" class="bg-turquoise text-white px-5 py-3 rounded-r-xl font-bold hover:bg-turquoise/80 transition-colors flex-shrink-0">
-        <i data-feather="arrow-right" class="w-5 h-5"></i>
-    </button>
-</form>
-<p id="newsletter-status" class="hidden text-xs mt-3"></p>
+                    <form class="flex" onsubmit="event.preventDefault(); alert('Subscribed!')">
+                        <input type="email" placeholder="Email Address" class="bg-white/5 border border-white/10 rounded-l-xl px-4 py-3 w-full text-sm focus:outline-none focus:border-turquoise text-white placeholder-gray-500 font-medium transition-colors" required>
+                        <button type="submit" class="bg-turquoise text-white px-5 py-3 rounded-r-xl font-bold hover:bg-turquoise/80 transition-colors">
+                            <i data-feather="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
             
@@ -673,13 +670,14 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div>
                             <label for="orient-firstname" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">First Name</label>
-                            <input type="text" id="orient-firstname" name="firstName" required maxlength="50"
-    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
+                            <input type="text" id="orient-firstname" name="firstName" required
+                                class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
                         </div>
                         <div>
                             <label for="orient-lastname" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Last Name</label>
-                            <input type="text" id="orient-lastname" name="lastName" required maxlength="50"
-    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
+                            <input type="text" id="orient-lastname" name="lastName" required
+                                class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all">
+                        </div>
                     </div>
 
                     <div>
@@ -716,8 +714,8 @@
 
                     <div>
                         <label for="orient-message" class="block text-xs font-bold text-ocean uppercase tracking-widest mb-2">Message</label>
-                        <textarea id="orient-message" name="message" rows="4" maxlength="500" placeholder="Tell us more about your business goals or questions..."
-    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all resize-none"></textarea>
+                        <textarea id="orient-message" name="message" rows="4" placeholder="Tell us more about your business goals or questions..."
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-deep focus:outline-none focus:border-turquoise focus:ring-1 focus:ring-turquoise transition-all resize-none"></textarea>
                     </div>
 
                     <div id="orient-status" class="hidden text-sm font-medium rounded-xl px-4 py-3"></div>
@@ -733,7 +731,7 @@
 
     <!-- Product Gallery Modal (Shopping App Style) -->
     <!-- Fixed over the entire screen with a high z-index -->
-    <div id="product-modal" class="fixed inset-0 z-[100] flex flex-col bg-[#1C6FB5]">
+    <div id="product-modal" class="fixed inset-0 z-[100] flex flex-col bg-[#1C6FB5] backdrop-blur-3xl">
         
         <!-- Modal Header / Search Area -->
     <div class="bg-[#1C6FB5]/95 border-b border-white/10 pt-6 pb-4 px-4 sticky top-0 z-20 shadow-sm">
@@ -795,7 +793,7 @@
     </div>
 
     <!-- Other Water Related Products Modal (separate showcase, not the catalog) -->
-<div id="water-related-modal" class="fixed inset-0 z-[105] flex flex-col bg-[#123A66]">
+<div id="water-related-modal" class="fixed inset-0 z-[105] flex flex-col bg-[#123A66] backdrop-blur-3xl">
     <div class="bg-[#123A66]/95 border-b border-white/10 pt-6 pb-5 px-4 sm:px-8 sticky top-0 z-20 shadow-sm">
         <div class="max-w-5xl mx-auto flex items-center justify-between gap-4">
             <div>
@@ -862,12 +860,7 @@
     <!-- Application Logic -->
     <script>
         // Initialize icons
-       function safeFeatherReplace() {
-    if (window.feather && typeof feather.replace === 'function') {
         feather.replace();
-    }
-}
-safeFeatherReplace();
 
         // Product Catalog Data - starts from the shared bundled defaults;
         // loadLiveCatalog() below overwrites this with the live Blob data if one exists.
@@ -880,7 +873,7 @@ safeFeatherReplace();
 
         let currentCategory = 'All';
         let currentSubCategory = 'All';
-        const PRODUCTS_PER_PAGE = 12;
+        const PRODUCTS_PER_PAGE = 4;
         let currentPage = 1;
         const grid = document.getElementById('product-grid');
         const searchInput = document.getElementById('searchInput');
@@ -903,7 +896,7 @@ safeFeatherReplace();
                 <i data-feather="search" class="w-12 h-12 mb-4 text-gray-600"></i>
                 <p class="text-xl">No products found for your search.</p>
             </div>`;
-        safeFeatherReplace();
+        feather.replace();
         document.getElementById('pagination-controls').innerHTML = '';
         return;
     }
@@ -935,7 +928,7 @@ safeFeatherReplace();
         grid.appendChild(card);
     });
 
-    safeFeatherReplace();
+    feather.replace();
     renderPagination(totalPages);
 }
 
@@ -1005,7 +998,7 @@ function goToPage(page) {
                 buildDetailsThumbnails(p.images);
                 
                 document.getElementById('details-modal').classList.add('open');
-                safeFeatherReplace(); // just in case
+                feather.replace(); // just in case
             }
         }
         
@@ -1088,14 +1081,14 @@ function renderWaterRelatedProducts() {
             </div>
         </div>
     `).join('');
-    safeFeatherReplace();
+    feather.replace();
 }
 
 function openWaterRelatedModal() {
     renderWaterRelatedProducts();
     document.getElementById('water-related-modal').classList.add('open');
     document.body.style.overflow = 'hidden';
-    safeFeatherReplace();
+    feather.replace();
 }
 
 function closeWaterRelatedModal() {
@@ -1192,16 +1185,10 @@ if (waterRelatedModal.classList.contains('open')) {
 
         // Replace this with your deployed Google Apps Script Web App URL.
         // See the deployment instructions provided alongside this file.
-        const ORIENTATION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLxLqdaSeoLQF3sTlhRxKYzubCpKeKviXeAt9Wj4CRsdKEgHrkcY8LHjz9Z6XDu5dS/exec";
+        const ORIENTATION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSxomE1ozGW_G6-Fn5P86Dk9LhgYBr4isZI84eSr0ToWQ0cPs-JcV6nJZK9fUpXQsQ/exec";
 
 function openOrientationModal(context, presetProducts) {
     const messageField = document.getElementById('orient-message');
-
-    // Prevent picking a date/time before right now.
-    const scheduleField = document.getElementById('orient-schedule');
-    const now = new Date();
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // convert to local time for the input
-    scheduleField.min = now.toISOString().slice(0, 16); // "YYYY-MM-DDTHH:mm"
     // Always sync the message to whichever button was clicked, instead of
     // only filling it when empty — otherwise a stale message from a
     // previous "Inquire Now" click sticks around on Contact/Get a Quote.
@@ -1215,7 +1202,7 @@ function openOrientationModal(context, presetProducts) {
 
     document.getElementById('orientation-modal').classList.add('open');
     document.body.style.overflow = 'hidden';
-    safeFeatherReplace();
+    feather.replace();
 }
 
         function closeOrientationModal(event) {
@@ -1234,39 +1221,7 @@ function openOrientationModal(context, presetProducts) {
                 statusEl.classList.add('bg-red-50', 'text-red-700');
             }
         }
-    function submitNewsletterForm(event) {
-    event.preventDefault();
 
-    const emailField = document.getElementById('newsletter-email');
-    const submitBtn = document.getElementById('newsletter-submit-btn');
-    const statusEl = document.getElementById('newsletter-status');
-
-    const payload = {
-        formType: 'newsletter',
-        email: emailField.value.trim()
-    };
-
-    submitBtn.disabled = true;
-    statusEl.classList.add('hidden');
-
-    fetch(ORIENTATION_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-    }).then(() => {
-        statusEl.textContent = 'Thanks — you\'re subscribed!';
-        statusEl.className = 'text-xs mt-3 text-turquoise';
-        statusEl.classList.remove('hidden');
-        emailField.value = '';
-        submitBtn.disabled = false;
-    }).catch(() => {
-        statusEl.textContent = 'Something went wrong. Please try again.';
-        statusEl.className = 'text-xs mt-3 text-red-300';
-        statusEl.classList.remove('hidden');
-        submitBtn.disabled = false;
-    });
-}
 function submitOrientationForm(event) {
     event.preventDefault();
 
