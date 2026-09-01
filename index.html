@@ -220,7 +220,7 @@
                 <button onclick="openOrientationModal()" class="px-4 py-2 bg-white text-deep rounded-full font-bold text-xs sm:text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none whitespace-nowrap">
                     Contact
                 </button>
-                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-white hover:text-turquoise focus:outline-none p-2" aria-label="Toggle Menu">
+                <button id="mobile-menu-btn" onclick="event.stopPropagation(); toggleMobileMenu()" class="text-white hover:text-turquoise focus:outline-none p-2" aria-label="Toggle Menu">
                     <i data-feather="menu" class="w-6 h-6 sm:w-7 sm:h-7"></i>
                 </button>
             </div>
