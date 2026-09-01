@@ -190,7 +190,7 @@
 <body class="antialiased min-h-screen flex flex-col">
 
 <!-- Logo: fixed top-left, standalone -->
-<a href="#" onclick="event.preventDefault(); closeGallery(); const m=document.getElementById('mobile-menu'); if(m.classList.contains('opacity-100')) toggleMobileMenu(); window.scrollTo({top:0, behavior:'smooth'});" aria-label="Pearls Water Home" class="fixed top-2 sm:top-3 left-3 sm:left-6 lg:left-10 z-50 flex items-center justify-center flex-shrink-0 h-20 w-20 sm:h-24 sm:w-24 lg:h-28 lg:w-28 cursor-pointer">
+<a href="#" onclick="event.preventDefault(); closeGallery(); if(document.getElementById('mobile-menu').dataset.open === 'true') toggleMobileMenu(true); window.scrollTo({top:0, behavior:'smooth'});" aria-label="Pearls Water Home" class="fixed top-2 sm:top-3 left-3 sm:left-6 lg:left-10 z-50 flex items-center justify-center flex-shrink-0 h-20 w-20 sm:h-24 sm:w-24 lg:h-28 lg:w-28 cursor-pointer">
     <img src="/pearls-logo.png" alt="Pearls Water Logo" class="w-full h-full object-contain drop-shadow-[0_4px_14px_rgba(0,0,0,0.5)]" />
 </a>
 
@@ -220,23 +220,21 @@
                 <button onclick="openOrientationModal()" class="px-4 py-2 bg-white text-deep rounded-full font-bold text-xs sm:text-sm hover:bg-turquoise hover:text-white transition-colors focus:outline-none whitespace-nowrap">
                     Contact
                 </button>
-                <button onclick="toggleMobileMenu()" class="text-white hover:text-turquoise focus:outline-none p-2" aria-label="Toggle Menu">
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-white hover:text-turquoise focus:outline-none p-2" aria-label="Toggle Menu">
                     <i data-feather="menu" class="w-6 h-6 sm:w-7 sm:h-7"></i>
                 </button>
             </div>
         </div>
     </div>
 </nav>
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-white/98 backdrop-blur-xl z-[60] flex flex-col items-center justify-center space-y-8 opacity-0 pointer-events-none transition-all duration-300">
-        <button onclick="toggleMobileMenu()" class="absolute top-4 right-4 sm:top-6 sm:right-6 text-deep hover:text-turquoise focus:outline-none p-2" aria-label="Close Menu">
-            <i data-feather="x" class="w-8 h-8"></i>
-        </button>
-        <a href="#packages" onclick="toggleMobileMenu()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Packages</a>
-                <button onclick="toggleMobileMenu(); openGallery()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Catalog</button>
-        <button onclick="toggleMobileMenu(); openWaterRelatedModal()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Other Related Water Products</button>
-
-        <button onclick="toggleMobileMenu(); openOrientationModal()" class="text-[#ffffff] hover:text-turquoise transition-colors text-2xl font-black uppercase tracking-widest">Contact</button>
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" data-open="false" class="lg:hidden fixed top-16 sm:top-20 right-3 sm:right-6 z-[60] w-60 max-w-[calc(100%-1.5rem)] rounded-2xl overflow-hidden glass-panel shadow-2xl origin-top-right scale-95 opacity-0 pointer-events-none transition-all duration-200 ease-out">
+        <nav class="flex flex-col divide-y divide-white/10">
+            <a href="#packages" onclick="toggleMobileMenu(true)" class="px-5 py-4 text-white hover:bg-white/10 hover:text-turquoise transition-colors text-sm font-bold uppercase tracking-wider">Packages</a>
+            <button onclick="toggleMobileMenu(true); openGallery()" class="px-5 py-4 text-left text-white hover:bg-white/10 hover:text-turquoise transition-colors text-sm font-bold uppercase tracking-wider">Catalog</button>
+            <button onclick="toggleMobileMenu(true); openWaterRelatedModal()" class="px-5 py-4 text-left text-white hover:bg-white/10 hover:text-turquoise transition-colors text-sm font-bold uppercase tracking-wider">Other Related Water Products</button>
+            <button onclick="toggleMobileMenu(true); openOrientationModal()" class="px-5 py-4 text-left text-white hover:bg-white/10 hover:text-turquoise transition-colors text-sm font-bold uppercase tracking-wider">Contact</button>
+        </nav>
     </div>
 
     <!-- MAIN HERO -->
@@ -1087,64 +1085,45 @@ function closeWaterRelatedModal() {
     if (scrollArea) scrollArea.scrollTo({ top: 0, behavior: 'auto' });
 }
         
-        function toggleMobileMenu() {
+        // ---- Mobile Dropdown Menu ----
+        function toggleMobileMenu(forceClose) {
             const menu = document.getElementById('mobile-menu');
-            if (menu.classList.contains('opacity-0')) {
-                menu.classList.remove('opacity-0', 'pointer-events-none');
-                menu.classList.add('opacity-100', 'pointer-events-auto');
-                document.body.style.overflow = 'hidden';
+            const btn = document.getElementById('mobile-menu-btn');
+            const isOpen = menu.dataset.open === 'true';
+            const shouldOpen = forceClose === true ? false : !isOpen;
+
+            if (shouldOpen) {
+                menu.dataset.open = 'true';
+                menu.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+                menu.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
+                btn.innerHTML = '<i data-feather="x" class="w-6 h-6 sm:w-7 sm:h-7"></i>';
             } else {
-                menu.classList.remove('opacity-100', 'pointer-events-auto');
-                menu.classList.add('opacity-0', 'pointer-events-none');
-                document.body.style.overflow = '';
+                menu.dataset.open = 'false';
+                menu.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+                menu.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+                btn.innerHTML = '<i data-feather="menu" class="w-6 h-6 sm:w-7 sm:h-7"></i>';
             }
+            feather.replace();
         }
-        
-    function resetCatalogFilters() {
-    // Snap the catalog back to its default "All Products" view — no
-    // search term, no sub-category filter, page 1 — so reopening the
-    // gallery doesn't still show whatever was last filtered/searched/paged to.
-    currentCategory = 'All';
-    currentSubCategory = 'All';
-    currentPage = 1;
-    searchInput.value = '';
 
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active', 'text-turquoise');
-        btn.classList.add('text-white/50');
-    });
-    const allTabBtn = document.querySelector('.tab-btn[data-category="All"]');
-    if (allTabBtn) {
-        allTabBtn.classList.add('active', 'text-turquoise');
-        allTabBtn.classList.remove('text-white/50');
-    }
-
-    subcategoryTabs.classList.add('hidden');
-    document.querySelectorAll('.sub-tab-btn').forEach(btn => {
-        btn.classList.remove('active', 'bg-ocean', 'text-white');
-        btn.classList.add('bg-white/10', 'text-white/60');
-    });
-    const allSubBtn = subcategoryTabs.querySelector('.sub-tab-btn');
-    if (allSubBtn) {
-        allSubBtn.classList.add('active', 'bg-ocean', 'text-white');
-        allSubBtn.classList.remove('bg-white/10', 'text-white/60');
-    }
-
-    renderProducts();
-
-    const scrollArea = document.querySelector('.modal-content');
-    if (scrollArea) scrollArea.scrollTo({ top: 0, behavior: 'auto' });
-}
-
-function closeGallery() {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-    resetCatalogFilters();
-}
+        // Close the dropdown when clicking anywhere outside of it
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (menu.dataset.open === 'true' && !menu.contains(e.target) && !btn.contains(e.target)) {
+                toggleMobileMenu(true);
+            }
+        });
 
         // Close gallery on Escape key press
         document.addEventListener('keydown', (e) => {
             if (e.key !== 'Escape') return;
+
+            const mobileMenuEl = document.getElementById('mobile-menu');
+            if (mobileMenuEl.dataset.open === 'true') {
+                toggleMobileMenu(true);
+                return;
+            }
 
             const orientationModal = document.getElementById('orientation-modal');
             if (orientationModal.classList.contains('open')) {
