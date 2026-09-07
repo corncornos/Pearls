@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pearls Water — Catalog Admin</title>
+<title>Pearls Water — Admin</title>
 <meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -21,6 +21,10 @@
   .product-row.drag-over-bottom { border-bottom: 2px solid #00D4FF; }
   .dropzone { transition: border-color 0.15s, background-color 0.15s; }
   .dropzone.drag-over { border-color: #00D4FF; background: rgba(0,212,255,0.08); }
+  .admin-tab { transition: all 0.15s; }
+  .admin-tab.active { background:#00D4FF; color:#0A1428; }
+  .admin-tab:not(.active) { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.6); }
+  input[type="color"] { padding:2px; height:44px; cursor:pointer; }
 </style>
 </head>
 <body class="min-h-screen text-white">
@@ -28,7 +32,7 @@
   <!-- LOGIN VIEW -->
   <div id="login-view" class="min-h-screen flex items-center justify-center p-4">
     <div class="card rounded-2xl p-8 w-full max-w-sm">
-      <h1 class="text-xl font-bold mb-1">Catalog Admin</h1>
+      <h1 class="text-xl font-bold mb-1">Admin</h1>
       <p class="text-white/50 text-sm mb-6">Pearls Water — internal use only</p>
       <input id="password-input" type="password" placeholder="Admin password" class="w-full rounded-lg px-4 py-3 mb-3" />
       <button id="login-btn" class="w-full bg-turquoise text-deep font-bold rounded-lg py-3 hover:opacity-90 transition">Log In</button>
@@ -40,30 +44,128 @@
   <div id="editor-view" class="hidden max-w-6xl mx-auto p-4 sm:p-8">
     <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
       <div>
-        <h1 class="text-2xl font-bold">Catalog Admin</h1>
+        <h1 class="text-2xl font-bold">Admin</h1>
         <p class="text-white/50 text-sm">Edits save straight to the live site.</p>
       </div>
-      <div class="flex gap-3">
-        <button id="add-btn" class="bg-white/10 hover:bg-white/20 rounded-lg px-4 py-2 font-semibold text-sm transition">+ Add Product</button>
-        <button id="save-btn" class="bg-turquoise text-deep font-bold rounded-lg px-5 py-2 text-sm hover:opacity-90 transition">Save All Changes</button>
-        <button id="logout-btn" class="bg-white/5 hover:bg-white/10 rounded-lg px-4 py-2 text-sm transition">Log Out</button>
-      </div>
+      <button id="logout-btn" class="bg-white/5 hover:bg-white/10 rounded-lg px-4 py-2 text-sm transition">Log Out</button>
+    </div>
+
+    <!-- Section Tabs -->
+    <div class="flex gap-2 mb-6">
+      <button id="tab-catalog-btn" class="admin-tab active rounded-full px-5 py-2 text-sm font-bold transition">Catalog</button>
+      <button id="tab-design-btn" class="admin-tab rounded-full px-5 py-2 text-sm font-bold transition">Site Design</button>
     </div>
 
     <p id="status-msg" class="mb-4 text-sm hidden break-words"></p>
 
-    <div id="product-list" class="space-y-4"></div>
+    <!-- CATALOG PANEL -->
+    <div id="panel-catalog">
+      <div class="flex justify-end gap-3 mb-4">
+        <button id="add-btn" class="bg-white/10 hover:bg-white/20 rounded-lg px-4 py-2 font-semibold text-sm transition">+ Add Product</button>
+        <button id="save-btn" class="bg-turquoise text-deep font-bold rounded-lg px-5 py-2 text-sm hover:opacity-90 transition">Save Catalog</button>
+      </div>
+      <div id="product-list" class="space-y-4"></div>
+    </div>
+
+    <!-- DESIGN PANEL -->
+    <div id="panel-design" class="hidden">
+      <div class="flex justify-end mb-4">
+        <button id="save-design-btn" class="bg-turquoise text-deep font-bold rounded-lg px-5 py-2 text-sm hover:opacity-90 transition">Save Site Design</button>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Colors -->
+        <div class="card rounded-xl p-5">
+          <h2 class="font-bold mb-4">Colors</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div><label class="text-xs text-white/50">Deep</label><input id="cfg-color-deep" type="color" class="w-full rounded-lg mt-1"></div>
+            <div><label class="text-xs text-white/50">Ocean</label><input id="cfg-color-ocean" type="color" class="w-full rounded-lg mt-1"></div>
+            <div><label class="text-xs text-white/50">Turquoise</label><input id="cfg-color-turquoise" type="color" class="w-full rounded-lg mt-1"></div>
+            <div><label class="text-xs text-white/50">Accent</label><input id="cfg-color-accent" type="color" class="w-full rounded-lg mt-1"></div>
+          </div>
+        </div>
+
+        <!-- Fonts -->
+        <div class="card rounded-xl p-5">
+          <h2 class="font-bold mb-4">Fonts</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div><label class="text-xs text-white/50">Heading font (CSS value)</label><input id="cfg-font-heading" type="text" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+            <div><label class="text-xs text-white/50">Body font (CSS value)</label><input id="cfg-font-body" type="text" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+          </div>
+        </div>
+
+        <!-- Logo -->
+        <div class="card rounded-xl p-5">
+          <h2 class="font-bold mb-4">Logo</h2>
+          <div class="grid grid-cols-3 gap-4">
+            <div><label class="text-xs text-white/50">Size (px)</label><input id="cfg-logo-size" type="number" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+            <div><label class="text-xs text-white/50">Top offset (px)</label><input id="cfg-logo-top" type="number" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+            <div><label class="text-xs text-white/50">Left offset (px)</label><input id="cfg-logo-left" type="number" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+          </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="card rounded-xl p-5">
+          <h2 class="font-bold mb-4">Hero Section</h2>
+          <div class="space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><label class="text-xs text-white/50">Line 1</label><input id="cfg-hero-line1" type="text" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+              <div><label class="text-xs text-white/50">Line 2</label><input id="cfg-hero-line2" type="text" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+            </div>
+            <div><label class="text-xs text-white/50">Subtext</label><textarea id="cfg-hero-subtext" rows="2" class="w-full rounded-lg px-3 py-2 mt-1"></textarea></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><label class="text-xs text-white/50">Primary button label</label><input id="cfg-hero-primary" type="text" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+              <div><label class="text-xs text-white/50">Secondary button label</label><input id="cfg-hero-secondary" type="text" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><label class="text-xs text-white/50">Title max size (px)</label><input id="cfg-hero-titlemax" type="number" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+              <div><label class="text-xs text-white/50">Background image URL</label><input id="cfg-hero-bgimage" type="text" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sections visibility -->
+        <div class="card rounded-xl p-5">
+          <h2 class="font-bold mb-4">Sections</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <label class="flex items-center gap-2 text-sm"><input id="cfg-section-packages" type="checkbox" class="w-4 h-4 accent-turquoise"> Packages</label>
+            <label class="flex items-center gap-2 text-sm"><input id="cfg-section-whyus" type="checkbox" class="w-4 h-4 accent-turquoise"> Why Us</label>
+            <label class="flex items-center gap-2 text-sm"><input id="cfg-section-testimonials" type="checkbox" class="w-4 h-4 accent-turquoise"> Testimonials</label>
+            <label class="flex items-center gap-2 text-sm"><input id="cfg-section-opportunity" type="checkbox" class="w-4 h-4 accent-turquoise"> Opportunity</label>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="card rounded-xl p-5">
+          <h2 class="font-bold mb-4">Footer</h2>
+          <div class="space-y-3">
+            <div><label class="text-xs text-white/50">Tagline</label><textarea id="cfg-footer-tagline" rows="2" class="w-full rounded-lg px-3 py-2 mt-1"></textarea></div>
+            <div><label class="text-xs text-white/50">Address (use a line break for multi-line)</label><textarea id="cfg-footer-address" rows="2" class="w-full rounded-lg px-3 py-2 mt-1"></textarea></div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div><label class="text-xs text-white/50">Email</label><input id="cfg-footer-email" type="text" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+              <div><label class="text-xs text-white/50">Phone 1</label><input id="cfg-footer-phone1" type="text" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+              <div><label class="text-xs text-white/50">Phone 2</label><input id="cfg-footer-phone2" type="text" class="w-full rounded-lg px-3 py-2 mt-1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 <script>
-const CATEGORIES = ["Purified Water Systems", "Mineral & High pH", "Consumables", "Services"];
+const CATEGORIES = ["Purified Water Systems", "Mineral & High pH", "Consumables", "Services", "Water Related Products"];
 const SUBCATEGORIES = ["Wall Hung Filters", "Sediment Filters", "Carbon Block", "UV Sterilizer", "Elements", "Heads", "FRP Tanks", "RO Membrane", "Filter Cartridge", "Accessories"];
 
 // Bundled fallback so the very first save has something sensible to start from.
-// This mirrors the catalog currently baked into index.html.
-const DEFAULT_PRODUCTS = [{"id": 1, "name": "Single Membrane System", "category": "Purified Water Systems", "price": "₱25,000", "desc": "Reliable single membrane purification for entry-level stations.", "images": ["/regenerated_image_1777348959001.png", "https://images.unsplash.com/photo-1523413651479-59cb1f1f619b?auto=format&fit=crop&q=80&w=600"]}, {"id": 2, "name": "Double Membrane System", "category": "Purified Water Systems", "price": "₱45,000", "desc": "Dual RO filtration strength for medium to high volume operations.", "images": ["/regenerated_image_1777348429470.png", "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&q=80&w=600"]}, {"id": 3, "name": "Triple Membrane (Auto)", "category": "Purified Water Systems", "price": "₱68,000", "desc": "Automated high-capacity triple membrane system for commercial use.", "images": ["/regenerated_image_1777348377790.png", "https://images.unsplash.com/photo-1550508821-654a1a3e6af2?auto=format&fit=crop&q=80&w=600"]}, {"id": 4, "name": "Quadruple Membrane", "category": "Purified Water Systems", "price": "₱90,000", "desc": "Industrial-grade heavy duty quadruple membrane setup.", "images": ["/regenerated_image_1777348345639.png", "https://images.unsplash.com/photo-1584486665790-2e45da27e9ff?auto=format&fit=crop&q=80&w=600"]}, {"id": 5, "name": "Mineral Water System", "category": "Mineral & High pH", "price": "₱35,000", "desc": "Remineralization system to add essential minerals back into purified water.", "images": ["/regenerated_image_1777348342303.png", "https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&q=80&w=600"]}, {"id": 6, "name": "High pH Alkaline Unit", "category": "Mineral & High pH", "price": "₱42,000", "desc": "Boosts your water pH securely for excellent alkaline health benefits.", "images": ["/regenerated_image_1777352616332.png", "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"]}, {"id": 7, "name": "Ultrafine Mineral + Alkaline", "category": "Mineral & High pH", "price": "₱55,000", "desc": "The ultimate 2-in-1 combo system providing both mineral and alkaline outputs.", "images": ["https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1606550262100-305141e5dc42?auto=format&fit=crop&q=80&w=600"]}, {"id": 8, "name": "3-in-1 Complete Station", "category": "Mineral & High pH", "price": "₱85,000", "desc": "Dispenses Purified, Mineral, and Alkaline from one integrated powerhouse.", "images": ["https://images.unsplash.com/photo-1606550262100-305141e5dc42?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1564419320461-6870880221ad?auto=format&fit=crop&q=80&w=600"]}, {"id": 18, "name": "Complete Rehab Treatment", "category": "Services", "price": "Get Quote", "desc": "Full system overhaul, deep sanitization, and pipe realignment.", "images": ["https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600"]}, {"id": 19, "name": "Membrane Replacement Labor", "category": "Services", "price": "₱1,500", "desc": "Professional on-site installation and tuning service.", "images": ["https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"]}, {"id": 20, "name": "Staff Re-training Course", "category": "Services", "price": "₱3,000", "desc": "Comprehensive on-site operational and maintenance training for your staff.", "images": ["https://plus.unsplash.com/premium_photo-1661631481102-127e9f3b1add?auto=format&fit=crop&q=80&w=600", "https://images.unsplash.com/photo-1582216503947-6bcf49457637?auto=format&fit=crop&q=80&w=600"]}, {"id": 101, "name": "PW1", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "", "images": ["/consumables/wallhungfilters/PW1.JPG"]}, {"id": 102, "name": "PW2", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "", "images": ["/consumables/wallhungfilters/PW2.JPG"]}, {"id": 103, "name": "Mineral", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "", "images": ["/consumables/wallhungfilters/MINERAL.JPG"]}, {"id": 104, "name": "M+", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "", "images": ["/consumables/wallhungfilters/M+.JPG"]}, {"id": 105, "name": "PW1 C", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "", "images": [""]}, {"id": 106, "name": "PW2 C", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "", "images": [""]}, {"id": 107, "name": "PW3 C", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "", "images": [""]}, {"id": 108, "name": "Mineral C", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "", "images": ["/consumables/wallhungfilters/MINERAL C.JPG"]}, {"id": 109, "name": "M+ C", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "", "images": [""]}, {"id": 110, "name": "Brine Tank", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "Available in 70, 80, and 120 liters", "images": ["/consumables/wallhungfilters/BRINE TANK.JPG"]}, {"id": 111, "name": "PU Elbow (10 or 12 mm)", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "Available in 10 and 12 mm", "images": ["/consumables/wallhungfilters/PU ELBOW.JPG"]}, {"id": 112, "name": "PU Straight (10 or 12 mm)", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "Available in 10 and 12 mm", "images": ["/consumables/wallhungfilters/PU STRAIGHT.JPG"]}, {"id": 113, "name": "Quick Connect (1/2 or 1/4)", "category": "Consumables", "subCategory": "Wall Hung Filters", "price": "Ask for Price", "desc": "Available in 1/2 and 1/4", "images": ["/consumables/wallhungfilters/QUICK CONNECT.JPG"]}, {"id": 120, "name": "10x54", "category": "Consumables", "subCategory": "Sediment Filters", "price": "Ask for Price", "desc": "", "images": [""]}, {"id": 121, "name": "13x54", "category": "Consumables", "subCategory": "Sediment Filters", "price": "Ask for Price", "desc": "", "images": [""]}, {"id": 122, "name": "16x54", "category": "Consumables", "subCategory": "Sediment Filters", "price": "Ask for Price", "desc": "", "images": [""]}, {"id": 123, "name": "AC Cream", "category": "Consumables", "subCategory": "Carbon Block", "price": "Ask for Price", "desc": "Hydrosep", "images": ["/ac cream.png"]}, {"id": 124, "name": "AC Green", "category": "Consumables", "subCategory": "Carbon Block", "price": "Ask for Price", "desc": "CocoPure, CocoPlus, CocoOne, CocoSure", "images": ["/consumables/sediment/ac green.JPG"]}, {"id": 170, "name": "UV Lamp", "category": "Consumables", "subCategory": "UV Sterilizer", "price": "Ask for Price", "desc": "Available in 16, 24, 25, and 35 watts", "images": ["https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"]}, {"id": 171, "name": "UV Ballast", "category": "Consumables", "subCategory": "UV Sterilizer", "price": "Ask for Price", "desc": "Available in 16, 24, 25, and 35 watts", "images": ["https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"]}, {"id": 172, "name": "UV Chamber", "category": "Consumables", "subCategory": "UV Sterilizer", "price": "Ask for Price", "desc": "Available in 16, 24, 25, and 35 watts", "images": ["https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"]}, {"id": 173, "name": "UV Quartz Glass", "category": "Consumables", "subCategory": "UV Sterilizer", "price": "Ask for Price", "desc": "Available in 16, 24, 25, and 35 watts", "images": ["https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"]}, {"id": 130, "name": "Activated Carbon", "category": "Consumables", "subCategory": "Elements", "price": "Ask for Price", "desc": "", "images": ["/carbon.png"]}, {"id": 131, "name": "Anthracite", "category": "Consumables", "subCategory": "Elements", "price": "Ask for Price", "desc": "", "images": ["/anthracite.jpeg"]}, {"id": 132, "name": "Pebbles", "category": "Consumables", "subCategory": "Elements", "price": "Ask for Price", "desc": "", "images": ["/pebbles.png"]}, {"id": 133, "name": "Resin", "category": "Consumables", "subCategory": "Elements", "price": "Ask for Price", "desc": "", "images": ["/consumables/elements/RESIN.webp"]}, {"id": 134, "name": "Salt", "category": "Consumables", "subCategory": "Elements", "price": "Ask for Price", "desc": "", "images": ["/claro vida salt.png"]}, {"id": 135, "name": "Silica Sand", "category": "Consumables", "subCategory": "Elements", "price": "Ask for Price", "desc": "", "images": ["consumables/elements/SILICA_SAND.png"]}, {"id": 136, "name": "Solenoid Valve", "category": "Consumables", "subCategory": "Elements", "price": "Ask for Price", "desc": "", "images": ["/consumables/elements/SOLENOID_VALVE.png"]}, {"id": 140, "name": "Manual Head Softener", "category": "Consumables", "subCategory": "Heads", "price": "Ask for Price", "desc": "", "images": ["/consumables/heads//MANUAL_HEAD_SOFTENER.png"]}, {"id": 141, "name": "Manual Head Multimedia of Carbon", "category": "Consumables", "subCategory": "Heads", "price": "Ask for Price", "desc": "", "images": ["/consumables/heads//MANUAL_HEAD_MULTIMEDIA OF_CARBON.png"]}, {"id": 142, "name": "Automatic Head Softener", "category": "Consumables", "subCategory": "Heads", "price": "Ask for Price", "desc": "", "images": ["consumables/heads/AUTOMATIC_HEAD_SOFTENER.png"]}, {"id": 143, "name": "10x54", "category": "Consumables", "subCategory": "FRP Tanks", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"]}, {"id": 144, "name": "13x54", "category": "Consumables", "subCategory": "FRP Tanks", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"]}, {"id": 145, "name": "16x54", "category": "Consumables", "subCategory": "FRP Tanks", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=600"]}, {"id": 154, "name": "40X40", "category": "Consumables", "subCategory": "RO Membrane", "price": "Ask for Price", "desc": "Vontron (ULP 21, ULP 11), Dupont-Filmtec Before (BW 30), Netto (Espa 3, Espa 4), Octagon, Hydropure, YQS, American Power", "images": ["https://images.unsplash.com/photo-1523413651479-59cb1f1f619b?auto=format&fit=crop&q=80&w=600"]}, {"id": 155, "name": "80x40", "category": "Consumables", "subCategory": "RO Membrane", "price": "Ask for Price", "desc": "Dupont-Filmtec Before (RO 400, RO 400 Advance), American Power (RO 400, RO 400 Advance)", "images": ["https://images.unsplash.com/photo-1523413651479-59cb1f1f619b?auto=format&fit=crop&q=80&w=600"]}, {"id": 160, "name": "SL10 Blue/Clear", "category": "Consumables", "subCategory": "Filter Cartridge", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&q=80&w=600"]}, {"id": 161, "name": "SL 20 Blue/Clear", "category": "Consumables", "subCategory": "Filter Cartridge", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&q=80&w=600"]}, {"id": 162, "name": "BB20", "category": "Consumables", "subCategory": "Filter Cartridge", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&q=80&w=600"]}, {"id": 163, "name": "Membrane", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "Available in manual and reverse osmosis", "images": ["https://images.unsplash.com/photo-1523413651479-59cb1f1f619b?auto=format&fit=crop&q=80&w=600"]}, {"id": 164, "name": "Spanner", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "Available in black and white", "images": ["https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&q=80&w=600"]}, {"id": 165, "name": "Upper Strainer", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&q=80&w=600"]}, {"id": 166, "name": "Lower Strainer", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&q=80&w=600"]}, {"id": 167, "name": "Oil Pressure Gauge", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "Available in 100 psi and 350 psi", "images": ["https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600"]}, {"id": 168, "name": "Flow Meter", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600"]}, {"id": 169, "name": "Selector Switch", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600"]}, {"id": 174, "name": "Pilot Light", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "Available in red, green, and blue", "images": ["https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600"]}, {"id": 175, "name": "Buzzer", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600"]}, {"id": 176, "name": "Timer", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600"]}, {"id": 177, "name": "Heat Gun", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&q=80&w=600"]}, {"id": 178, "name": "Blue Hose", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&q=80&w=600"]}, {"id": 179, "name": "White Hose", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "", "images": ["https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&q=80&w=600"]}, {"id": 180, "name": "PVC Clamp White", "category": "Consumables", "subCategory": "Accessories", "price": "Ask for Price", "desc": "Available in size big and small", "images": ["https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&q=80&w=600"]}];
+// Kept in sync with /catalog-defaults.js (single source of truth) - loaded below
+// as a script include so this file no longer carries its own stale duplicate.
+</script>
+<script src="/catalog-defaults.js"></script>
+<script src="/site-config-defaults.js"></script>
+<script>
 
 let products = [];
+let siteConfig = null;
 const listEl = document.getElementById('product-list');
 const statusEl = document.getElementById('status-msg');
 
@@ -74,17 +176,27 @@ function showStatus(msg, isError = false) {
   setTimeout(() => statusEl.classList.add('hidden'), isError ? 15000 : 4000);
 }
 
+// ---- Tab switching ----
+function showTab(tab) {
+  const isCatalog = tab === 'catalog';
+  document.getElementById('panel-catalog').classList.toggle('hidden', !isCatalog);
+  document.getElementById('panel-design').classList.toggle('hidden', isCatalog);
+  document.getElementById('tab-catalog-btn').classList.toggle('active', isCatalog);
+  document.getElementById('tab-design-btn').classList.toggle('active', !isCatalog);
+}
+document.getElementById('tab-catalog-btn').addEventListener('click', () => showTab('catalog'));
+document.getElementById('tab-design-btn').addEventListener('click', () => showTab('design'));
+
+// ---- Catalog logic (unchanged behavior) ----
 function nextId() {
   return products.reduce((max, p) => Math.max(max, Number(p.id) || 0), 0) + 1;
 }
-
 function escapeHtml(str) {
   return String(str).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 }
 function escapeAttr(str) {
   return String(str).replace(/"/g, '&quot;');
 }
-
 function thumbsMarkup(idx) {
   const p = products[idx];
   return (p.images || []).filter(Boolean).map((img, imgIdx) => `
@@ -178,16 +290,13 @@ function attachDragHandlers() {
       dragSrcIdx = Number(row.dataset.idx);
       row.classList.add('dragging');
       e.dataTransfer.effectAllowed = 'move';
-      // Firefox requires setData to enable dragging
       e.dataTransfer.setData('text/plain', String(dragSrcIdx));
     });
-
     row.addEventListener('dragend', () => {
       row.classList.remove('dragging');
       rows.forEach(r => r.classList.remove('drag-over-top', 'drag-over-bottom'));
       dragSrcIdx = null;
     });
-
     row.addEventListener('dragover', (e) => {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'move';
@@ -198,32 +307,26 @@ function attachDragHandlers() {
       row.classList.toggle('drag-over-bottom', isAfter);
       row.classList.toggle('drag-over-top', !isAfter);
     });
-
     row.addEventListener('dragleave', () => {
       row.classList.remove('drag-over-top', 'drag-over-bottom');
     });
-
     row.addEventListener('drop', (e) => {
       e.preventDefault();
       row.classList.remove('drag-over-top', 'drag-over-bottom');
       const targetIdx = Number(row.dataset.idx);
       if (dragSrcIdx === null || targetIdx === dragSrcIdx) return;
-
       const rect = row.getBoundingClientRect();
       const isAfter = (e.clientY - rect.top) > rect.height / 2;
       let insertAt = isAfter ? targetIdx + 1 : targetIdx;
-
       const [moved] = products.splice(dragSrcIdx, 1);
-      if (dragSrcIdx < insertAt) insertAt -= 1; // account for the removed item shifting indices
+      if (dragSrcIdx < insertAt) insertAt -= 1;
       products.splice(insertAt, 0, moved);
       render();
     });
   });
 }
 
-// --- Image drag-and-drop upload -------------------------------------------------
-
-const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // 4MB, matches api/upload-image.js
+const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
 
 function updateImagesUI(idx) {
   const thumbs = listEl.querySelector(`[data-thumbs="${idx}"]`);
@@ -245,26 +348,25 @@ function onRemoveImageClick(e) {
 
 async function uploadFiles(idx, fileList) {
   const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
-  const statusEl = listEl.querySelector(`[data-upload-status="${idx}"]`);
+  const statusElLocal = listEl.querySelector(`[data-upload-status="${idx}"]`);
   if (files.length === 0) {
-    if (statusEl) {
-      statusEl.textContent = 'Only image files are supported.';
-      statusEl.className = 'text-[11px] mt-1 min-h-[1em] text-red-400';
+    if (statusElLocal) {
+      statusElLocal.textContent = 'Only image files are supported.';
+      statusElLocal.className = 'text-[11px] mt-1 min-h-[1em] text-red-400';
     }
     return;
   }
-
   for (const file of files) {
     if (file.size > MAX_UPLOAD_BYTES) {
-      if (statusEl) {
-        statusEl.textContent = `${file.name} is too large (max ${MAX_UPLOAD_BYTES / (1024 * 1024)}MB).`;
-        statusEl.className = 'text-[11px] mt-1 min-h-[1em] text-red-400';
+      if (statusElLocal) {
+        statusElLocal.textContent = `${file.name} is too large (max ${MAX_UPLOAD_BYTES / (1024 * 1024)}MB).`;
+        statusElLocal.className = 'text-[11px] mt-1 min-h-[1em] text-red-400';
       }
       continue;
     }
-    if (statusEl) {
-      statusEl.textContent = `Uploading ${file.name}...`;
-      statusEl.className = 'text-[11px] mt-1 min-h-[1em] text-white/50';
+    if (statusElLocal) {
+      statusElLocal.textContent = `Uploading ${file.name}...`;
+      statusElLocal.className = 'text-[11px] mt-1 min-h-[1em] text-white/50';
     }
     try {
       const res = await fetch(`/api/upload-image?filename=${encodeURIComponent(file.name)}`, {
@@ -282,21 +384,20 @@ async function uploadFiles(idx, fileList) {
 
       products[idx].images = [...(products[idx].images || []), data.url];
       updateImagesUI(idx);
-      if (statusEl) {
-        statusEl.textContent = `Uploaded ${file.name}`;
-        statusEl.className = 'text-[11px] mt-1 min-h-[1em] text-turquoise';
+      if (statusElLocal) {
+        statusElLocal.textContent = `Uploaded ${file.name}`;
+        statusElLocal.className = 'text-[11px] mt-1 min-h-[1em] text-turquoise';
       }
     } catch (err) {
-      if (statusEl) {
-        statusEl.textContent = String(err.message || err);
-        statusEl.className = 'text-[11px] mt-1 min-h-[1em] text-red-400';
+      if (statusElLocal) {
+        statusElLocal.textContent = String(err.message || err);
+        statusElLocal.className = 'text-[11px] mt-1 min-h-[1em] text-red-400';
       }
       console.error('Image upload failed:', err);
     }
   }
-
   setTimeout(() => {
-    if (statusEl) statusEl.textContent = '';
+    if (statusElLocal) statusElLocal.textContent = '';
   }, 4000);
 }
 
@@ -304,22 +405,18 @@ function attachImageUploadHandlers() {
   listEl.querySelectorAll('[data-dropzone]').forEach(zone => {
     const idx = Number(zone.dataset.dropzone);
     const fileInput = listEl.querySelector(`[data-fileinput="${idx}"]`);
-
     zone.addEventListener('click', () => fileInput.click());
-
     fileInput.addEventListener('change', () => {
       if (fileInput.files.length) uploadFiles(idx, fileInput.files);
       fileInput.value = '';
     });
-
     ['dragenter', 'dragover'].forEach(evt => {
       zone.addEventListener(evt, (e) => {
         e.preventDefault();
-        e.stopPropagation(); // don't trigger the row's own reorder-drag handlers
+        e.stopPropagation();
         zone.classList.add('drag-over');
       });
     });
-
     ['dragleave', 'drop'].forEach(evt => {
       zone.addEventListener(evt, (e) => {
         e.preventDefault();
@@ -327,19 +424,15 @@ function attachImageUploadHandlers() {
         zone.classList.remove('drag-over');
       });
     });
-
     zone.addEventListener('drop', (e) => {
       const dtFiles = e.dataTransfer && e.dataTransfer.files;
       if (dtFiles && dtFiles.length) uploadFiles(idx, dtFiles);
     });
   });
-
   listEl.querySelectorAll('[data-remove-img]').forEach(btn => {
     btn.addEventListener('click', onRemoveImageClick);
   });
 }
-
-// ----------------------------------------------------------------------------
 
 function onFieldChange(e) {
   const idx = Number(e.target.dataset.idx);
@@ -350,7 +443,7 @@ function onFieldChange(e) {
   } else {
     products[idx][field] = e.target.value;
   }
-  if (field === 'category') render(); // toggle subcategory field visibility
+  if (field === 'category') render();
 }
 
 document.getElementById('add-btn').addEventListener('click', () => {
@@ -379,6 +472,107 @@ document.getElementById('save-btn').addEventListener('click', async () => {
   } catch (err) {
     showStatus(String(err.message || err), true);
     console.error('Save failed:', err);
+  }
+});
+
+// ---- Design (site-config) logic ----
+function fillDesignForm(cfg) {
+  document.getElementById('cfg-color-deep').value = cfg.colors?.deep || '#123A66';
+  document.getElementById('cfg-color-ocean').value = cfg.colors?.ocean || '#1C6FB5';
+  document.getElementById('cfg-color-turquoise').value = cfg.colors?.turquoise || '#00D4FF';
+  document.getElementById('cfg-color-accent').value = cfg.colors?.accent || '#2E86DE';
+
+  document.getElementById('cfg-font-heading').value = cfg.fonts?.heading || "'Montserrat', sans-serif";
+  document.getElementById('cfg-font-body').value = cfg.fonts?.body || "'Inter', sans-serif";
+
+  document.getElementById('cfg-logo-size').value = cfg.logo?.size ?? 235;
+  document.getElementById('cfg-logo-top').value = cfg.logo?.top ?? -30;
+  document.getElementById('cfg-logo-left').value = cfg.logo?.left ?? 44;
+
+  document.getElementById('cfg-hero-line1').value = cfg.hero?.line1 || '';
+  document.getElementById('cfg-hero-line2').value = cfg.hero?.line2 || '';
+  document.getElementById('cfg-hero-subtext').value = cfg.hero?.subtext || '';
+  document.getElementById('cfg-hero-primary').value = cfg.hero?.primaryBtnLabel || '';
+  document.getElementById('cfg-hero-secondary').value = cfg.hero?.secondaryBtnLabel || '';
+  document.getElementById('cfg-hero-titlemax').value = cfg.hero?.titleMaxSize ?? 110;
+  document.getElementById('cfg-hero-bgimage').value = cfg.hero?.bgImage || '';
+
+  document.getElementById('cfg-section-packages').checked = cfg.sections?.packages !== false;
+  document.getElementById('cfg-section-whyus').checked = cfg.sections?.whyUs !== false;
+  document.getElementById('cfg-section-testimonials').checked = cfg.sections?.testimonials !== false;
+  document.getElementById('cfg-section-opportunity').checked = cfg.sections?.opportunity !== false;
+
+  document.getElementById('cfg-footer-tagline').value = cfg.footer?.tagline || '';
+  document.getElementById('cfg-footer-address').value = cfg.footer?.address || '';
+  document.getElementById('cfg-footer-email').value = cfg.footer?.email || '';
+  document.getElementById('cfg-footer-phone1').value = cfg.footer?.phone1 || '';
+  document.getElementById('cfg-footer-phone2').value = cfg.footer?.phone2 || '';
+}
+
+function readDesignForm() {
+  return {
+    colors: {
+      deep: document.getElementById('cfg-color-deep').value,
+      ocean: document.getElementById('cfg-color-ocean').value,
+      turquoise: document.getElementById('cfg-color-turquoise').value,
+      accent: document.getElementById('cfg-color-accent').value,
+    },
+    fonts: {
+      heading: document.getElementById('cfg-font-heading').value,
+      body: document.getElementById('cfg-font-body').value,
+    },
+    logo: {
+      size: Number(document.getElementById('cfg-logo-size').value) || 235,
+      top: Number(document.getElementById('cfg-logo-top').value) || 0,
+      left: Number(document.getElementById('cfg-logo-left').value) || 0,
+    },
+    hero: {
+      line1: document.getElementById('cfg-hero-line1').value,
+      line2: document.getElementById('cfg-hero-line2').value,
+      subtext: document.getElementById('cfg-hero-subtext').value,
+      primaryBtnLabel: document.getElementById('cfg-hero-primary').value,
+      secondaryBtnLabel: document.getElementById('cfg-hero-secondary').value,
+      titleMaxSize: Number(document.getElementById('cfg-hero-titlemax').value) || 110,
+      bgImage: document.getElementById('cfg-hero-bgimage').value,
+    },
+    sections: {
+      packages: document.getElementById('cfg-section-packages').checked,
+      whyUs: document.getElementById('cfg-section-whyus').checked,
+      testimonials: document.getElementById('cfg-section-testimonials').checked,
+      opportunity: document.getElementById('cfg-section-opportunity').checked,
+    },
+    footer: {
+      tagline: document.getElementById('cfg-footer-tagline').value,
+      address: document.getElementById('cfg-footer-address').value,
+      email: document.getElementById('cfg-footer-email').value,
+      phone1: document.getElementById('cfg-footer-phone1').value,
+      phone2: document.getElementById('cfg-footer-phone2').value,
+    },
+  };
+}
+
+document.getElementById('save-design-btn').addEventListener('click', async () => {
+  try {
+    const config = readDesignForm();
+    const res = await fetch('/api/site-config', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(config),
+    });
+    let data;
+    try {
+      data = await res.json();
+    } catch (parseErr) {
+      throw new Error(`Server returned a non-JSON response (status ${res.status}). Check Vercel function logs.`);
+    }
+    if (!res.ok) {
+      const msg = [data.error, data.detail].filter(Boolean).join(' — ');
+      throw new Error(msg || `Save failed (status ${res.status})`);
+    }
+    showStatus('Saved site design. Live site will pick these up on next page load.');
+  } catch (err) {
+    showStatus(String(err.message || err), true);
+    console.error('Design save failed:', err);
   }
 });
 
@@ -414,14 +608,26 @@ async function login() {
 async function enterEditor() {
   document.getElementById('login-view').classList.add('hidden');
   document.getElementById('editor-view').classList.remove('hidden');
+
+  // Load catalog
   try {
     const res = await fetch('/api/products');
     const data = await res.json();
-    products = (data.products && data.products.length) ? data.products : DEFAULT_PRODUCTS.slice();
+    products = (data.products && data.products.length) ? data.products : (window.DEFAULT_PRODUCTS || []).slice();
   } catch (err) {
-    products = DEFAULT_PRODUCTS.slice();
+    products = (window.DEFAULT_PRODUCTS || []).slice();
   }
   render();
+
+  // Load site design config
+  try {
+    const res = await fetch('/api/site-config');
+    const data = await res.json();
+    siteConfig = (data && data.config) ? data.config : (window.DEFAULT_SITE_CONFIG || {});
+  } catch (err) {
+    siteConfig = window.DEFAULT_SITE_CONFIG || {};
+  }
+  fillDesignForm(siteConfig);
 }
 
 // If already logged in (cookie still valid), skip straight to the editor.
