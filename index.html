@@ -6,35 +6,50 @@
     <title>Pearls Water Corporation</title>
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        deep: '#123A66',
-                        ocean: '#1C6FB5',
-                        turquoise: '#00D4FF',
-                        accent: '#2E86DE'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
+   <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    deep: 'var(--color-deep)',
+                    ocean: 'var(--color-ocean)',
+                    turquoise: 'var(--color-turquoise)',
+                    accent: 'var(--color-accent)'
+                },
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
                 }
             }
         }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    }
+</script>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@600;700&family=Poppins:wght@400;600;700&family=Roboto:wght@400;500;700&family=Playfair+Display:wght@600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <!-- Feather Icons for lightweight UI icons -->
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #cbd7e5; 
-            color: #123A66; 
-            margin: 0; 
-            padding: 0;
-            overflow-x: hidden;
-        }
+
+        :root {
+    --color-deep: #123A66;
+    --color-ocean: #1C6FB5;
+    --color-turquoise: #00D4FF;
+    --color-accent: #2E86DE;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --hero-title-max: 110px;
+    --hero-bg-image: url('/public/spl4.jpg');
+    --logo-size: 235px;
+    --logo-top: -30px;
+    --logo-left: 44px;
+}
+h1, h2, h3 { font-family: var(--font-heading), var(--font-body); }
+body { 
+    font-family: var(--font-body); 
+    background-color: #cbd7e5; 
+    color: #123A66; 
+    margin: 0; 
+    padding: 0;
+    overflow-x: hidden;
+}
         /* Modern UI Improvements */
         .glass-panel {
            background: rgba(27, 116, 185, 0.55);
@@ -45,21 +60,20 @@
         }
 
         
- .hero-bg {
-    background-image: url('/public/spl4.jpg');
+.hero-bg {
+    background-image: var(--hero-bg-image);
     background-color: #123A66;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
 
-        .hero-title {
-            font-size: min(12vw, 110px);
-            line-height: 0.85;
-            letter-spacing: -0.03em;
-            font-weight: 800;
-        }
-
+ .hero-title {
+    font-size: min(12vw, var(--hero-title-max));
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+}
         .glow-btn {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -190,7 +204,7 @@
 <body class="antialiased min-h-screen flex flex-col">
 
 <!-- Logo: fixed top-left, standalone -->
-<a href="#" onclick="event.preventDefault(); closeGallery(); if(document.getElementById('mobile-menu').dataset.open === 'true') toggleMobileMenu(true); window.scrollTo({top:0, behavior:'smooth'});" aria-label="Pearls Water Home" class="fixed top-[-30px] left-11 sm:left-12 lg:left-22 z-50 flex items-center justify-center flex-shrink-0 h-[235px] w-[235px] cursor-pointer">
+<a id="logo-link" href="#" onclick="event.preventDefault(); closeGallery(); if(document.getElementById('mobile-menu').dataset.open === 'true') toggleMobileMenu(true); window.scrollTo({top:0, behavior:'smooth'});" aria-label="Pearls Water Home" class="fixed z-50 flex items-center justify-center flex-shrink-0 cursor-pointer" style="top:var(--logo-top); left:var(--logo-left); height:var(--logo-size); width:var(--logo-size);">
     <img src="/pearls-logo.png" alt="Pearls Water Logo" class="w-full h-full object-contain drop-shadow-[0_4px_14px_rgba(0,0,0,0.5)]" />
 </a>
 
@@ -242,25 +256,24 @@
             
     <div class="relative z-10 text-left px-4 sm:px-10 lg:px-20 max-w-3xl flex flex-col items-start pt-50 sm:pt-54 lg:pt-52">
             
-            <h2 class="hero-title mb-6 text-white" style="text-shadow: 0 4px 24px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.5);">
-                Safe, Clean and<br/>
-                <span class="text-turquoise" style="text-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.5);">Quality Water.</span>
-            </h2>
-            
-            <p class="text-lg md:text-2xl text-white/90 mb-14 max-w-2xl leading-relaxed font-light" style="text-shadow: 0 2px 12px rgba(0,0,0,0.5);">
-                Embrace the cutting-edge design of a safer and healthier water treatment systems provider.
-            </p>
+  <h2 class="hero-title mb-6 text-white" style="text-shadow: 0 4px 24px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.5);">
+    <span id="hero-line1-text">Safe, Clean and</span><br/>
+    <span id="hero-line2-text" class="text-turquoise" style="text-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.5);">Quality Water.</span>
+</h2>
+
+<p id="hero-subtext" class="text-lg md:text-2xl text-white/90 mb-14 max-w-2xl leading-relaxed font-light" style="text-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+    Embrace the cutting-edge design of a safer and healthier water treatment systems provider.
+</p>
             
             <div class="flex flex-col sm:flex-row items-center justify-start gap-4 sm:gap-6 w-full">
                 <!-- Primary CTA -->
-                <button onclick="openGallery()" class="glow-btn border-none outline-none overflow-hidden transform-gpu px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-ocean to-turquoise text-white rounded-full font-bold text-base sm:text-lg uppercase tracking-wider transition-all hover:-translate-y-1 w-full sm:w-auto shadow-lg shadow-turquoise/40 flex justify-center items-center">
-                    Check Our Products
-                </button>
-                
-                <!-- Secondary CTA -->
-                <button onclick="openOrientationModal('General Quote Request')" class="px-8 sm:px-10 py-4 sm:py-5 bg-white/5 backdrop-blur-sm border-2 border-white/30 hover:border-white hover:bg-white hover:text-ocean text-white rounded-full font-bold text-base sm:text-lg uppercase tracking-wider transition-all w-full sm:w-auto hover:-translate-y-1 shadow-lg flex justify-center items-center">
-                    Get a Quote
-                </button>
+           <button onclick="openGallery()" class="glow-btn border-none outline-none overflow-hidden transform-gpu px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-ocean to-turquoise text-white rounded-full font-bold text-base sm:text-lg uppercase tracking-wider transition-all hover:-translate-y-1 w-full sm:w-auto shadow-lg shadow-turquoise/40 flex justify-center items-center">
+    <span id="hero-primary-btn-label">Check Our Products</span>
+</button>
+
+<button onclick="openOrientationModal('General Quote Request')" class="px-8 sm:px-10 py-4 sm:py-5 bg-white/5 backdrop-blur-sm border-2 border-white/30 hover:border-white hover:bg-white hover:text-ocean text-white rounded-full font-bold text-base sm:text-lg uppercase tracking-wider transition-all w-full sm:w-auto hover:-translate-y-1 shadow-lg flex justify-center items-center">
+    <span id="hero-secondary-btn-label">Get a Quote</span>
+</button>
             </div>
         </div>
     </header>
@@ -562,7 +575,7 @@
                     </div>
 
                     
-                    <p class="text-sm text-gray-400 mb-8 leading-relaxed max-w-sm">Premium purification technology delivering perfect, clean water. Empowering communities and businesses across the Philippines.</p>
+       <p id="footer-tagline" class="text-sm text-gray-400 mb-8 leading-relaxed max-w-sm">Premium purification technology delivering perfect, clean water. Empowering communities and businesses across the Philippines.</p>
                     <div class="flex gap-4">
                         <a href="https://www.facebook.com/profile.php?id=61551875476595" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:bg-turquoise hover:border-turquoise hover:text-white transition-all"><i data-feather="facebook" class="w-4 h-4"></i></a>
                         <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:bg-turquoise hover:border-turquoise hover:text-white transition-all"><i data-feather="instagram" class="w-4 h-4"></i></a>
@@ -586,12 +599,12 @@
                     <ul class="space-y-4 text-sm">
                         <li class="flex items-start gap-4">
                             <i data-feather="map-pin" class="w-5 h-5 text-turquoise flex-shrink-0 mt-0.5 opacity-80"></i>
-                            <span class="text-gray-400 leading-relaxed">Pearl Street, Business District<br/>Metro Manila, Philippines</span>
+      <span id="footer-address" class="text-gray-400 leading-relaxed">Pearl Street, Business District<br/>Metro Manila, Philippines</span>
                         </li>
 
                         <li class="flex items-center gap-4">
                             <i data-feather="mail" class="w-5 h-5 text-turquoise flex-shrink-0 opacity-80"></i>
-                            <span class="text-gray-400">pearlswater48@gmail.com</span>
+        <span id="footer-email" class="text-gray-400">pearlswater48@gmail.com</span>
                         </li>
                         
                          <li class="flex items-center gap-4">
@@ -836,12 +849,77 @@
     </div>
 
     <!-- Shared fallback catalog (also used by admin.html) -->
-    <script src="/catalog-defaults.js"></script>
-
+ <script src="/catalog-defaults.js"></script>
+<script src="/site-config-defaults.js"></script>
     <!-- Application Logic -->
     <script>
         // Initialize icons
         feather.replace();
+
+        function applySiteConfig(cfg) {
+    if (!cfg) return;
+    const root = document.documentElement.style;
+    if (cfg.colors) {
+        if (cfg.colors.deep) root.setProperty('--color-deep', cfg.colors.deep);
+        if (cfg.colors.ocean) root.setProperty('--color-ocean', cfg.colors.ocean);
+        if (cfg.colors.turquoise) root.setProperty('--color-turquoise', cfg.colors.turquoise);
+        if (cfg.colors.accent) root.setProperty('--color-accent', cfg.colors.accent);
+    }
+    if (cfg.fonts) {
+        if (cfg.fonts.heading) root.setProperty('--font-heading', cfg.fonts.heading);
+        if (cfg.fonts.body) root.setProperty('--font-body', cfg.fonts.body);
+    }
+    if (cfg.logo) {
+        if (cfg.logo.size) root.setProperty('--logo-size', cfg.logo.size + 'px');
+        if (cfg.logo.top !== undefined) root.setProperty('--logo-top', cfg.logo.top + 'px');
+        if (cfg.logo.left !== undefined) root.setProperty('--logo-left', cfg.logo.left + 'px');
+    }
+    if (cfg.hero) {
+        if (cfg.hero.titleMaxSize) root.setProperty('--hero-title-max', cfg.hero.titleMaxSize + 'px');
+        if (cfg.hero.bgImage) root.setProperty('--hero-bg-image', `url('${cfg.hero.bgImage}')`);
+        const l1 = document.getElementById('hero-line1-text');
+        const l2 = document.getElementById('hero-line2-text');
+        const sub = document.getElementById('hero-subtext');
+        const p1 = document.getElementById('hero-primary-btn-label');
+        const p2 = document.getElementById('hero-secondary-btn-label');
+        if (l1 && cfg.hero.line1) l1.textContent = cfg.hero.line1;
+        if (l2 && cfg.hero.line2) l2.textContent = cfg.hero.line2;
+        if (sub && cfg.hero.subtext) sub.textContent = cfg.hero.subtext;
+        if (p1 && cfg.hero.primaryBtnLabel) p1.textContent = cfg.hero.primaryBtnLabel;
+        if (p2 && cfg.hero.secondaryBtnLabel) p2.textContent = cfg.hero.secondaryBtnLabel;
+    }
+    if (cfg.sections) {
+        const map = { packages: 'packages', whyUs: 'why-us', testimonials: 'testimonials', opportunity: 'opportunity' };
+        Object.keys(map).forEach(key => {
+            const el = document.getElementById(map[key]);
+            if (el) el.style.display = (cfg.sections[key] === false) ? 'none' : '';
+        });
+    }
+    if (cfg.footer) {
+        const tag = document.getElementById('footer-tagline');
+        const addr = document.getElementById('footer-address');
+        const email = document.getElementById('footer-email');
+        const ph1 = document.getElementById('footer-phone1');
+        const ph2 = document.getElementById('footer-phone2');
+        if (tag && cfg.footer.tagline) tag.textContent = cfg.footer.tagline;
+        if (addr && cfg.footer.address) addr.innerHTML = cfg.footer.address.replace(/\n/g, '<br/>');
+        if (email && cfg.footer.email) email.textContent = cfg.footer.email;
+        if (ph1 && cfg.footer.phone1) ph1.textContent = cfg.footer.phone1;
+        if (ph2 && cfg.footer.phone2) ph2.textContent = cfg.footer.phone2;
+    }
+}
+
+applySiteConfig(window.DEFAULT_SITE_CONFIG);
+
+(async function loadLiveSiteConfig() {
+    try {
+        const res = await fetch('/api/site-config');
+        const data = await res.json();
+        if (data && data.config) applySiteConfig(data.config);
+    } catch (err) {
+        // keep bundled defaults
+    }
+})();
 
         // Product Catalog Data - starts from the shared bundled defaults;
         // loadLiveCatalog() below overwrites this with the live Blob data if one exists.
