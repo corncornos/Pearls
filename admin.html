@@ -51,11 +51,151 @@
     <p id="status-msg" class="mb-4 text-sm hidden break-words"></p>
 
     <div id="product-list" class="space-y-4"></div>
+    <div class="flex items-center justify-between mb-4 flex-wrap gap-4">
+  <div>
+    <h1 class="text-2xl font-bold">Pearls Water Admin</h1>
+    <p class="text-white/50 text-sm">Edits save straight to the live site.</p>
   </div>
+  <button id="logout-btn" class="bg-white/5 hover:bg-white/10 rounded-lg px-4 py-2 text-sm transition">Log Out</button>
+</div>
+
+<div class="flex gap-2 mb-6 border-b border-white/10">
+  <button id="tab-catalog-btn" class="px-4 py-2 text-sm font-semibold border-b-2 border-turquoise text-turquoise" onclick="switchTab('catalog')">Product Catalog</button>
+  <button id="tab-design-btn" class="px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-white/50 hover:text-white" onclick="switchTab('design')">Site Design</button>
+</div>
+
+<div id="tab-panel-catalog">
+  <div class="flex justify-end gap-3 mb-4">
+    <button id="add-btn" class="bg-white/10 hover:bg-white/20 rounded-lg px-4 py-2 font-semibold text-sm transition">+ Add Product</button>
+    <button id="save-btn" class="bg-turquoise text-deep font-bold rounded-lg px-5 py-2 text-sm hover:opacity-90 transition">Save All Changes</button>
+  </div>
+  <p id="status-msg" class="mb-4 text-sm hidden break-words"></p>
+  <div id="product-list" class="space-y-4"></div>
+</div>
+
+<div id="tab-panel-design" class="hidden">
+  <p id="design-status-msg" class="mb-4 text-sm hidden break-words"></p>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="space-y-6">
+
+      <div class="card rounded-xl p-5">
+        <h3 class="font-bold mb-4">Brand Colors</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <label class="block"><span class="text-xs text-white/50">Deep (dark navy)</span>
+            <input type="color" id="cfg-color-deep" class="w-full h-10 mt-1 rounded-lg bg-transparent border border-white/15"></label>
+          <label class="block"><span class="text-xs text-white/50">Ocean (mid blue)</span>
+            <input type="color" id="cfg-color-ocean" class="w-full h-10 mt-1 rounded-lg bg-transparent border border-white/15"></label>
+          <label class="block"><span class="text-xs text-white/50">Turquoise (highlight)</span>
+            <input type="color" id="cfg-color-turquoise" class="w-full h-10 mt-1 rounded-lg bg-transparent border border-white/15"></label>
+          <label class="block"><span class="text-xs text-white/50">Accent</span>
+            <input type="color" id="cfg-color-accent" class="w-full h-10 mt-1 rounded-lg bg-transparent border border-white/15"></label>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-5">
+        <h3 class="font-bold mb-4">Fonts</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <label class="block"><span class="text-xs text-white/50">Headings</span>
+            <select id="cfg-font-heading" class="w-full rounded-lg px-3 py-2 mt-1">
+              <option value="'Montserrat', sans-serif">Montserrat</option>
+              <option value="'Poppins', sans-serif">Poppins</option>
+              <option value="'Playfair Display', serif">Playfair Display</option>
+              <option value="'Inter', sans-serif">Inter</option>
+              <option value="'Roboto', sans-serif">Roboto</option>
+              <option value="'Lato', sans-serif">Lato</option>
+            </select></label>
+          <label class="block"><span class="text-xs text-white/50">Body Text</span>
+            <select id="cfg-font-body" class="w-full rounded-lg px-3 py-2 mt-1">
+              <option value="'Inter', sans-serif">Inter</option>
+              <option value="'Roboto', sans-serif">Roboto</option>
+              <option value="'Lato', sans-serif">Lato</option>
+              <option value="'Poppins', sans-serif">Poppins</option>
+            </select></label>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-5">
+        <h3 class="font-bold mb-4">Logo — Size & Position</h3>
+        <div class="grid grid-cols-3 gap-4">
+          <label class="block"><span class="text-xs text-white/50">Size (px)</span>
+            <input type="number" id="cfg-logo-size" min="60" max="400" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+          <label class="block"><span class="text-xs text-white/50">Top offset (px)</span>
+            <input type="number" id="cfg-logo-top" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+          <label class="block"><span class="text-xs text-white/50">Left offset (px)</span>
+            <input type="number" id="cfg-logo-left" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-5">
+        <h3 class="font-bold mb-4">Hero Section</h3>
+        <div class="space-y-3">
+          <label class="block"><span class="text-xs text-white/50">Headline — line 1</span>
+            <input type="text" id="cfg-hero-line1" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+          <label class="block"><span class="text-xs text-white/50">Headline — line 2 (highlighted)</span>
+            <input type="text" id="cfg-hero-line2" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+          <label class="block"><span class="text-xs text-white/50">Subheadline</span>
+            <textarea id="cfg-hero-subtext" rows="2" class="w-full rounded-lg px-3 py-2 mt-1"></textarea></label>
+          <div class="grid grid-cols-2 gap-4">
+            <label class="block"><span class="text-xs text-white/50">Primary button label</span>
+              <input type="text" id="cfg-hero-primary-btn" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+            <label class="block"><span class="text-xs text-white/50">Secondary button label</span>
+              <input type="text" id="cfg-hero-secondary-btn" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+          </div>
+          <label class="block"><span class="text-xs text-white/50">Headline max size (px)</span>
+            <input type="range" id="cfg-hero-title-size" min="60" max="160" class="w-full mt-1">
+            <span id="cfg-hero-title-size-val" class="text-xs text-white/50"></span></label>
+          <label class="block"><span class="text-xs text-white/50">Background image path</span>
+            <input type="text" id="cfg-hero-bg" placeholder="/public/spl4.jpg" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-5">
+        <h3 class="font-bold mb-4">Sections — Show / Hide</h3>
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <label class="flex items-center gap-2"><input type="checkbox" id="cfg-section-packages" class="w-4 h-4"> Business Packages</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="cfg-section-whyus" class="w-4 h-4"> Why Choose Us</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="cfg-section-testimonials" class="w-4 h-4"> Testimonials</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="cfg-section-opportunity" class="w-4 h-4"> Business Opportunity</label>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-5">
+        <h3 class="font-bold mb-4">Footer & Contact Info</h3>
+        <div class="space-y-3">
+          <label class="block"><span class="text-xs text-white/50">Tagline</span>
+            <textarea id="cfg-footer-tagline" rows="2" class="w-full rounded-lg px-3 py-2 mt-1"></textarea></label>
+          <label class="block"><span class="text-xs text-white/50">Address</span>
+            <textarea id="cfg-footer-address" rows="2" class="w-full rounded-lg px-3 py-2 mt-1"></textarea></label>
+          <div class="grid grid-cols-3 gap-4">
+            <label class="block"><span class="text-xs text-white/50">Email</span>
+              <input type="text" id="cfg-footer-email" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+            <label class="block"><span class="text-xs text-white/50">Phone 1</span>
+              <input type="text" id="cfg-footer-phone1" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+            <label class="block"><span class="text-xs text-white/50">Phone 2</span>
+              <input type="text" id="cfg-footer-phone2" class="w-full rounded-lg px-3 py-2 mt-1"></label>
+          </div>
+        </div>
+      </div>
+
+      <button id="save-design-btn" class="w-full bg-turquoise text-deep font-bold rounded-lg py-3 hover:opacity-90 transition">Save Site Design</button>
+    </div>
+
+    <div class="lg:sticky lg:top-6 h-fit">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="font-bold text-sm text-white/70">Live Preview</h3>
+        <button onclick="document.getElementById('design-preview-frame').src = document.getElementById('design-preview-frame').src" class="text-xs bg-white/10 hover:bg-white/20 rounded-lg px-3 py-1.5">Refresh Preview</button>
+      </div>
+      <div class="rounded-xl overflow-hidden border border-white/10" style="height:80vh;">
+        <iframe id="design-preview-frame" src="/" class="w-full h-full" style="background:#fff;"></iframe>
+      </div>
+      <p class="text-xs text-white/40 mt-2">This shows the live saved site. Save your changes, then click Refresh Preview.</p>
+    </div>
+  </div>
+</div>
 
 <!-- Shared fallback catalog (also used by index.html). Defines window.DEFAULT_PRODUCTS. -->
 <script src="/catalog-defaults.js"></script>
-
+<script src="/site-config-defaults.js"></script>
 <script>
 const CATEGORIES = ["Purified Water Systems", "Mineral & High pH", "Consumables", "Services", "Water Related Products"];
 const SUBCATEGORIES = ["Wall Hung Filters", "Sediment Filters", "Carbon Block", "UV Sterilizer", "Elements", "Heads", "FRP Tanks", "RO Membrane", "Filter Cartridge", "Accessories"];
@@ -75,9 +215,132 @@ function showStatus(msg, isError = false) {
   setTimeout(() => statusEl.classList.add('hidden'), isError ? 15000 : 4000);
 }
 
+  
+
 function nextId() {
   return products.reduce((max, p) => Math.max(max, Number(p.id) || 0), 0) + 1;
 }
+
+  function switchTab(tab) {
+  const isCatalog = tab === 'catalog';
+  document.getElementById('tab-panel-catalog').classList.toggle('hidden', !isCatalog);
+  document.getElementById('tab-panel-design').classList.toggle('hidden', isCatalog);
+  document.getElementById('tab-catalog-btn').className = 'px-4 py-2 text-sm font-semibold border-b-2 ' + (isCatalog ? 'border-turquoise text-turquoise' : 'border-transparent text-white/50 hover:text-white');
+  document.getElementById('tab-design-btn').className = 'px-4 py-2 text-sm font-semibold border-b-2 ' + (!isCatalog ? 'border-turquoise text-turquoise' : 'border-transparent text-white/50 hover:text-white');
+}
+
+let siteConfig = null;
+
+function populateDesignForm(cfg) {
+  document.getElementById('cfg-color-deep').value = cfg.colors.deep;
+  document.getElementById('cfg-color-ocean').value = cfg.colors.ocean;
+  document.getElementById('cfg-color-turquoise').value = cfg.colors.turquoise;
+  document.getElementById('cfg-color-accent').value = cfg.colors.accent;
+  document.getElementById('cfg-font-heading').value = cfg.fonts.heading;
+  document.getElementById('cfg-font-body').value = cfg.fonts.body;
+  document.getElementById('cfg-logo-size').value = cfg.logo.size;
+  document.getElementById('cfg-logo-top').value = cfg.logo.top;
+  document.getElementById('cfg-logo-left').value = cfg.logo.left;
+  document.getElementById('cfg-hero-line1').value = cfg.hero.line1;
+  document.getElementById('cfg-hero-line2').value = cfg.hero.line2;
+  document.getElementById('cfg-hero-subtext').value = cfg.hero.subtext;
+  document.getElementById('cfg-hero-primary-btn').value = cfg.hero.primaryBtnLabel;
+  document.getElementById('cfg-hero-secondary-btn').value = cfg.hero.secondaryBtnLabel;
+  document.getElementById('cfg-hero-title-size').value = cfg.hero.titleMaxSize;
+  document.getElementById('cfg-hero-title-size-val').textContent = cfg.hero.titleMaxSize + 'px';
+  document.getElementById('cfg-hero-bg').value = cfg.hero.bgImage;
+  document.getElementById('cfg-section-packages').checked = cfg.sections.packages !== false;
+  document.getElementById('cfg-section-whyus').checked = cfg.sections.whyUs !== false;
+  document.getElementById('cfg-section-testimonials').checked = cfg.sections.testimonials !== false;
+  document.getElementById('cfg-section-opportunity').checked = cfg.sections.opportunity !== false;
+  document.getElementById('cfg-footer-tagline').value = cfg.footer.tagline;
+  document.getElementById('cfg-footer-address').value = cfg.footer.address;
+  document.getElementById('cfg-footer-email').value = cfg.footer.email;
+  document.getElementById('cfg-footer-phone1').value = cfg.footer.phone1;
+  document.getElementById('cfg-footer-phone2').value = cfg.footer.phone2;
+}
+
+function readDesignForm() {
+  return {
+    colors: {
+      deep: document.getElementById('cfg-color-deep').value,
+      ocean: document.getElementById('cfg-color-ocean').value,
+      turquoise: document.getElementById('cfg-color-turquoise').value,
+      accent: document.getElementById('cfg-color-accent').value,
+    },
+    fonts: {
+      heading: document.getElementById('cfg-font-heading').value,
+      body: document.getElementById('cfg-font-body').value,
+    },
+    logo: {
+      size: Number(document.getElementById('cfg-logo-size').value),
+      top: Number(document.getElementById('cfg-logo-top').value),
+      left: Number(document.getElementById('cfg-logo-left').value),
+    },
+    hero: {
+      line1: document.getElementById('cfg-hero-line1').value,
+      line2: document.getElementById('cfg-hero-line2').value,
+      subtext: document.getElementById('cfg-hero-subtext').value,
+      primaryBtnLabel: document.getElementById('cfg-hero-primary-btn').value,
+      secondaryBtnLabel: document.getElementById('cfg-hero-secondary-btn').value,
+      titleMaxSize: Number(document.getElementById('cfg-hero-title-size').value),
+      bgImage: document.getElementById('cfg-hero-bg').value,
+    },
+    sections: {
+      packages: document.getElementById('cfg-section-packages').checked,
+      whyUs: document.getElementById('cfg-section-whyus').checked,
+      testimonials: document.getElementById('cfg-section-testimonials').checked,
+      opportunity: document.getElementById('cfg-section-opportunity').checked,
+    },
+    footer: {
+      tagline: document.getElementById('cfg-footer-tagline').value,
+      address: document.getElementById('cfg-footer-address').value,
+      email: document.getElementById('cfg-footer-email').value,
+      phone1: document.getElementById('cfg-footer-phone1').value,
+      phone2: document.getElementById('cfg-footer-phone2').value,
+    }
+  };
+}
+
+document.getElementById('cfg-hero-title-size').addEventListener('input', (e) => {
+  document.getElementById('cfg-hero-title-size-val').textContent = e.target.value + 'px';
+});
+
+async function loadSiteConfig() {
+  try {
+    const res = await fetch('/api/site-config');
+    const data = await res.json();
+    siteConfig = data.config || JSON.parse(JSON.stringify(window.DEFAULT_SITE_CONFIG));
+  } catch (err) {
+    siteConfig = JSON.parse(JSON.stringify(window.DEFAULT_SITE_CONFIG));
+  }
+  populateDesignForm(siteConfig);
+}
+
+function showDesignStatus(msg, isError = false) {
+  const el = document.getElementById('design-status-msg');
+  el.textContent = msg;
+  el.className = 'mb-4 text-sm ' + (isError ? 'text-red-400' : 'text-turquoise');
+  el.classList.remove('hidden');
+  setTimeout(() => el.classList.add('hidden'), isError ? 15000 : 4000);
+}
+
+document.getElementById('save-design-btn').addEventListener('click', async () => {
+  const config = readDesignForm();
+  try {
+    const res = await fetch('/api/site-config', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(config),
+    });
+    let data;
+    try { data = await res.json(); } catch (e) { throw new Error(`Server returned a non-JSON response (status ${res.status}).`); }
+    if (!res.ok) throw new Error([data.error, data.detail].filter(Boolean).join(' — ') || `Save failed (status ${res.status})`);
+    showDesignStatus('Site design saved. Click "Refresh Preview" to see it.');
+  } catch (err) {
+    showDesignStatus(String(err.message || err), true);
+  }
+});
 
 function render() {
   listEl.innerHTML = '';
@@ -282,6 +545,7 @@ async function enterEditor() {
     products = DEFAULT_PRODUCTS.slice();
   }
   render();
+  await loadSiteConfig();
 }
 
 // If already logged in (cookie still valid), skip straight to the editor.
