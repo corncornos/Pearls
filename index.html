@@ -1123,6 +1123,10 @@ function goToPage(page) {
             document.body.style.overflow = 'hidden'; 
             // Small delay to allow CSS grid to render before triggering animations if desired
         }
+        function closeGallery() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+}
 
             // ---- Other Water Related Products Modal ----
 function renderWaterRelatedProducts() {
