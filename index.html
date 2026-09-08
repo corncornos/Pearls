@@ -775,15 +775,17 @@ body {
             </div>
         </div>
 
-        <!-- Scrollable Product Grid Area -->
-        <div class="flex-1 overflow-y-auto p-4 md:p-8 modal-content">
-            <div class="max-w-7xl mx-auto">
-                <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                    <!-- Products will be injected here via JavaScript -->
-                </div>
-                <div id="pagination-controls" class="flex items-center justify-center flex-wrap gap-2 mt-10 mb-4"></div>
-            </div>
+<!-- Scrollable Product Grid Area -->
+<div class="flex-1 overflow-y-auto p-4 md:p-8 modal-content">
+    <div class="max-w-7xl mx-auto">
+        <!-- Pagination now at the top -->
+        <div id="pagination-controls" class="flex items-center justify-center flex-wrap gap-1.5 mb-6"></div>
+        
+        <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            <!-- Products will be injected here via JavaScript -->
         </div>
+    </div>
+</div>
     </div>
 
     <!-- Other Water Related Products Modal (separate showcase, not the catalog) -->
@@ -998,11 +1000,11 @@ function renderPagination(totalPages) {
 
     const makeBtn = (label, page, opts = {}) => {
         const btn = document.createElement('button');
-        btn.className = `min-w-[2.5rem] h-10 px-3 rounded-full text-sm font-bold transition-colors ${
-            opts.active ? 'bg-turquoise text-white' :
-            opts.disabled ? 'text-white/20 cursor-not-allowed' :
-            'text-white/70 hover:bg-white/10'
-        }`;
+    btn.className = `min-w-[1.75rem] h-7 px-2 rounded-full text-xs font-bold transition-colors ${
+    opts.active ? 'bg-turquoise text-white' :
+    opts.disabled ? 'text-white/20 cursor-not-allowed' :
+    'text-white/70 hover:bg-white/10'
+}`;
         btn.innerText = label;
         if (opts.disabled) {
             btn.disabled = true;
