@@ -52,15 +52,22 @@ body {
 }
 .glass-panel {
   background: linear-gradient(to right, #1B74B9, #40E0D0);
-  /* or make both ends closer in luminance: */
-  /* background: linear-gradient(to right, #2A8BC4, #40E0D0); */
-  
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.18); /* explicit width */
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12); /* softer + less spread */
-}
 
+  /* 1. Give the border an explicit width & make it a bit stronger */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  /* 2. Soften the shadow so it doesn’t darken the tips */
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+
+  /* 3. Important for clean rounded gradient edges */
+  overflow: hidden;
+
+  /* optional but often helps */
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+}
         
 .hero-bg {
     background-image: var(--hero-bg-image);
