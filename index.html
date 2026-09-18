@@ -320,34 +320,34 @@ body {
     </div>
     <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">Filtration Options</span>
     <div class="space-y-2.5 mb-8 flex-1">
-        <div class="flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3">
+        <button onclick="openImageModal('/card1/SINGLE.png', 'Single')" class="w-full flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3 text-left hover:bg-gray-100 transition-colors cursor-pointer">
             <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
             <div>
                 <h4 class="text-sm font-bold text-deep">Single</h4>
                 <p class="text-[11px] text-gray-400 leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
             </div>
-        </div>
-        <div class="flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3">
+        </button>
+        <button onclick="openImageModal('/card1/DOUBLE-DUAL.png', 'Double/Dual')" class="w-full flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3 text-left hover:bg-gray-100 transition-colors cursor-pointer">
             <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
             <div>
                 <h4 class="text-sm font-bold text-deep">Double/Dual</h4>
                 <p class="text-[11px] text-gray-400 leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
             </div>
-        </div>
-        <div class="flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3">
+        </button>
+        <button onclick="openImageModal('/card1/TRIPLE.png', 'Triple')" class="w-full flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3 text-left hover:bg-gray-100 transition-colors cursor-pointer">
             <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
             <div>
                 <h4 class="text-sm font-bold text-deep">Triple</h4>
                 <p class="text-[11px] text-gray-400 leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
             </div>
-        </div>
-        <div class="flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3">
+        </button>
+        <button onclick="openImageModal('/card1/QUADRUPLE.png', 'Quadruple')" class="w-full flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3 text-left hover:bg-gray-100 transition-colors cursor-pointer">
             <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
             <div>
                 <h4 class="text-sm font-bold text-deep">Quadruple</h4>
                 <p class="text-[11px] text-gray-400 leading-relaxed">Special Purified, Deluxe, Economy, Premium, Executive</p>
             </div>
-        </div>
+        </button>
     </div>
     <button onclick="openOrientationModal('Reverse Osmosis - Purified Package Inquiry', ['Water Refilling Station'])"
             class="w-full py-4 rounded-full border-2 border-ocean text-ocean font-bold uppercase tracking-wide text-sm hover:bg-ocean hover:text-white transition-colors flex items-center justify-center gap-2 group/btn">
@@ -380,22 +380,23 @@ body {
     <span class="text-[11px] font-bold text-white/70 uppercase tracking-widest mb-3">Choose Your Level</span>
 
     <!-- Filter Buttons -->
- <div class="flex flex-col items-center gap-3 mb-8">
-    <button onclick="openImageModal('/card2/REGULAR.png', 'Regular')"
-        class="filter-btn w-56 text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
-        Regular
-    </button>
+    <div class="flex flex-col items-center gap-3 mb-8">
+        <button onclick="openImageModal('/card2/REGULAR.png', 'Regular')"
+            class="filter-btn w-56 text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
+            Regular
+        </button>
 
-    <button onclick="openImageModal('/card2/PREMIUM%20AND%20ULTRAFINE.png', 'Premium / Ultrafine')"
-        class="filter-btn w-56 text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
-        Premium/Ultrafine
-    </button>
+        <button onclick="openImageModal('/card2/PREMIUM%20AND%20ULTRAFINE.png', 'Premium / Ultrafine')"
+            class="filter-btn w-56 text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
+            Premium/Ultrafine
+        </button>
 
-    <button onclick="openImageModal('/card2/2N1.png', '2N1')"
-        class="filter-btn w-56 text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
-        2N1
-    </button>
-</div>
+        <button onclick="openImageModal('/card2/2N1.png', '2N1')"
+            class="filter-btn w-56 text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
+            2N1
+        </button>
+    </div>
+
     <!-- Inquire Button -->
     <button onclick="openOrientationModal('Mineral / High pH Water Package Inquiry', ['Water Refilling Station'])"
             class="w-full py-4 rounded-full bg-gradient-to-r from-[#98fb98] to-[#32CD32] text-[#123A66] font-bold uppercase tracking-wide text-sm hover:opacity-90 transition-opacity shadow-md flex items-center justify-center gap-2 group/btn mt-auto">
@@ -403,7 +404,6 @@ body {
         <i data-feather="arrow-right" class="w-4 h-4 transition-transform group-hover/btn:translate-x-1"></i>
     </button>
 </div>
-                
 <!-- Card 3: Combination Packages -->
 <div class="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200 hover:border-[#FFC857]/50 hover:shadow-2xl hover:shadow-ocean/5 transition-all duration-300 flex flex-col group">
     <div class="flex flex-col items-center text-center mb-6">
@@ -416,34 +416,34 @@ body {
     </div>
     <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">Package Options</span>
     <div class="space-y-2.5 mb-8 flex-1">
-        <div class="flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3">
+        <button onclick="openImageModal('/card3/2N1 SINGLE.png', '2-N-1 Single')" class="w-full flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3 text-left hover:bg-gray-100 transition-colors cursor-pointer">
             <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
             <div>
                 <h4 class="text-sm font-bold text-deep">2-N-1 Single</h4>
                 <p class="text-[11px] text-gray-400 leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
             </div>
-        </div>
-         <div class="flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3">
-            <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
-            <div>
-                <h4 class="text-sm font-bold text-deep">2-N-1 Double</h4>
-                <p class="text-[11px] text-gray-400 leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
-            </div>
-        </div>
-        <div class="flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3">
+        </button>
+        <button onclick="openImageModal('/card3/2N1 DOUBLE.png', '2-N-1 Double')" class="w-full flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3 text-left hover:bg-gray-100 transition-colors cursor-pointer">
+    <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
+    <div>
+        <h4 class="text-sm font-bold text-deep">2-N-1 Double</h4>
+        <p class="text-[11px] text-gray-400 leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
+    </div>
+</button>
+        <button onclick="openImageModal('/card3/3N1 SINGLE.png', '3-N-1 Single')" class="w-full flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3 text-left hover:bg-gray-100 transition-colors cursor-pointer">
             <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
             <div>
                 <h4 class="text-sm font-bold text-deep">3-N-1 Single</h4>
                 <p class="text-[11px] text-gray-400 leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
             </div>
-        </div>
-        <div class="flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3">
+        </button>
+        <button onclick="openImageModal('/card3/3N1 DOUBLE.png', '3-N-1 Double')" class="w-full flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3 text-left hover:bg-gray-100 transition-colors cursor-pointer">
             <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
             <div>
                 <h4 class="text-sm font-bold text-deep">3-N-1 Double</h4>
                 <p class="text-[11px] text-gray-400 leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
             </div>
-        </div>
+        </button>
     </div>
     <button onclick="openOrientationModal('Combination Packages Inquiry', ['Water Refilling Station'])"
             class="w-full py-4 rounded-full border-2 border-ocean text-ocean font-bold uppercase tracking-wide text-sm hover:bg-ocean hover:text-white transition-colors flex items-center justify-center gap-2 group/btn">
