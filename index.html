@@ -382,21 +382,20 @@ body {
     <!-- Filter Buttons -->
  <div class="flex flex-col items-center gap-3 mb-8">
     <button onclick="openImageModal('/card2/REGULAR.png', 'Regular')"
-        class="filter-btn text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
+        class="filter-btn w-56 text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
         Regular
     </button>
 
-        <button onclick="openImageModal('/card2/PREMIUM%20AND%20ULTRAFINE.png', 'Premium / Ultrafine')"
-            class="filter-btn text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
-            Premium/Ultrafine
-        </button>
-        
-        <button onclick="openImageModal('/card2/2N1.png', '2N1')"
-            class="filter-btn text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
-            2N1
-        </button>
-    </div>
+    <button onclick="openImageModal('/card2/PREMIUM%20AND%20ULTRAFINE.png', 'Premium / Ultrafine')"
+        class="filter-btn w-56 text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
+        Premium/Ultrafine
+    </button>
 
+    <button onclick="openImageModal('/card2/2N1.png', '2N1')"
+        class="filter-btn w-56 text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
+        2N1
+    </button>
+</div>
     <!-- Inquire Button -->
     <button onclick="openOrientationModal('Mineral / High pH Water Package Inquiry', ['Water Refilling Station'])"
             class="w-full py-4 rounded-full bg-gradient-to-r from-[#98fb98] to-[#32CD32] text-[#123A66] font-bold uppercase tracking-wide text-sm hover:opacity-90 transition-opacity shadow-md flex items-center justify-center gap-2 group/btn mt-auto">
@@ -404,6 +403,7 @@ body {
         <i data-feather="arrow-right" class="w-4 h-4 transition-transform group-hover/btn:translate-x-1"></i>
     </button>
 </div>
+                
 <!-- Card 3: Combination Packages -->
 <div class="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200 hover:border-[#FFC857]/50 hover:shadow-2xl hover:shadow-ocean/5 transition-all duration-300 flex flex-col group">
     <div class="flex flex-col items-center text-center mb-6">
