@@ -208,6 +208,15 @@ body {
             transform: scale(0.94);
             opacity: 0;
         }
+
+        /* Image Preview Modal Transitions */
+        #image-preview-modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        #image-preview-modal.open > div {
+            transform: scale(1);
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
@@ -1184,6 +1193,28 @@ function closeWaterRelatedModal() {
     const scrollArea = document.querySelector('#water-related-modal .flex-1.overflow-y-auto');
     if (scrollArea) scrollArea.scrollTo({ top: 0, behavior: 'auto' });
 }
+
+        // ---- Image Preview Modal (Card 2 filter buttons: Regular / Premium-Ultrafine / 2N1) ----
+        // These were referenced by onclick="openImageModal(...)" / "closeImageModal(...)" in
+        // the HTML and by the #image-preview-modal markup, but were never defined — so the
+        // buttons looked clickable but did nothing. Defining them here is the actual fix.
+        function openImageModal(src, title) {
+            const imgModal = document.getElementById('image-preview-modal');
+            document.getElementById('modal-preview-img').src = src;
+            document.getElementById('modal-preview-img').alt = title || '';
+            document.getElementById('modal-preview-title').innerText = title || '';
+            imgModal.classList.remove('invisible', 'opacity-0');
+            imgModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal(event) {
+            if (event && event.target !== event.currentTarget) return; // ignore clicks inside the content box
+            const imgModal = document.getElementById('image-preview-modal');
+            imgModal.classList.remove('open');
+            imgModal.classList.add('invisible', 'opacity-0');
+            document.body.style.overflow = '';
+        }
         
         // ---- Mobile Dropdown Menu ----
         function toggleMobileMenu(forceClose) {
@@ -1240,6 +1271,12 @@ if (waterRelatedModal.classList.contains('open')) {
             const detailsModal = document.getElementById('details-modal');
             if (detailsModal.classList.contains('open')) {
                 closeDetails();
+                return;
+            }
+
+            const imagePreviewModal = document.getElementById('image-preview-modal');
+            if (imagePreviewModal.classList.contains('open')) {
+                closeImageModal();
                 return;
             }
 
