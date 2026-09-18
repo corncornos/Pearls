@@ -380,22 +380,24 @@ body {
     <span class="text-[11px] font-bold text-white/70 uppercase tracking-widest mb-3">Choose Your Level</span>
 
     <!-- Filter Buttons -->
-    <div class="flex flex-wrap justify-center gap-3 mb-8">
-        <button onclick="openImageModal('/card2/REGULAR.png', 'Regular')"
-            class="filter-btn text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
-            Regular
-        </button>
+ <div class="flex flex-col items-center gap-3 mb-8">
+    <button onclick="openImageModal('/card2/REGULAR.png', 'Regular')"
+        class="filter-btn text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
+        Regular
+    </button>
 
+    <div class="flex flex-wrap justify-center gap-3">
         <button onclick="openImageModal('/card2/PREMIUM%20AND%20ULTRAFINE.png', 'Premium / Ultrafine')"
             class="filter-btn text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
             Premium/Ultrafine
         </button>
-<br>
+
         <button onclick="openImageModal('/card2/2N1.png', '2N1')"
             class="filter-btn text-center py-3 px-5 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/20 transition-colors">
             2N1
         </button>
     </div>
+</div>
 
     <!-- Inquire Button -->
     <button onclick="openOrientationModal('Mineral / High pH Water Package Inquiry', ['Water Refilling Station'])"
@@ -420,6 +422,13 @@ body {
             <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
             <div>
                 <h4 class="text-sm font-bold text-deep">2-N-1 Single</h4>
+                <p class="text-[11px] text-gray-400 leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
+            </div>
+        </div>
+         <div class="flex items-start gap-3 bg-gray-50 rounded-2xl px-4 py-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-ocean/40 flex-shrink-0 mt-1.5"></span>
+            <div>
+                <h4 class="text-sm font-bold text-deep">2-N-1 Double</h4>
                 <p class="text-[11px] text-gray-400 leading-relaxed">Special Basic, Deluxe, Economy, Premium, Executive</p>
             </div>
         </div>
