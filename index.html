@@ -362,6 +362,7 @@ body {
     <span class="text-[11px] font-bold text-white/70 uppercase tracking-widest mb-3">Choose Your Level</span>
     <div class="space-y-2.5 mb-8 flex-1">
 <!-- Filter Buttons -->
+<!-- Filter Buttons -->
 <div class="flex flex-wrap justify-center gap-3 mb-8">
   <button 
     onclick="showImages('regular')" 
@@ -389,26 +390,25 @@ body {
 <div class="mt-8">
   <!-- Regular Images -->
   <div id="images-regular" class="image-set grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <img src="/card2/REGULAR.png" alt="Regular product 1" class="rounded-xl w-full h-64 object-cover">
+    <img src="/card2/REGULAR.png" alt="Regular product" class="rounded-xl w-full h-64 object-cover">
   </div>
 
-  <!-- Premium Images (hidden by default) -->
+  <!-- Premium Images -->
   <div id="images-premium" class="image-set hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <img src="/card2/PREMIUM AND ULTRAFINE.png" alt="Premium product 1" class="rounded-xl w-full h-64 object-cover">
+    <img src="/card2/PREMIUM%20AND%20ULTRAFINE.png" alt="Premium product" class="rounded-xl w-full h-64 object-cover">
   </div>
 
-  <!-- 2N1 Images (hidden by default) -->
+  <!-- 2N1 Images -->
   <div id="images-2n1" class="image-set hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <img src="/public/2N1.png" alt="2N1 product 1" class="rounded-xl w-full h-64 object-cover">
+    <img src="/public/2N1.png" alt="2N1 product" class="rounded-xl w-full h-64 object-cover">
   </div>
 </div>
-    </div>
-    <button onclick="openOrientationModal('Mineral / High pH Water Package Inquiry', ['Water Refilling Station'])"
-            class="w-full py-4 rounded-full bg-gradient-to-r from-[#98fb98] to-[#32CD32] text-[#123A66] font-bold uppercase tracking-wide text-sm hover:opacity-90 transition-opacity shadow-md flex items-center justify-center gap-2 group/btn">
-        Inquire Now <i data-feather="arrow-right" class="w-4 h-4 transition-transform group-hover/btn:translate-x-1"></i>
-    </button>
-</div>
 
+<button onclick="openOrientationModal('Mineral / High pH Water Package Inquiry', ['Water Refilling Station'])"
+        class="w-full py-4 rounded-full bg-gradient-to-r from-[#98fb98] to-[#32CD32] text-[#123A66] font-bold uppercase tracking-wide text-sm hover:opacity-90 transition-opacity shadow-md flex items-center justify-center gap-2 group/btn mt-8">
+  Inquire Now 
+  <i data-feather="arrow-right" class="w-4 h-4 transition-transform group-hover/btn:translate-x-1"></i>
+</button>
 <!-- Card 3: Combination Packages -->
 <div class="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200 hover:border-[#FFC857]/50 hover:shadow-2xl hover:shadow-ocean/5 transition-all duration-300 flex flex-col group">
     <div class="flex flex-col items-center text-center mb-6">
@@ -1422,6 +1422,37 @@ document.querySelectorAll('.drag-scroll').forEach(enableDragScroll);
         renderProducts();
     }
 })();
+
+        // ===== Filter buttons for Mineral / High pH card =====
+function showImages(type) {
+  // Hide all image sets
+  document.querySelectorAll('.image-set').forEach(el => {
+    el.classList.add('hidden');
+  });
+
+  // Show the selected one
+  const target = document.getElementById('images-' + type);
+  if (target) {
+    target.classList.remove('hidden');
+  }
+
+  // Update active button style
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.remove('bg-white/25', 'border-white/40');
+    btn.classList.add('bg-white/10', 'border-white/25');
+  });
+
+  const activeBtn = document.getElementById('btn-' + type);
+  if (activeBtn) {
+    activeBtn.classList.remove('bg-white/10', 'border-white/25');
+    activeBtn.classList.add('bg-white/25', 'border-white/40');
+  }
+}
+
+// Show Regular images by default when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  showImages('regular');
+});
     </script>
 </body>
 </html>
