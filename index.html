@@ -361,9 +361,51 @@ body {
     </div>
     <span class="text-[11px] font-bold text-white/70 uppercase tracking-widest mb-3">Choose Your Level</span>
     <div class="space-y-2.5 mb-8 flex-1">
-        <div class="text-center py-3 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/15 transition-colors">Regular</div>
-        <div class="text-center py-3 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/15 transition-colors">Premium/Ultrafine</div>
-        <div class="text-center py-3 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/15 transition-colors">2N1</div>
+<!-- Filter Buttons -->
+<div class="flex flex-wrap justify-center gap-3 mb-8">
+  <button 
+    onclick="showImages('regular')" 
+    id="btn-regular"
+    class="filter-btn active text-center py-3 px-6 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/15 transition-colors">
+    Regular
+  </button>
+
+  <button 
+    onclick="showImages('premium')" 
+    id="btn-premium"
+    class="filter-btn text-center py-3 px-6 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/15 transition-colors">
+    Premium/Ultrafine
+  </button>
+
+  <button 
+    onclick="showImages('2n1')" 
+    id="btn-2n1"
+    class="filter-btn text-center py-3 px-6 rounded-full bg-white/10 border border-white/25 text-white text-sm font-bold uppercase tracking-wide hover:bg-white/15 transition-colors">
+    2N1
+  </button>
+</div>
+
+<!-- Image Display Area -->
+<div class="mt-8">
+  <!-- Regular Images -->
+  <div id="images-regular" class="image-set grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <img src="/path/to/regular-1.jpg" alt="Regular product 1" class="rounded-xl w-full h-64 object-cover">
+    <img src="/path/to/regular-2.jpg" alt="Regular product 2" class="rounded-xl w-full h-64 object-cover">
+    <img src="/path/to/regular-3.jpg" alt="Regular product 3" class="rounded-xl w-full h-64 object-cover">
+  </div>
+
+  <!-- Premium Images (hidden by default) -->
+  <div id="images-premium" class="image-set hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <img src="/path/to/premium-1.jpg" alt="Premium product 1" class="rounded-xl w-full h-64 object-cover">
+    <img src="/path/to/premium-2.jpg" alt="Premium product 2" class="rounded-xl w-full h-64 object-cover">
+  </div>
+
+  <!-- 2N1 Images (hidden by default) -->
+  <div id="images-2n1" class="image-set hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <img src="/path/to/2n1-1.jpg" alt="2N1 product 1" class="rounded-xl w-full h-64 object-cover">
+    <img src="/path/to/2n1-2.jpg" alt="2N1 product 2" class="rounded-xl w-full h-64 object-cover">
+  </div>
+</div>
     </div>
     <button onclick="openOrientationModal('Mineral / High pH Water Package Inquiry', ['Water Refilling Station'])"
             class="w-full py-4 rounded-full bg-gradient-to-r from-[#98fb98] to-[#32CD32] text-[#123A66] font-bold uppercase tracking-wide text-sm hover:opacity-90 transition-opacity shadow-md flex items-center justify-center gap-2 group/btn">
